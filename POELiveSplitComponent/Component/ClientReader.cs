@@ -13,12 +13,12 @@ namespace POELiveSplitComponent.Component
 
         public void Start(Action<long> handleLoadStart, Action<long, string> handleLoadEnd)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public void Stop()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

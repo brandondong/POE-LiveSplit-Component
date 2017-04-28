@@ -4,7 +4,7 @@ using LiveSplit.Model;
 
 namespace POELiveSplitComponent.Component
 {
-    class POEComponentFactory : IComponentFactory
+    public class POEComponentFactory : IComponentFactory
     {
         public ComponentCategory Category => ComponentCategory.Timer;
 
