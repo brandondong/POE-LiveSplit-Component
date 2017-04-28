@@ -2,23 +2,17 @@
 using System;
 using LiveSplit.Model;
 
-namespace POELiveSplitComponent.UI
+namespace POELiveSplitComponent.Component
 {
     class POEComponentFactory : IComponentFactory
     {
         public ComponentCategory Category => ComponentCategory.Timer;
 
-        public string ComponentName => "POE";
+        public string ComponentName => POEComponent.NAME;
 
         public string Description => "Load Time Removal and Auto Splitting for Path of Exile.";
 
-        public string UpdateName
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public string UpdateName => POEComponent.NAME;
 
         public string UpdateURL
         {
@@ -28,13 +22,7 @@ namespace POELiveSplitComponent.UI
             }
         }
 
-        public Version Version
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public Version Version => Version.Parse("1.0.0");
 
         public string XMLURL
         {

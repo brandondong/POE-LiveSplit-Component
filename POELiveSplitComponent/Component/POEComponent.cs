@@ -1,33 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
 using LiveSplit.Model;
 using LiveSplit.UI;
 using LiveSplit.UI.Components;
 
-namespace POELiveSplitComponent.UI
+namespace POELiveSplitComponent.Component
 {
-    internal class POEComponent : LogicComponent
+    class POEComponent : LogicComponent
     {
-        private LiveSplitState state;
+        public const string NAME = "POE";
+
+        private ClientReader reader;
+
+        private ComponentSettings settings = new ComponentSettings();
 
         public POEComponent(LiveSplitState state)
         {
-            this.state = state;
+            LoadRemoverSplitter remover = new LoadRemoverSplitter(state, settings);
+            reader = new ClientReader();
+            reader.Start(remover.HandleLoadStart, remover.HandleLoadEnd);
         }
 
-        public override string ComponentName => "POE";
+        public override string ComponentName => NAME;
 
         public override void Dispose()
         {
-            throw new NotImplementedException();
+            reader.Stop();
         }
 
         public override XmlNode GetSettings(XmlDocument document)
         {
-            throw new NotImplementedException();
+            return settings.GetSettings(document);
         }
 
         public override Control GetSettingsControl(LayoutMode mode)
@@ -37,7 +41,7 @@ namespace POELiveSplitComponent.UI
 
         public override void SetSettings(XmlNode settings)
         {
-            throw new NotImplementedException();
+            this.settings.SetSettings(settings);
         }
 
         public override void Update(IInvalidator invalidator, LiveSplitState state, float width, float height, LayoutMode mode)
