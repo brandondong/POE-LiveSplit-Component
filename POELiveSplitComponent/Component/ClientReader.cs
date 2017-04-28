@@ -4,7 +4,14 @@ namespace POELiveSplitComponent.Component
 {
     class ClientReader
     {
-        public void Start(Action handleLoadStart, Action handleLoadEnd)
+        private ComponentSettings settings;
+
+        public ClientReader(ComponentSettings settings)
+        {
+            this.settings = settings;
+        }
+
+        public void Start(Action<long> handleLoadStart, Action<long, string> handleLoadEnd)
         {
             throw new NotImplementedException();
         }

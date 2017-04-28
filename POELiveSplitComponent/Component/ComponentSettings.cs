@@ -9,18 +9,18 @@ namespace POELiveSplitComponent.Component
         private const string LOAD_REMOVAL_FLAG = "load.removal";
         private const string AUTO_SPLIT_FLAG = "auto.split";
 
-        private string logLocation = "C:/Program Files (x86)/Grinding Gear Games/Path of Exile/logs/client.txt";
+        public string LogLocation = "C:/Program Files (x86)/Grinding Gear Games/Path of Exile/logs/client.txt";
 
-        private bool loadRemovalEnabled = true;
+        public bool LoadRemovalEnabled = true;
 
-        private bool autoSplitEnabled = true;
+        public bool AutoSplitEnabled = true;
 
         public XmlNode GetSettings(XmlDocument document)
         {
             XmlElement settingsNode = document.CreateElement("Settings");
-            settingsNode.AppendChild(SettingsHelper.ToElement(document, LOG_KEY, logLocation));
-            settingsNode.AppendChild(SettingsHelper.ToElement(document, LOAD_REMOVAL_FLAG, loadRemovalEnabled));
-            settingsNode.AppendChild(SettingsHelper.ToElement(document, AUTO_SPLIT_FLAG, autoSplitEnabled));
+            settingsNode.AppendChild(SettingsHelper.ToElement(document, LOG_KEY, LogLocation));
+            settingsNode.AppendChild(SettingsHelper.ToElement(document, LOAD_REMOVAL_FLAG, LoadRemovalEnabled));
+            settingsNode.AppendChild(SettingsHelper.ToElement(document, AUTO_SPLIT_FLAG, AutoSplitEnabled));
             return settingsNode;
         }
 
@@ -31,15 +31,15 @@ namespace POELiveSplitComponent.Component
             {
                 if (element[LOG_KEY] != null)
                 {
-                    logLocation = element[LOG_KEY].InnerText;
+                    LogLocation = element[LOG_KEY].InnerText;
                 }
                 if (element[LOAD_REMOVAL_FLAG] != null)
                 {
-                    loadRemovalEnabled = bool.Parse(element[LOAD_REMOVAL_FLAG].InnerText);
+                    LoadRemovalEnabled = bool.Parse(element[LOAD_REMOVAL_FLAG].InnerText);
                 }
                 if (element[AUTO_SPLIT_FLAG] != null)
                 {
-                    autoSplitEnabled = bool.Parse(element[AUTO_SPLIT_FLAG].InnerText);
+                    AutoSplitEnabled = bool.Parse(element[AUTO_SPLIT_FLAG].InnerText);
                 }
             }
         }

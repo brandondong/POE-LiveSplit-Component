@@ -15,11 +15,14 @@ namespace POELiveSplitComponent.Component
 
         private ComponentSettings settings = new ComponentSettings();
 
+        private SettingsControl control;
+
         public POEComponent(LiveSplitState state)
         {
             LoadRemoverSplitter remover = new LoadRemoverSplitter(state, settings);
-            reader = new ClientReader();
+            reader = new ClientReader(settings);
             reader.Start(remover.HandleLoadStart, remover.HandleLoadEnd);
+            control = new SettingsControl(settings);
         }
 
         public override string ComponentName => NAME;
@@ -36,12 +39,13 @@ namespace POELiveSplitComponent.Component
 
         public override Control GetSettingsControl(LayoutMode mode)
         {
-            throw new NotImplementedException();
+            return control;
         }
 
         public override void SetSettings(XmlNode settings)
         {
             this.settings.SetSettings(settings);
+            control.XmlRefresh();
         }
 
         public override void Update(IInvalidator invalidator, LiveSplitState state, float width, float height, LayoutMode mode)

@@ -48,16 +48,19 @@
   <ItemGroup>
     <Compile Include="Component\ClientReader.cs" />
     <Compile Include="Component\ComponentSettings.cs" />
-    <Compile Include="Component\Form1.cs">
+    <Compile Include="Component\SettingsControl.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Component\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Component\SettingsControl.Designer.cs">
+      <DependentUpon>SettingsControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Component\LoadRemover.cs" />
+    <Compile Include="Component\LoadRemoverSplitter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Component\POEComponent.cs" />
     <Compile Include="Component\POEComponentFactory.cs" />
+    <EmbeddedResource Include="Component\SettingsControl.resx">
+      <DependentUpon>SettingsControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
