@@ -48,14 +48,8 @@ namespace POELiveSplitComponent.Component
         {
             try
             {
-                using (StreamReader reader = new StreamReader(settings.LogLocation))
-                {
-                    reader.ReadLine();
-                }
-                using (StreamWriter writer = File.AppendText(settings.LogLocation))
-                {
-                    writer.WriteLine("LiveSplit::testing write permissions");
-                }
+                using (FileStream fs = new FileStream(settings.LogLocation, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
+                { }
                 MessageBox.Show("No problems found.", "Log File Test", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
