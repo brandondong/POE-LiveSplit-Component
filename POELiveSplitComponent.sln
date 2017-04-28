@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POELiveSplitComponent", "POELiveSplitComponent\POELiveSplitComponent.csproj", "{3C331AFE-831A-4B14-B507-7BDEC1BDED02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveSplit.Core", "..\POE-LiveSplit\LiveSplit\LiveSplit.Core\LiveSplit.Core.csproj", "{6DE847DB-20A3-4848-AEEE-1B4364AECDFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateManager", "..\POE-LiveSplit\LiveSplit\UpdateManager\UpdateManager.csproj", "{56DEA3A0-2EB7-493B-B50F-A5E3AA8AE52A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release Candidate|Any CPU = Release Candidate|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C331AFE-831A-4B14-B507-7BDEC1BDED02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C331AFE-831A-4B14-B507-7BDEC1BDED02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C331AFE-831A-4B14-B507-7BDEC1BDED02}.Release Candidate|Any CPU.ActiveCfg = Release|Any CPU
+		{3C331AFE-831A-4B14-B507-7BDEC1BDED02}.Release Candidate|Any CPU.Build.0 = Release|Any CPU
+		{3C331AFE-831A-4B14-B507-7BDEC1BDED02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C331AFE-831A-4B14-B507-7BDEC1BDED02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DE847DB-20A3-4848-AEEE-1B4364AECDFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DE847DB-20A3-4848-AEEE-1B4364AECDFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DE847DB-20A3-4848-AEEE-1B4364AECDFB}.Release Candidate|Any CPU.ActiveCfg = Release Candidate|Any CPU
+		{6DE847DB-20A3-4848-AEEE-1B4364AECDFB}.Release Candidate|Any CPU.Build.0 = Release Candidate|Any CPU
+		{6DE847DB-20A3-4848-AEEE-1B4364AECDFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DE847DB-20A3-4848-AEEE-1B4364AECDFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56DEA3A0-2EB7-493B-B50F-A5E3AA8AE52A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56DEA3A0-2EB7-493B-B50F-A5E3AA8AE52A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56DEA3A0-2EB7-493B-B50F-A5E3AA8AE52A}.Release Candidate|Any CPU.ActiveCfg = Release Candidate|Any CPU
+		{56DEA3A0-2EB7-493B-B50F-A5E3AA8AE52A}.Release Candidate|Any CPU.Build.0 = Release Candidate|Any CPU
+		{56DEA3A0-2EB7-493B-B50F-A5E3AA8AE52A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56DEA3A0-2EB7-493B-B50F-A5E3AA8AE52A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
