@@ -1,12 +1,17 @@
 ﻿using LiveSplit.Options;
 using System;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading;
 
 namespace POELiveSplitComponent.Component
 {
     class ClientReader
     {
+        private static readonly Regex START = new Regex(@"^[^ ]+ [^ ]+ (\d+).*Got Instance Details");
+
+        private static readonly Regex END = new Regex(@"^[^ ]+ [^ ]+ (\d+).*Entering area (.*)$");
+
         private ComponentSettings settings;
 
         private bool keepReading = true;
@@ -52,7 +57,20 @@ namespace POELiveSplitComponent.Component
 
         private void ProcessLine(string s, Action<long> handleLoadStart, Action<long, string> handleLoadEnd)
         {
-            Console.WriteLine(s);
+            MatchCollection matches = START.Matches(s);
+            if (matches.Count > 0)
+            {
+                GroupCollection groups = matches[0].Groups;
+                handleLoadStart(long.Parse(groups[1].Value));
+            } else
+            {
+                matches = END.Matches(s);
+                if (matches.Count > 0)
+                {
+                    GroupCollection groups = matches[0].Groups;
+                    handleLoadEnd(long.Parse(groups[1].Value), groups[2].Value);
+                }
+            }
         }
 
         public void Stop()
