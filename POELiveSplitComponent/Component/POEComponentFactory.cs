@@ -1,6 +1,9 @@
 ﻿using LiveSplit.UI.Components;
 using System;
 using LiveSplit.Model;
+using POELiveSplitComponent.Component;
+
+[assembly: ComponentFactory(typeof(POEComponentFactory))]
 
 namespace POELiveSplitComponent.Component
 {
