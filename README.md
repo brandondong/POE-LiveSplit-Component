@@ -4,6 +4,8 @@ Load screen time removal and auto splitting for Path of Exile speedrunning.
 ## Auto Splitting
 Upon entering the first zone in an act for the first time (excluding Twilight Strand on Normal difficulty), the timer will automatically split. This can be used to track progress across acts without the inconvenience of having to manually trigger a split. Note that runs will most likely still have to be ended by the player as races typically do not end on zone entrances but on boss kills or reaching a specific level.
 
+[Demonstration](http://i.imgur.com/at31aiP.gif)
+
 ## Load Removal
 Load screen time is automatically subtracted from your run. This is done by reading the timestamps on client logs.
 
@@ -11,6 +13,8 @@ Load screen time is automatically subtracted from your run. This is done by read
 The pausing and unpausing of the game timer is an illusion with respect to time calculation. The calculation is done simply by using the LiveSplit real time timer (which was never paused) and subtracting the load times calculated with client log timestamp intervals. As such, any timer inaccuracies can only be from LiveSplit itself or from the timestamps GGG provides. File read latency plays no role in the final time.
 
 The lines in the log file that are used as basis for load screen start and end are "Got Instance Details" and "Entering area..." respectively. From testing, the logs report that I have entered an area slightly before my load screens are finished. Unfortunately, this is the last line the log file reports and may lead to an overestimation of game time. Surprisingly, /played is even more unforgiving and reports my loadscreens as even shorter than they really are.
+
+[Demonstration](http://i.imgur.com/v3BaEQY.gif)
 
 ## Setup
 1. Go to the official LiveSplit [download page](http://livesplit.org/downloads/) and download the latest development build (the second link)
