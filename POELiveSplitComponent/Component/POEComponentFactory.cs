@@ -17,23 +17,11 @@ namespace POELiveSplitComponent.Component
 
         public string UpdateName => POEComponent.NAME;
 
-        public string UpdateURL
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public string UpdateURL => "https://raw.githubusercontent.com/brandondong/POE-LiveSplit-Component/master/POELiveSplitComponent/Update/";
 
         public Version Version => Version.Parse("1.0.0");
 
-        public string XMLURL
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public string XMLURL => UpdateURL + "updates.xml";
 
         public IComponent Create(LiveSplitState state)
         {

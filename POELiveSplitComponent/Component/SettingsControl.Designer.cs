@@ -40,6 +40,7 @@
             this.autoSplitToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.loadRemovalToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.clientLocationToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -64,6 +65,7 @@
             this.checkAutoSplit.Size = new System.Drawing.Size(124, 17);
             this.checkAutoSplit.TabIndex = 0;
             this.checkAutoSplit.Text = "Enable Auto Splitting";
+            this.autoSplitToolTip.SetToolTip(this.checkAutoSplit, "Performs a split when the player enters the first zone in the next act.");
             this.checkAutoSplit.UseVisualStyleBackColor = true;
             this.checkAutoSplit.CheckedChanged += new System.EventHandler(this.HandleAutoSplitChanged);
             // 
@@ -107,6 +109,7 @@
             this.textLogLocation.Name = "textLogLocation";
             this.textLogLocation.Size = new System.Drawing.Size(266, 20);
             this.textLogLocation.TabIndex = 2;
+            this.clientLocationToolTip.SetToolTip(this.textLogLocation, "Used to detect load screen durations and zone locations.");
             this.textLogLocation.TextChanged += new System.EventHandler(this.handleLogLocationChanged);
             // 
             // label1
@@ -114,9 +117,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(9, 46);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(84, 13);
+            this.label1.Size = new System.Drawing.Size(109, 13);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Log file location:";
+            this.label1.Text = "Client log file location:";
             // 
             // checkLoadRemoval
             // 
@@ -128,16 +131,9 @@
             this.checkLoadRemoval.Size = new System.Drawing.Size(131, 17);
             this.checkLoadRemoval.TabIndex = 0;
             this.checkLoadRemoval.Text = "Enable Load Removal";
+            this.loadRemovalToolTip.SetToolTip(this.checkLoadRemoval, "Removes load times from the run.");
             this.checkLoadRemoval.UseVisualStyleBackColor = true;
             this.checkLoadRemoval.CheckedChanged += new System.EventHandler(this.handleLoadRemovalChanged);
-            // 
-            // autoSplitToolTip
-            // 
-            this.autoSplitToolTip.ToolTipTitle = "Performs a split when the player enters the first zone in the next act.";
-            // 
-            // loadRemovalToolTip
-            // 
-            this.loadRemovalToolTip.ToolTipTitle = "Removes load times from the run.";
             // 
             // openFileDialog
             // 
@@ -173,6 +169,7 @@
         private System.Windows.Forms.ToolTip loadRemovalToolTip;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.Button testButton;
+        private System.Windows.Forms.ToolTip clientLocationToolTip;
     }
 }
 

@@ -20,6 +20,7 @@ namespace POELiveSplitComponent.Component
             this.settings = settings;
             timer = new TimerModel();
             timer.CurrentState = state;
+            state.OnStart += HandleResetRuns;
         }
 
         public void HandleLoadStart(long timestamp)
@@ -33,16 +34,11 @@ namespace POELiveSplitComponent.Component
 
         public void HandleLoadEnd(long timestamp, string location)
         {
-            HandleResetRuns();
             if (settings.LoadRemovalEnabled)
             {
                 loadTimes += timestamp - startTimestamp.GetValueOrDefault(timestamp);
                 state.IsGameTimePaused = false;
                 state.LoadingTimes = TimeSpan.FromMilliseconds(loadTimes);
-            } else
-            {
-                // Just to set the flag so that the next time we don't reset our run info
-                state.LoadingTimes = TimeSpan.FromMilliseconds(0);
             }
 
             if (settings.AutoSplitEnabled)
@@ -55,14 +51,11 @@ namespace POELiveSplitComponent.Component
             }
         }
 
-        private void HandleResetRuns()
+        private void HandleResetRuns(object sender, EventArgs e)
         {
-            if (!state.IsGameTimeInitialized)
-            {
-                // Timer got reset; throw away the previous run's load times and reset zone progression
-                loadTimes = 0;
-                lookingForZoneIndex = 0;
-            }
+            loadTimes = 0;
+            lookingForZoneIndex = 0;
+            startTimestamp = null;
         }
     }
 }
