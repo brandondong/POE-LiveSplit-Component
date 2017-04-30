@@ -30,8 +30,14 @@
         {
             this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radioSplitCustom = new System.Windows.Forms.RadioButton();
+            this.radioSplitAllZones = new System.Windows.Forms.RadioButton();
+            this.radioSplitByActs = new System.Windows.Forms.RadioButton();
+            this.checkedListZones = new System.Windows.Forms.CheckedListBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.checkAutoSplit = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.linkLoadSetup = new System.Windows.Forms.LinkLabel();
             this.testButton = new System.Windows.Forms.Button();
             this.browseButton = new System.Windows.Forms.Button();
             this.textLogLocation = new System.Windows.Forms.TextBox();
@@ -47,13 +53,72 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.radioSplitCustom);
+            this.groupBox1.Controls.Add(this.radioSplitAllZones);
+            this.groupBox1.Controls.Add(this.radioSplitByActs);
+            this.groupBox1.Controls.Add(this.checkedListZones);
+            this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.checkAutoSplit);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(448, 55);
+            this.groupBox1.Size = new System.Drawing.Size(448, 196);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Auto Split";
+            // 
+            // radioSplitCustom
+            // 
+            this.radioSplitCustom.AutoSize = true;
+            this.radioSplitCustom.Location = new System.Drawing.Point(187, 48);
+            this.radioSplitCustom.Name = "radioSplitCustom";
+            this.radioSplitCustom.Size = new System.Drawing.Size(60, 17);
+            this.radioSplitCustom.TabIndex = 8;
+            this.radioSplitCustom.Text = "Custom";
+            this.radioSplitCustom.UseVisualStyleBackColor = true;
+            this.radioSplitCustom.CheckedChanged += new System.EventHandler(this.HandleSplitByChanged);
+            // 
+            // radioSplitAllZones
+            // 
+            this.radioSplitAllZones.AutoSize = true;
+            this.radioSplitAllZones.Location = new System.Drawing.Point(112, 48);
+            this.radioSplitAllZones.Name = "radioSplitAllZones";
+            this.radioSplitAllZones.Size = new System.Drawing.Size(69, 17);
+            this.radioSplitAllZones.TabIndex = 7;
+            this.radioSplitAllZones.Text = "All Zones";
+            this.radioSplitAllZones.UseVisualStyleBackColor = true;
+            this.radioSplitAllZones.CheckedChanged += new System.EventHandler(this.HandleSplitByChanged);
+            // 
+            // radioSplitByActs
+            // 
+            this.radioSplitByActs.AutoSize = true;
+            this.radioSplitByActs.Checked = true;
+            this.radioSplitByActs.Location = new System.Drawing.Point(60, 48);
+            this.radioSplitByActs.Name = "radioSplitByActs";
+            this.radioSplitByActs.Size = new System.Drawing.Size(46, 17);
+            this.radioSplitByActs.TabIndex = 6;
+            this.radioSplitByActs.TabStop = true;
+            this.radioSplitByActs.Text = "Acts";
+            this.radioSplitByActs.UseVisualStyleBackColor = true;
+            this.radioSplitByActs.CheckedChanged += new System.EventHandler(this.HandleSplitByChanged);
+            // 
+            // checkedListZones
+            // 
+            this.checkedListZones.CheckOnClick = true;
+            this.checkedListZones.FormattingEnabled = true;
+            this.checkedListZones.Location = new System.Drawing.Point(12, 71);
+            this.checkedListZones.Name = "checkedListZones";
+            this.checkedListZones.Size = new System.Drawing.Size(234, 109);
+            this.checkedListZones.TabIndex = 5;
+            this.checkedListZones.SelectedIndexChanged += new System.EventHandler(this.ZoneSelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(9, 48);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(45, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Split on:";
             // 
             // checkAutoSplit
             // 
@@ -71,17 +136,33 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.linkLoadSetup);
             this.groupBox2.Controls.Add(this.testButton);
             this.groupBox2.Controls.Add(this.browseButton);
             this.groupBox2.Controls.Add(this.textLogLocation);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.checkLoadRemoval);
-            this.groupBox2.Location = new System.Drawing.Point(12, 73);
+            this.groupBox2.Location = new System.Drawing.Point(12, 225);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(448, 135);
+            this.groupBox2.Size = new System.Drawing.Size(448, 174);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Load Removal";
+            // 
+            // linkLoadSetup
+            // 
+            this.linkLoadSetup.AutoSize = true;
+            this.linkLoadSetup.LinkArea = new System.Windows.Forms.LinkArea(132, 4);
+            this.linkLoadSetup.Location = new System.Drawing.Point(12, 129);
+            this.linkLoadSetup.MaximumSize = new System.Drawing.Size(420, 0);
+            this.linkLoadSetup.Name = "linkLoadSetup";
+            this.linkLoadSetup.Size = new System.Drawing.Size(415, 30);
+            this.linkLoadSetup.TabIndex = 2;
+            this.linkLoadSetup.TabStop = true;
+            this.linkLoadSetup.Text = "Note that a timer operating on Game Time must be used to display the subtracted l" +
+    "oad times. Setup information for that can be found here.";
+            this.linkLoadSetup.UseCompatibleTextRendering = true;
+            this.linkLoadSetup.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLoadSetupClicked);
             // 
             // testButton
             // 
@@ -147,7 +228,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "SettingsControl";
-            this.Size = new System.Drawing.Size(476, 220);
+            this.Size = new System.Drawing.Size(476, 417);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -170,6 +251,12 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.Button testButton;
         private System.Windows.Forms.ToolTip clientLocationToolTip;
+        private System.Windows.Forms.LinkLabel linkLoadSetup;
+        private System.Windows.Forms.CheckedListBox checkedListZones;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.RadioButton radioSplitCustom;
+        private System.Windows.Forms.RadioButton radioSplitAllZones;
+        private System.Windows.Forms.RadioButton radioSplitByActs;
     }
 }
 
