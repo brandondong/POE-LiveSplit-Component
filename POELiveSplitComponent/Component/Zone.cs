@@ -88,6 +88,19 @@ namespace POELiveSplitComponent.Component
             return allZones;
         }
 
+        public static Difficulty ParseDifficulty(string location)
+        {
+            if (location.StartsWith("1"))
+            {
+                return Difficulty.Normal;
+            }
+            else if (location.StartsWith("2"))
+            {
+                return Difficulty.Cruel;
+            }
+            return Difficulty.Merciless;
+        }
+
         private string name;
         private Difficulty difficulty;
         public bool IsActZone { get; }
@@ -96,7 +109,7 @@ namespace POELiveSplitComponent.Component
         {
             this.name = name;
             this.difficulty = difficulty;
-            this.IsActZone = isActZone;
+            IsActZone = isActZone;
         }
 
         public static Zone create(string name, Difficulty difficulty)
@@ -117,6 +130,21 @@ namespace POELiveSplitComponent.Component
         public override string ToString()
         {
             return name + " (" + difficulty + ")";
+        }
+
+        public override bool Equals(object obj)
+        {
+            Zone zone = obj as Zone;
+            if (zone == null)
+            {
+                return false;
+            }
+            return name.Equals(zone.name) && difficulty.Equals(zone.difficulty);
+        }
+
+        public override int GetHashCode()
+        {
+            return name.GetHashCode() * 23 + difficulty.GetHashCode();
         }
 
         public enum Difficulty { Normal, Cruel, Merciless }

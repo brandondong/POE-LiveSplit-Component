@@ -12,7 +12,7 @@ namespace POELiveSplitComponent.Component
 
         private static readonly Regex END = new Regex(@"^[^ ]+ [^ ]+ (\d+).*Entering area (.*)$");
 
-        private static readonly Regex ZONE_NAME = new Regex(@"^[^ ]+ [^ ]+ (\d+).*You have entered (.*)\.$");
+        private static readonly Regex ZONE_NAME = new Regex(@"^[^ ]+ [^ ]+ \d+.*You have entered (.*)\.$");
 
         private ComponentSettings settings;
 
@@ -23,7 +23,7 @@ namespace POELiveSplitComponent.Component
             this.settings = settings;
         }
 
-        public void Start(Action<long> handleLoadStart, Action<long, string> handleLoadEnd)
+        public void Start(Action<long> handleLoadStart, Action<long, string> handleLoadEnd, Action<string> handleZoneName)
         {
             new Thread(() =>
             {
@@ -39,13 +39,13 @@ namespace POELiveSplitComponent.Component
                             {
                                 while (!sr.EndOfStream)
                                 {
-                                    ProcessLine(sr.ReadLine(), handleLoadStart, handleLoadEnd);
+                                    ProcessLine(sr.ReadLine(), handleLoadStart, handleLoadEnd, handleZoneName);
                                 }
                                 while (sr.EndOfStream)
                                 {
                                     Thread.Sleep(100);
                                 }
-                                ProcessLine(sr.ReadLine(), handleLoadStart, handleLoadEnd);
+                                ProcessLine(sr.ReadLine(), handleLoadStart, handleLoadEnd, handleZoneName);
                             }
                         }
                     }
@@ -57,21 +57,27 @@ namespace POELiveSplitComponent.Component
             }).Start();
         }
 
-        private void ProcessLine(string s, Action<long> handleLoadStart, Action<long, string> handleLoadEnd)
+        private void ProcessLine(string s, Action<long> handleLoadStart, Action<long, string> handleLoadEnd, Action<string> handleZoneName)
         {
-            MatchCollection matches = START.Matches(s);
-            if (matches.Count > 0)
+            Match match = START.Match(s);
+            if (match.Success)
             {
-                GroupCollection groups = matches[0].Groups;
+                GroupCollection groups = match.Groups;
                 handleLoadStart(long.Parse(groups[1].Value));
-            } else
+                return;
+            }
+            match = END.Match(s);
+            if (match.Success)
             {
-                matches = END.Matches(s);
-                if (matches.Count > 0)
-                {
-                    GroupCollection groups = matches[0].Groups;
-                    handleLoadEnd(long.Parse(groups[1].Value), groups[2].Value);
-                }
+                GroupCollection groups = match.Groups;
+                handleLoadEnd(long.Parse(groups[1].Value), groups[2].Value);
+                return;
+            }
+            match = ZONE_NAME.Match(s);
+            if (match.Success)
+            {
+                GroupCollection groups = match.Groups;
+                handleZoneName(groups[1].Value);
             }
         }
 

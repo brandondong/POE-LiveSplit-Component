@@ -1,18 +1,17 @@
 ﻿using System;
 using LiveSplit.Model;
+using System.Collections.Generic;
 
 namespace POELiveSplitComponent.Component
 {
     class LoadRemoverSplitter
-    {
-        private static readonly string[] ZONES = new string[] { "1_2_1", "1_3_1", "1_4_1", "2_1_1", "2_2_1", "2_3_1", "2_4_1", "3_1_1", "3_2_1", "3_3_1", "3_4_1" };
-
-        private LiveSplitState state;
+    {   private LiveSplitState state;
         private ComponentSettings settings;
         private TimerModel timer;
         private long loadTimes = 0;
         private long? startTimestamp;
-        private int lookingForZoneIndex = 0;
+        private string zoneName;
+        private HashSet<Zone> encounteredZones = new HashSet<Zone>();
 
         public LoadRemoverSplitter(LiveSplitState state, ComponentSettings settings)
         {
@@ -22,7 +21,7 @@ namespace POELiveSplitComponent.Component
             timer.CurrentState = state;
             state.OnStart += HandleResetRuns;
         }
-
+        
         public void HandleLoadStart(long timestamp)
         {
             if (settings.LoadRemovalEnabled)
@@ -30,6 +29,11 @@ namespace POELiveSplitComponent.Component
                 state.IsGameTimePaused = true;
                 startTimestamp = timestamp;
             }
+        }
+
+        public void HandleZoneName(string zoneName)
+        {
+            this.zoneName = zoneName;
         }
 
         public void HandleLoadEnd(long timestamp, string location)
@@ -43,10 +47,14 @@ namespace POELiveSplitComponent.Component
 
             if (settings.AutoSplitEnabled)
             {
-                if (lookingForZoneIndex < ZONES.Length && location.Equals(ZONES[lookingForZoneIndex]))
+                if (zoneName != null)
                 {
-                    timer.Split();
-                    lookingForZoneIndex++;
+                    Zone zone = Zone.create(zoneName, Zone.ParseDifficulty(location));
+                    if (!encounteredZones.Contains(zone) && settings.SplitZones[zone])
+                    {
+                        timer.Split();
+                        encounteredZones.Add(zone);
+                    }
                 }
             }
         }
@@ -54,8 +62,9 @@ namespace POELiveSplitComponent.Component
         private void HandleResetRuns(object sender, EventArgs e)
         {
             loadTimes = 0;
-            lookingForZoneIndex = 0;
             startTimestamp = null;
+            zoneName = null;
+            encounteredZones = new HashSet<Zone>();
         }
     }
 }
