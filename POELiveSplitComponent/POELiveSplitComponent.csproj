@@ -59,6 +59,7 @@
       <DependentUpon>SettingsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Component\LoadRemoverSplitter.cs" />
+    <Compile Include="Component\Zone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Component\POEComponent.cs" />
     <Compile Include="Component\POEComponentFactory.cs" />

@@ -20,9 +20,11 @@ namespace POELiveSplitComponent.Component
         {
             this.settings = settings;
             InitializeComponent();
+            foreach (Zone zone in Zone.ZONES)
+            {
+                checkedListZones.Items.Add(zone, false);
+            }
             XmlRefresh();
-            string[] myFruit = { "Apples", "Oranges", "Tomato", "Apples", "Oranges", "Tomato", "Apples", "Oranges", "Tomato", "Apples", "Oranges", "Tomato" };
-            checkedListZones.Items.AddRange(myFruit);
         }
 
         public void XmlRefresh()
@@ -83,9 +85,20 @@ namespace POELiveSplitComponent.Component
                 {
                     checkedListZones.SetItemChecked(i, true);
                 }
-            } else if (radioSplitByActs.Checked)
+            }
+            else if (radioSplitByActs.Checked)
             {
-
+                for (int i = 0; i < checkedListZones.Items.Count; i++)
+                {
+                    Zone zone = (Zone)checkedListZones.Items[i];
+                    if (zone.IsActZone)
+                    {
+                        checkedListZones.SetItemChecked(i, true);
+                    } else
+                    {
+                        checkedListZones.SetItemChecked(i, false);
+                    }
+                }
             }
         }
 

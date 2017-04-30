@@ -107,7 +107,7 @@
             this.checkedListZones.FormattingEnabled = true;
             this.checkedListZones.Location = new System.Drawing.Point(12, 71);
             this.checkedListZones.Name = "checkedListZones";
-            this.checkedListZones.Size = new System.Drawing.Size(234, 109);
+            this.checkedListZones.Size = new System.Drawing.Size(266, 109);
             this.checkedListZones.TabIndex = 5;
             this.checkedListZones.SelectedIndexChanged += new System.EventHandler(this.ZoneSelectedIndexChanged);
             // 

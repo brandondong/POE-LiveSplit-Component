@@ -12,6 +12,8 @@ namespace POELiveSplitComponent.Component
 
         private static readonly Regex END = new Regex(@"^[^ ]+ [^ ]+ (\d+).*Entering area (.*)$");
 
+        private static readonly Regex ZONE_NAME = new Regex(@"^[^ ]+ [^ ]+ (\d+).*You have entered (.*)\.$");
+
         private ComponentSettings settings;
 
         private bool keepReading = true;
