@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<updates></updates>
+<updates>
+	<update version="1.0.0">
+		<files>
+			<file path="Components/POELiveSplitComponent.dll" status="changed" />
+		</files>
+		<changelog>
+			<change>Testing update functionality. Please ignore.</change>
+		</changelog>
+	</update>
+</updates>
