@@ -23,8 +23,10 @@ The lines in the log file that are used as basis for load screen start and end a
 4. Type "Path of Exile" as the Game Name and click the Activate button below the number of attempts
 5. To disable Auto Splitting or Load Removal, click the Settings button
 
+Note that splits are not automatically created for you when Auto Splitting is enabled as LiveSplit components don't have the ability to do this. The Auto Splitter will split on first act zones so if you set up your splits to be A1N, A2N for example, you will move onto your second segment once you enter Southern Forest.
+
 ## Additional Setup Instructions for Load Removal
-Follow these additional instructions if you want to use load removal (enabled by default).
+Follow these additional instructions if you want to use load removal.
 
 6. Right click on the timer and select "Edit Layout"
 7. Click the Layout Settings button
