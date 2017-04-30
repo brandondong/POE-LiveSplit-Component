@@ -32,6 +32,35 @@ namespace POELiveSplitComponent.Component
             checkAutoSplit.Checked = settings.AutoSplitEnabled;
             checkLoadRemoval.Checked = settings.LoadRemovalEnabled;
             textLogLocation.Text = settings.LogLocation;
+
+            bool isSplitByAct = true;
+            bool isSplitAll = true;
+            for (int i = 0; i < checkedListZones.Items.Count; i++)
+            {
+                Zone zone = (Zone)checkedListZones.Items[i];
+                bool shouldSplit = settings.SplitZones[zone];
+                if (shouldSplit != zone.IsActZone)
+                {
+                    isSplitByAct = false;
+                }
+                if (!shouldSplit)
+                {
+                    isSplitAll = false;
+                }
+                checkedListZones.SetItemChecked(i, shouldSplit);
+            }
+            if (isSplitByAct)
+            {
+                radioSplitByActs.Checked = true;
+            }
+            else if (isSplitAll)
+            {
+                radioSplitAllZones.Checked = true;
+            }
+            else
+            {
+                radioSplitCustom.Checked = true;
+            }
         }
 
         private void HandleAutoSplitChanged(object sender, EventArgs e)
@@ -91,13 +120,7 @@ namespace POELiveSplitComponent.Component
                 for (int i = 0; i < checkedListZones.Items.Count; i++)
                 {
                     Zone zone = (Zone)checkedListZones.Items[i];
-                    if (zone.IsActZone)
-                    {
-                        checkedListZones.SetItemChecked(i, true);
-                    } else
-                    {
-                        checkedListZones.SetItemChecked(i, false);
-                    }
+                    checkedListZones.SetItemChecked(i, zone.IsActZone);
                 }
             }
         }
@@ -105,6 +128,12 @@ namespace POELiveSplitComponent.Component
         private void ZoneSelectedIndexChanged(object sender, EventArgs e)
         {
             radioSplitCustom.Checked = true;
+        }
+
+        private void HandleItemChecked(object sender, ItemCheckEventArgs e)
+        {
+            Zone zone = (Zone)checkedListZones.Items[e.Index];
+            settings.SplitZones[zone] = e.NewValue == CheckState.Checked;
         }
     }
 }

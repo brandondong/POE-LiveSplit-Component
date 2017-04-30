@@ -109,6 +109,7 @@
             this.checkedListZones.Name = "checkedListZones";
             this.checkedListZones.Size = new System.Drawing.Size(266, 109);
             this.checkedListZones.TabIndex = 5;
+            this.checkedListZones.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.HandleItemChecked);
             this.checkedListZones.SelectedIndexChanged += new System.EventHandler(this.ZoneSelectedIndexChanged);
             // 
             // label2
