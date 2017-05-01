@@ -2,7 +2,7 @@
 <updates>
 	<update version="1.0.0">
 		<files>
-			<file path="Components/POELiveSplitComponent.dll" status="changed" />
+			<file path="POELiveSplitComponent.dll" status="changed" />
 		</files>
 		<changelog>
 			<change>Testing update functionality. Please ignore.</change>
