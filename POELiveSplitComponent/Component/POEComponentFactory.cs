@@ -19,7 +19,7 @@ namespace POELiveSplitComponent.Component
 
         public string UpdateURL => "https://raw.githubusercontent.com/brandondong/POE-LiveSplit-Component/master/POELiveSplitComponent/Update/";
 
-        public Version Version => Version.Parse("1.0.1");
+        public Version Version => Version.Parse("1.0.2");
 
         public string XMLURL => UpdateURL + "updates.xml";
 

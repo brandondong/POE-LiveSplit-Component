@@ -50,7 +50,7 @@ namespace POELiveSplitComponent.Component
                 if (zoneName != null)
                 {
                     Zone zone = Zone.create(zoneName, Zone.ParseDifficulty(location));
-                    if (!encounteredZones.Contains(zone) && settings.SplitZones[zone])
+                    if (!encounteredZones.Contains(zone) && settings.SplitZones.ContainsKey(zone) && settings.SplitZones[zone])
                     {
                         timer.Split();
                         encounteredZones.Add(zone);
