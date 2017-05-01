@@ -2,7 +2,7 @@
 Load screen time removal and auto splitting for Path of Exile speedrunning.
 
 ## Auto Splitting
-Upon entering the first zone in an act for the first time (excluding Twilight Strand on Normal difficulty), the timer will automatically split. This can be used to track progress across acts without the inconvenience of having to manually trigger a split. Note that runs will most likely still have to be ended by the player as races typically do not end on zone entrances but on boss kills or reaching a specific level.
+The component can be configured to automatically split upon entering specific zones for the first time. This can be used to track progress across sections of the game without the inconvenience of having to manually trigger a split. Note that runs will most likely still have to be ended by the player as races typically do not end on zone entrances but on boss kills or reaching a specific level.
 
 [Demonstration](http://i.imgur.com/at31aiP.gif)
 
@@ -21,9 +21,9 @@ The lines in the log file that are used as basis for load screen start and end a
 2. Extract the zip file and run the LiveSplit application executable
 3. Right click on the timer and select "Edit Splits"
 4. Type "Path of Exile" as the Game Name and click the Activate button below the number of attempts
-5. To disable Auto Splitting or Load Removal, click the Settings button
+5. To disable Auto Splitting or Load Removal, or to configure which zones will result in an automatic split upon entering, click the Settings button
 
-Note that splits are not automatically created for you when Auto Splitting is enabled as LiveSplit components don't have the ability to do this. The Auto Splitter will split on first act zones so if you set up your splits to be A1N, A2N for example, you will move onto your second segment once you enter Southern Forest.
+Note that splits are not automatically created for you when Auto Splitting is enabled as LiveSplit components don't have the ability to do this. The Auto Splitter will split on zones you specify so if you set up your splits to be A1N, A2N and configure the component to split on Southern Forest for example, you will move onto your second segment once you enter Act 2.
 
 ## Additional Setup Instructions for Load Removal
 Follow these additional instructions if you want to use load removal.
