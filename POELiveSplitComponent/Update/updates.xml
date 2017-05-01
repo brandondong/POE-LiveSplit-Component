@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <updates>
-	<update version="1.0.0">
+	<update version="1.0.1">
 		<files>
 			<file path="Components/POELiveSplitComponent.dll" status="changed" />
 		</files>
