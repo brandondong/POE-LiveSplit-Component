@@ -2,7 +2,7 @@
 <updates>
 	<update version="1.0.0">
 		<files>
-			<file path="POELiveSplitComponent.dll" status="changed" />
+			<file path="Components/POELiveSplitComponent.dll" status="changed" />
 		</files>
 		<changelog>
 			<change>You can now configure the specific zones to be automatically split on through the Settings menu. Previously, automatic splits were done on a limited set of hardcoded act entrance zones.</change>
