@@ -15,11 +15,11 @@ namespace POELiveSplitComponent.Component
 
         public string Description => "Load Time Removal and Auto Splitting for Path of Exile.";
 
-        public string UpdateName => POEComponent.NAME;
+        public string UpdateName => "Path of Exile";
 
         public string UpdateURL => "https://raw.githubusercontent.com/brandondong/POE-LiveSplit-Component/master/POELiveSplitComponent/Update/";
 
-        public Version Version => Version.Parse("1.0.0");
+        public Version Version => Version.Parse("1.0.1");
 
         public string XMLURL => UpdateURL + "updates.xml";
 
