@@ -18,34 +18,44 @@ namespace POELiveSplitComponent.Component
 
         private bool keepReading = true;
 
-        public ClientReader(ComponentSettings settings)
+        private Action<long> handleLoadStart;
+
+        private Action<long, string> handleLoadEnd;
+
+        private Action<string> handleZoneName;
+
+        public ClientReader(ComponentSettings settings, Action<long> handleLoadStart, Action<long, string> handleLoadEnd, Action<string> handleZoneName)
         {
             this.settings = settings;
+            this.handleLoadStart = handleLoadStart;
+            this.handleLoadEnd = handleLoadEnd;
+            this.handleZoneName = handleZoneName;
         }
 
-        public void Start(Action<long> handleLoadStart, Action<long, string> handleLoadEnd, Action<string> handleZoneName)
+        public void Start()
         {
             new Thread(() =>
             {
                 Thread.CurrentThread.IsBackground = true;
+                string logLocation = settings.LogLocation;
                 try
                 {
-                    using (FileStream fs = new FileStream(settings.LogLocation, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    using (FileStream fs = new FileStream(logLocation, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                     {
                         fs.Seek(0, SeekOrigin.End);
                         using (StreamReader sr = new StreamReader(fs))
                         {
-                            while (keepReading)
+                            while (keepReading && logLocation.Equals(settings.LogLocation))
                             {
                                 while (!sr.EndOfStream)
                                 {
-                                    ProcessLine(sr.ReadLine(), handleLoadStart, handleLoadEnd, handleZoneName);
+                                    ProcessLine(sr.ReadLine());
                                 }
                                 while (sr.EndOfStream)
                                 {
                                     Thread.Sleep(100);
                                 }
-                                ProcessLine(sr.ReadLine(), handleLoadStart, handleLoadEnd, handleZoneName);
+                                ProcessLine(sr.ReadLine());
                             }
                         }
                     }
@@ -57,7 +67,7 @@ namespace POELiveSplitComponent.Component
             }).Start();
         }
 
-        private void ProcessLine(string s, Action<long> handleLoadStart, Action<long, string> handleLoadEnd, Action<string> handleZoneName)
+        private void ProcessLine(string s)
         {
             Match match = START.Match(s);
             if (match.Success)

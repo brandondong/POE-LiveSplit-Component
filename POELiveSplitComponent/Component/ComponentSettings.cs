@@ -14,13 +14,28 @@ namespace POELiveSplitComponent.Component
         private const string AUTO_SPLIT_FLAG = "auto.split";
         private const string SPLIT_ZONES = "split.zones";
 
-        public string LogLocation = "C:/Program Files (x86)/Grinding Gear Games/Path of Exile/logs/client.txt";
+        private string logLocation = "C:/Program Files (x86)/Grinding Gear Games/Path of Exile/logs/client.txt";
+
+        public string LogLocation
+        {
+            get
+            {
+                return logLocation;
+            }
+            set
+            {
+                logLocation = value;
+                HandleLogLocationChanged?.Invoke();
+            }
+        }
 
         public bool LoadRemovalEnabled = true;
 
         public bool AutoSplitEnabled = true;
 
         public HashSet<Zone> SplitZones { get; private set; }
+
+        public Action HandleLogLocationChanged { get; set; }
 
         public ComponentSettings()
         {
