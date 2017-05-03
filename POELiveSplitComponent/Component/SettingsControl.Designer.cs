@@ -131,21 +131,17 @@
             this.checkAutoSplit.Size = new System.Drawing.Size(124, 17);
             this.checkAutoSplit.TabIndex = 0;
             this.checkAutoSplit.Text = "Enable Auto Splitting";
-            this.autoSplitToolTip.SetToolTip(this.checkAutoSplit, "Performs a split when the player enters the first zone in the next act.");
+            this.autoSplitToolTip.SetToolTip(this.checkAutoSplit, "Performs a split when the player enters a specific zone for the first time.");
             this.checkAutoSplit.UseVisualStyleBackColor = true;
             this.checkAutoSplit.CheckedChanged += new System.EventHandler(this.HandleAutoSplitChanged);
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.linkLoadSetup);
-            this.groupBox2.Controls.Add(this.testButton);
-            this.groupBox2.Controls.Add(this.browseButton);
-            this.groupBox2.Controls.Add(this.textLogLocation);
-            this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.checkLoadRemoval);
             this.groupBox2.Location = new System.Drawing.Point(12, 225);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(448, 174);
+            this.groupBox2.Size = new System.Drawing.Size(448, 86);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Load Removal";
@@ -154,7 +150,7 @@
             // 
             this.linkLoadSetup.AutoSize = true;
             this.linkLoadSetup.LinkArea = new System.Windows.Forms.LinkArea(132, 4);
-            this.linkLoadSetup.Location = new System.Drawing.Point(12, 129);
+            this.linkLoadSetup.Location = new System.Drawing.Point(12, 39);
             this.linkLoadSetup.MaximumSize = new System.Drawing.Size(420, 0);
             this.linkLoadSetup.Name = "linkLoadSetup";
             this.linkLoadSetup.Size = new System.Drawing.Size(415, 30);
@@ -167,7 +163,7 @@
             // 
             // testButton
             // 
-            this.testButton.Location = new System.Drawing.Point(12, 89);
+            this.testButton.Location = new System.Drawing.Point(24, 372);
             this.testButton.Name = "testButton";
             this.testButton.Size = new System.Drawing.Size(75, 23);
             this.testButton.TabIndex = 4;
@@ -177,7 +173,7 @@
             // 
             // browseButton
             // 
-            this.browseButton.Location = new System.Drawing.Point(284, 63);
+            this.browseButton.Location = new System.Drawing.Point(296, 346);
             this.browseButton.Name = "browseButton";
             this.browseButton.Size = new System.Drawing.Size(75, 23);
             this.browseButton.TabIndex = 3;
@@ -187,7 +183,7 @@
             // 
             // textLogLocation
             // 
-            this.textLogLocation.Location = new System.Drawing.Point(12, 63);
+            this.textLogLocation.Location = new System.Drawing.Point(24, 346);
             this.textLogLocation.Name = "textLogLocation";
             this.textLogLocation.Size = new System.Drawing.Size(266, 20);
             this.textLogLocation.TabIndex = 2;
@@ -197,7 +193,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 46);
+            this.label1.Location = new System.Drawing.Point(21, 329);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(109, 13);
             this.label1.TabIndex = 1;
@@ -227,14 +223,19 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.testButton);
+            this.Controls.Add(this.browseButton);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.textLogLocation);
+            this.Controls.Add(this.label1);
             this.Name = "SettingsControl";
-            this.Size = new System.Drawing.Size(476, 417);
+            this.Size = new System.Drawing.Size(476, 415);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

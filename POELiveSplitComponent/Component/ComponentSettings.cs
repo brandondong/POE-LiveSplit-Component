@@ -20,14 +20,17 @@ namespace POELiveSplitComponent.Component
 
         public bool AutoSplitEnabled = true;
 
-        public Dictionary<Zone, bool> SplitZones { get; }
+        public HashSet<Zone> SplitZones { get; private set; }
 
         public ComponentSettings()
         {
-            SplitZones = new Dictionary<Zone, bool>();
+            SplitZones = new HashSet<Zone>();
             foreach (Zone zone in Zone.ZONES)
             {
-                SplitZones.Add(zone, zone.IsActZone);
+                if (zone.IsActZone)
+                {
+                    SplitZones.Add(zone);
+                }
             }
         }
 
@@ -46,17 +49,14 @@ namespace POELiveSplitComponent.Component
 
         private string SerializeZones()
         {
-            HashSet<string> splitZones = new HashSet<string>();
-            foreach (Zone zone in Zone.ZONES)
+            HashSet<string> splitZoneStrings = new HashSet<string>();
+            foreach (Zone zone in SplitZones)
             {
-                if (SplitZones[zone])
-                {
-                    splitZones.Add(zone.ToString());
-                }
+                splitZoneStrings.Add(zone.ToString());
             }
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(HashSet<string>));
             StringWriter textWriter = new StringWriter();
-            xmlSerializer.Serialize(textWriter, splitZones);
+            xmlSerializer.Serialize(textWriter, splitZoneStrings);
             string serialized = textWriter.ToString();
             return serialized;
         }
@@ -81,9 +81,13 @@ namespace POELiveSplitComponent.Component
                 if (element[SPLIT_ZONES] != null)
                 {
                     HashSet<string> deserialized = DeserializeZones(element[SPLIT_ZONES].InnerText);
+                    SplitZones = new HashSet<Zone>();
                     foreach (Zone zone in Zone.ZONES)
                     {
-                        SplitZones[zone] = deserialized.Contains(zone.ToString());
+                        if (deserialized.Contains(zone.ToString()))
+                        {
+                            SplitZones.Add(zone);
+                        }
                     }
                 }
             }
