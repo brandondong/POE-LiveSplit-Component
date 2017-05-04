@@ -16,7 +16,7 @@ namespace POELiveSplitComponent.Component
 
         private ComponentSettings settings;
 
-        private bool keepReading = true;
+        private int threadCount = 0;
 
         private Action<long> handleLoadStart;
 
@@ -34,6 +34,8 @@ namespace POELiveSplitComponent.Component
 
         public void Start()
         {
+            threadCount++;
+            int thisThreadCount = threadCount;
             new Thread(() =>
             {
                 Thread.CurrentThread.IsBackground = true;
@@ -45,7 +47,7 @@ namespace POELiveSplitComponent.Component
                         fs.Seek(0, SeekOrigin.End);
                         using (StreamReader sr = new StreamReader(fs))
                         {
-                            while (keepReading && logLocation.Equals(settings.LogLocation))
+                            while (thisThreadCount == threadCount)
                             {
                                 while (!sr.EndOfStream)
                                 {
@@ -93,7 +95,7 @@ namespace POELiveSplitComponent.Component
 
         public void Stop()
         {
-            keepReading = false;
+            threadCount++;
         }
     }
 }

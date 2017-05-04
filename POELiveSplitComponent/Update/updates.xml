@@ -16,4 +16,12 @@
 			<change>Fix bug with unrecognized zones introduced in previous update.</change>
 		</changelog>
 	</update>
+	<update version="1.0.3">
+		<files>
+			<file path="Components/POELiveSplitComponent.dll" status="changed" />
+		</files>
+		<changelog>
+			<change>Fix autosplitting and load removal for Steam users.</change>
+		</changelog>
+	</update>
 </updates>
