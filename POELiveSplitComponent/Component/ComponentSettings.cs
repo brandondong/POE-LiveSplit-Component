@@ -13,6 +13,7 @@ namespace POELiveSplitComponent.Component
         private const string LOAD_REMOVAL_FLAG = "load.removal";
         private const string AUTO_SPLIT_FLAG = "auto.split";
         private const string SPLIT_ZONES = "split.zones";
+        private const string SPLIT_LABYRINTH = "split.labyrinth";
 
         private string logLocation = "C:/Program Files (x86)/Grinding Gear Games/Path of Exile/logs/client.txt";
 
@@ -35,6 +36,8 @@ namespace POELiveSplitComponent.Component
 
         public HashSet<Zone> SplitZones { get; private set; }
 
+        public bool SplitInLabyrinth = false;
+
         public Action HandleLogLocationChanged { get; set; }
 
         public ComponentSettings()
@@ -55,6 +58,7 @@ namespace POELiveSplitComponent.Component
             settingsNode.AppendChild(SettingsHelper.ToElement(document, LOG_KEY, LogLocation));
             settingsNode.AppendChild(SettingsHelper.ToElement(document, LOAD_REMOVAL_FLAG, LoadRemovalEnabled));
             settingsNode.AppendChild(SettingsHelper.ToElement(document, AUTO_SPLIT_FLAG, AutoSplitEnabled));
+            settingsNode.AppendChild(SettingsHelper.ToElement(document, SPLIT_LABYRINTH, SplitInLabyrinth));
 
             string serialized = SerializeZones();
             settingsNode.AppendChild(SettingsHelper.ToElement(document, SPLIT_ZONES, serialized));
@@ -92,6 +96,10 @@ namespace POELiveSplitComponent.Component
                 if (element[AUTO_SPLIT_FLAG] != null)
                 {
                     AutoSplitEnabled = bool.Parse(element[AUTO_SPLIT_FLAG].InnerText);
+                }
+                if (element[SPLIT_LABYRINTH] != null)
+                {
+                    SplitInLabyrinth = bool.Parse(element[SPLIT_LABYRINTH].InnerText);
                 }
                 if (element[SPLIT_ZONES] != null)
                 {
