@@ -17,21 +17,22 @@ The lines in the log file that are used as basis for load screen start and end a
 [Demonstration](http://i.imgur.com/v3BaEQY.gif)
 
 ## Setup
-1. Go to the official LiveSplit [download page](http://livesplit.org/downloads/) and download the latest development build (the second link)
+1. Go to the official LiveSplit [download page](http://livesplit.org/downloads/) and download the latest version (either link is fine)
 2. Extract the zip file and run the LiveSplit application executable
 3. Right click on the timer and select "Edit Splits"
 4. Type "Path of Exile" as the Game Name and click the Activate button below the number of attempts
 5. To disable Auto Splitting or Load Removal, or to configure which zones will result in an automatic split upon entering, click the Settings button
+6. If you are running Path of Exile through Steam, change the log file location in the Settings menu appropriately (the file will most likely be located at C:\Program Files (x86)\Steam\steamapps\common\Path of Exile\logs\Client.txt)
 
 Note that splits are not automatically created for you when Auto Splitting is enabled as LiveSplit components don't have the ability to do this. The Auto Splitter will split on zones you specify so if you set up your splits to be A1N, A2N and configure the component to split on Southern Forest for example, you will move onto your second segment once you enter Act 2.
 
 ## Additional Setup Instructions for Load Removal
 Follow these additional instructions if you want to use load removal.
 
-6. Right click on the timer and select "Edit Layout"
-7. Click the Layout Settings button
-8. Go to Timer -> Timing Method, select Game Time and then press OK
-9. Click the + icon in the layout editor and select Timer -> Timer and then click OK
+7. Right click on the timer and select "Edit Layout"
+8. Click the Layout Settings button
+9. Go to Timer -> Timing Method, select Game Time and then press OK
+10. Click the + icon in the layout editor and select Timer -> Timer and then click OK
 
 You now have two timers: the top timer uses Game Time (subtracting load screens) and the bottom uses Real Time.
 
