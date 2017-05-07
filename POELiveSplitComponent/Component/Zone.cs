@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace POELiveSplitComponent.Component
 {
-    class Zone
+    class Zone : IZone
     {
         public static readonly List<Zone> ZONES = initZones();
 
@@ -88,7 +88,16 @@ namespace POELiveSplitComponent.Component
             return allZones;
         }
 
-        public static Difficulty ParseDifficulty(string location)
+        public static IZone Parse(string zoneName, string location)
+        {
+            if (location.Contains("Labyrinth"))
+            {
+                return new LabyrinthZone(location);
+            }
+            return create(zoneName, ParseDifficulty(location));
+        }
+
+        private static Difficulty ParseDifficulty(string location)
         {
             if (location.StartsWith("1"))
             {
@@ -103,13 +112,13 @@ namespace POELiveSplitComponent.Component
 
         private string name;
         private Difficulty difficulty;
-        public bool IsActZone { get; }
+        private bool isActZone;
 
         private Zone(string name, Difficulty difficulty, bool isActZone)
         {
             this.name = name;
             this.difficulty = difficulty;
-            IsActZone = isActZone;
+            this.isActZone = isActZone;
         }
 
         public static Zone create(string name, Difficulty difficulty)
@@ -122,9 +131,19 @@ namespace POELiveSplitComponent.Component
             return new Zone(name, difficulty, true);
         }
 
+        public bool IsActZone()
+        {
+            return isActZone;
+        }
+
+        public bool IsInLabyrinth()
+        {
+            return false;
+        }
+
         public Zone clone(Difficulty newDiff)
         {
-            return new Zone(name, newDiff, IsActZone);
+            return new Zone(name, newDiff, isActZone);
         }
 
         public override string ToString()

@@ -34,7 +34,7 @@ namespace POELiveSplitComponent.Component
 
         public bool AutoSplitEnabled = true;
 
-        public HashSet<Zone> SplitZones { get; private set; }
+        public HashSet<IZone> SplitZones { get; private set; }
 
         public bool SplitInLabyrinth = false;
 
@@ -42,10 +42,10 @@ namespace POELiveSplitComponent.Component
 
         public ComponentSettings()
         {
-            SplitZones = new HashSet<Zone>();
+            SplitZones = new HashSet<IZone>();
             foreach (Zone zone in Zone.ZONES)
             {
-                if (zone.IsActZone)
+                if (zone.IsActZone())
                 {
                     SplitZones.Add(zone);
                 }
@@ -104,7 +104,7 @@ namespace POELiveSplitComponent.Component
                 if (element[SPLIT_ZONES] != null)
                 {
                     HashSet<string> deserialized = DeserializeZones(element[SPLIT_ZONES].InnerText);
-                    SplitZones = new HashSet<Zone>();
+                    SplitZones = new HashSet<IZone>();
                     foreach (Zone zone in Zone.ZONES)
                     {
                         if (deserialized.Contains(zone.ToString()))

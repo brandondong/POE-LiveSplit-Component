@@ -40,7 +40,7 @@ namespace POELiveSplitComponent.Component
             {
                 Zone zone = (Zone)checkedListZones.Items[i];
                 bool shouldSplit = settings.SplitZones.Contains(zone);
-                if (shouldSplit != zone.IsActZone)
+                if (shouldSplit != zone.IsActZone())
                 {
                     isSplitByAct = false;
                 }
@@ -121,7 +121,7 @@ namespace POELiveSplitComponent.Component
                 for (int i = 0; i < checkedListZones.Items.Count; i++)
                 {
                     Zone zone = (Zone)checkedListZones.Items[i];
-                    checkedListZones.SetItemChecked(i, zone.IsActZone);
+                    checkedListZones.SetItemChecked(i, zone.IsActZone());
                 }
             }
         }

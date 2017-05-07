@@ -11,7 +11,7 @@ namespace POELiveSplitComponent.Component
         private long loadTimes = 0;
         private long? startTimestamp;
         private string zoneName;
-        private HashSet<Zone> encounteredZones = new HashSet<Zone>();
+        private HashSet<IZone> encounteredZones = new HashSet<IZone>();
 
         public LoadRemoverSplitter(LiveSplitState state, ComponentSettings settings)
         {
@@ -49,8 +49,8 @@ namespace POELiveSplitComponent.Component
             {
                 if (zoneName != null)
                 {
-                    Zone zone = Zone.create(zoneName, Zone.ParseDifficulty(location));
-                    if (!encounteredZones.Contains(zone) && settings.SplitZones.Contains(zone))
+                    IZone zone = Zone.Parse(zoneName, location);
+                    if (!encounteredZones.Contains(zone) && (settings.SplitZones.Contains(zone) || (settings.SplitInLabyrinth && zone.IsInLabyrinth())))
                     {
                         timer.Split();
                         encounteredZones.Add(zone);
@@ -64,7 +64,7 @@ namespace POELiveSplitComponent.Component
             loadTimes = 0;
             startTimestamp = null;
             zoneName = null;
-            encounteredZones = new HashSet<Zone>();
+            encounteredZones = new HashSet<IZone>();
         }
     }
 }
