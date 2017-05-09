@@ -24,4 +24,12 @@
 			<change>Fix autosplitting and load removal for Steam users.</change>
 		</changelog>
 	</update>
+	<update version="1.0.4">
+		<files>
+			<file path="Components/POELiveSplitComponent.dll" status="changed" />
+		</files>
+		<changelog>
+			<change>Add option to autosplit on Labyrinth zones for Lab speedrunning.</change>
+		</changelog>
+	</update>
 </updates>
