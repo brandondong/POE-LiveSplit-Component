@@ -112,28 +112,33 @@ namespace POELiveSplitComponent.Component
 
         private string name;
         private Difficulty difficulty;
-        private bool isActZone;
+        private ZoneType type;
 
-        private Zone(string name, Difficulty difficulty, bool isActZone)
+        private Zone(string name, Difficulty difficulty, ZoneType type)
         {
             this.name = name;
             this.difficulty = difficulty;
-            this.isActZone = isActZone;
+            this.type = type;
         }
 
         public static Zone create(string name, Difficulty difficulty)
         {
-            return new Zone(name, difficulty, false);
+            return new Zone(name, difficulty, ZoneType.DEFAULT);
         }
 
         public static Zone createActZone(string name, Difficulty difficulty)
         {
-            return new Zone(name, difficulty, true);
+            return new Zone(name, difficulty, ZoneType.ACT);
         }
 
-        public bool IsActZone()
+        public ZoneType Type()
         {
-            return isActZone;
+            return type;
+        }
+
+        public string Serialize()
+        {
+            return ToString();
         }
 
         public bool IsInLabyrinth()
@@ -143,7 +148,7 @@ namespace POELiveSplitComponent.Component
 
         public Zone clone(Difficulty newDiff)
         {
-            return new Zone(name, newDiff, isActZone);
+            return new Zone(name, newDiff, type);
         }
 
         public override string ToString()

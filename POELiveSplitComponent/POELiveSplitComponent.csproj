@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Component\ClientParser.cs" />
     <Compile Include="Component\ClientReader.cs" />
     <Compile Include="Component\ComponentSettings.cs" />
     <Compile Include="Component\IZone.cs" />

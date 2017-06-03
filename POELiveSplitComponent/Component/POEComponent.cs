@@ -20,7 +20,7 @@ namespace POELiveSplitComponent.Component
         public POEComponent(LiveSplitState state)
         {
             LoadRemoverSplitter remover = new LoadRemoverSplitter(state, settings);
-            reader = new ClientReader(settings, remover.HandleLoadStart, remover.HandleLoadEnd, remover.HandleZoneName);
+            reader = new ClientReader(settings, remover);
             reader.Start();
             control = new SettingsControl(settings);
             settings.HandleLogLocationChanged = reader.Start;

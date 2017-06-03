@@ -2,11 +2,17 @@
 
 namespace POELiveSplitComponent.Component
 {
+
+    enum ZoneType
+    {
+        DEFAULT, ACT, LABYRINTH
+    }
+
     interface IZone
     {
-        bool IsActZone();
+        ZoneType Type();
 
-        bool IsInLabyrinth();
+        string Serialize();
     }
 
     class LabyrinthZone : IZone
@@ -18,14 +24,14 @@ namespace POELiveSplitComponent.Component
             this.location = location;
         }
 
-        public bool IsActZone()
+        public ZoneType Type()
         {
-            return false;
+            return ZoneType.LABYRINTH;
         }
 
-        public bool IsInLabyrinth()
+        public string Serialize()
         {
-            return true;
+            return location;
         }
 
         public override bool Equals(object obj)

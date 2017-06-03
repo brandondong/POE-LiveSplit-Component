@@ -45,7 +45,7 @@ namespace POELiveSplitComponent.Component
             SplitZones = new HashSet<IZone>();
             foreach (Zone zone in Zone.ZONES)
             {
-                if (zone.IsActZone())
+                if (zone.Type() == ZoneType.ACT)
                 {
                     SplitZones.Add(zone);
                 }
@@ -69,9 +69,9 @@ namespace POELiveSplitComponent.Component
         private string SerializeZones()
         {
             HashSet<string> splitZoneStrings = new HashSet<string>();
-            foreach (Zone zone in SplitZones)
+            foreach (IZone zone in SplitZones)
             {
-                splitZoneStrings.Add(zone.ToString());
+                splitZoneStrings.Add(zone.Serialize());
             }
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(HashSet<string>));
             StringWriter textWriter = new StringWriter();
@@ -107,7 +107,7 @@ namespace POELiveSplitComponent.Component
                     SplitZones = new HashSet<IZone>();
                     foreach (Zone zone in Zone.ZONES)
                     {
-                        if (deserialized.Contains(zone.ToString()))
+                        if (deserialized.Contains(zone.Serialize()))
                         {
                             SplitZones.Add(zone);
                         }

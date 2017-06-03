@@ -50,7 +50,7 @@ namespace POELiveSplitComponent.Component
                 if (zoneName != null)
                 {
                     IZone zone = Zone.Parse(zoneName, location);
-                    if (!encounteredZones.Contains(zone) && (settings.SplitZones.Contains(zone) || (settings.SplitInLabyrinth && zone.IsInLabyrinth())))
+                    if (!encounteredZones.Contains(zone) && (settings.SplitZones.Contains(zone) || (settings.SplitInLabyrinth && zone.Type() == ZoneType.LABYRINTH)))
                     {
                         timer.Split();
                         encounteredZones.Add(zone);
