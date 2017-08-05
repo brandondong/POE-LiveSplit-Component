@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace POELiveSplitComponent.Component
 {
@@ -13,77 +10,72 @@ namespace POELiveSplitComponent.Component
         private static List<Zone> initZones()
         {
             Zone[] zones = new Zone[] {
-                create("Lioneye's Watch", Difficulty.Normal),
-                create("The Coast", Difficulty.Normal),
-                create("The Tidal Island", Difficulty.Normal),
-                create("The Mud Flats", Difficulty.Normal),
-                create("The Submerged Passage", Difficulty.Normal),
-                create("The Ledge", Difficulty.Normal),
-                create("The Climb", Difficulty.Normal),
-                create("The Lower Prison", Difficulty.Normal),
-                create("The Upper Prison", Difficulty.Normal),
-                create("Prisoner's Gate", Difficulty.Normal),
-                create("The Ship Graveyard", Difficulty.Normal),
-                create("The Cavern of Wrath", Difficulty.Normal),
-                create("The Cavern of Anger", Difficulty.Normal),
-                createActZone("The Southern Forest", Difficulty.Normal),
-                create("The Forest Encampment", Difficulty.Normal),
-                create("The Riverways", Difficulty.Normal),
-                create("The Western Forest", Difficulty.Normal),
-                create("The Old Fields", Difficulty.Normal),
-                create("The Crossroads", Difficulty.Normal),
-                create("The Chamber of Sins Level 1", Difficulty.Normal),
-                create("The Chamber of Sins Level 2", Difficulty.Normal),
-                create("The Weaver's Chambers",Difficulty.Normal ) ,
-                create("The Broken Bridge", Difficulty.Normal),
-                create("The Wetlands", Difficulty.Normal),
-                create("The Vaal Ruins", Difficulty.Normal),
-                create("The Northern Forest", Difficulty.Normal),
-                create("The Caverns", Difficulty.Normal),
-                create("The Ancient Pyramid", Difficulty.Normal),
-                createActZone("The City of Sarn", Difficulty.Normal),
-                create("The Sarn Encampment", Difficulty.Normal),
-                create("The Slums", Difficulty.Normal),
-                create("The Crematorium", Difficulty.Normal),
-                create("The Slums Sewers", Difficulty.Normal),
-                create("The Warehouse Sewers", Difficulty.Normal),
-                create("The Warehouse District", Difficulty.Normal),
-                create("The Marketplace", Difficulty.Normal),
-                create("The Battlefront", Difficulty.Normal),
-                create("The Docks", Difficulty.Normal),
-                create("The Solaris Temple Level 1", Difficulty.Normal),
-                create("The Solaris Temple Level 2", Difficulty.Normal),
-                create("The Ebony Barracks", Difficulty.Normal),
-                create("The Lunaris Temple Level 1", Difficulty.Normal),
-                create("The Lunaris Temple Level 2", Difficulty.Normal),
-                create("The Imperial Gardens", Difficulty.Normal),
-                create("The Library", Difficulty.Normal),
-                create("The Sceptre of God", Difficulty.Normal),
-                create("The Upper Sceptre of God", Difficulty.Normal),
-                createActZone("The Aqueduct", Difficulty.Normal),
-                create("Highgate", Difficulty.Normal),
-                create("The Dried Lake", Difficulty.Normal),
-                create("The Mines Level 1", Difficulty.Normal),
-                create("The Mines Level 2", Difficulty.Normal),
-                create("The Crystal Veins", Difficulty.Normal),
-                create("Daresso's Dream", Difficulty.Normal),
-                create("Kaom's Dream", Difficulty.Normal),
-                create("Kaom's Stronghold", Difficulty.Normal),
-                create("The Grand Arena", Difficulty.Normal),
-                create("The Belly of the Beast Level 1", Difficulty.Normal),
-                create("The Belly of the Beast Level 2", Difficulty.Normal),
-                create("The Harvest", Difficulty.Normal)
+                create("Lioneye's Watch", 1),
+                create("The Coast", 1),
+                create("The Tidal Island", 1),
+                create("The Mud Flats", 1),
+                create("The Submerged Passage", 1),
+                create("The Ledge", 1),
+                create("The Climb", 1),
+                create("The Lower Prison", 1),
+                create("The Upper Prison", 1),
+                create("Prisoner's Gate", 1),
+                create("The Ship Graveyard", 1),
+                create("The Cavern of Wrath", 1),
+                create("The Cavern of Anger", 1),
+                createActZone("The Southern Forest", 1),
+                create("The Forest Encampment", 1),
+                create("The Riverways", 1),
+                create("The Western Forest", 1),
+                create("The Old Fields", 1),
+                create("The Crossroads", 1),
+                create("The Chamber of Sins Level 1", 1),
+                create("The Chamber of Sins Level 2", 1),
+                create("The Weaver's Chambers",1 ) ,
+                create("The Broken Bridge", 1),
+                create("The Wetlands", 1),
+                create("The Vaal Ruins", 1),
+                create("The Northern Forest", 1),
+                create("The Caverns", 1),
+                create("The Ancient Pyramid", 1),
+                createActZone("The City of Sarn", 1),
+                create("The Sarn Encampment", 1),
+                create("The Slums", 1),
+                create("The Crematorium", 1),
+                create("The Slums Sewers", 1),
+                create("The Warehouse Sewers", 1),
+                create("The Warehouse District", 1),
+                create("The Marketplace", 1),
+                create("The Battlefront", 1),
+                create("The Docks", 1),
+                create("The Solaris Temple Level 1", 1),
+                create("The Solaris Temple Level 2", 1),
+                create("The Ebony Barracks", 1),
+                create("The Lunaris Temple Level 1", 1),
+                create("The Lunaris Temple Level 2", 1),
+                create("The Imperial Gardens", 1),
+                create("The Library", 1),
+                create("The Sceptre of God", 1),
+                create("The Upper Sceptre of God", 1),
+                createActZone("The Aqueduct", 1),
+                create("Highgate", 1),
+                create("The Dried Lake", 1),
+                create("The Mines Level 1", 1),
+                create("The Mines Level 2", 1),
+                create("The Crystal Veins", 1),
+                create("Daresso's Dream", 1),
+                create("Kaom's Dream", 1),
+                create("Kaom's Stronghold", 1),
+                create("The Grand Arena", 1),
+                create("The Belly of the Beast Level 1", 1),
+                create("The Belly of the Beast Level 2", 1),
+                create("The Harvest", 1)
             };
             List<Zone> allZones = new List<Zone>(zones);
-            allZones.Add(createActZone("The Twilight Strand", Difficulty.Cruel));
+            allZones.Add(createActZone("The Twilight Strand", 2));
             foreach (Zone zone in zones)
             {
-                allZones.Add(zone.clone(Difficulty.Cruel));
-            }
-            allZones.Add(createActZone("The Twilight Strand", Difficulty.Merciless));
-            foreach (Zone zone in zones)
-            {
-                allZones.Add(zone.clone(Difficulty.Merciless));
+                allZones.Add(zone.clone(2));
             }
             return allZones;
         }
@@ -94,41 +86,33 @@ namespace POELiveSplitComponent.Component
             {
                 return new LabyrinthZone(location);
             }
-            return create(zoneName, ParseDifficulty(location));
+            return create(zoneName, ParsePart(location));
         }
 
-        private static Difficulty ParseDifficulty(string location)
+        private static int ParsePart(string location)
         {
-            if (location.StartsWith("1"))
-            {
-                return Difficulty.Normal;
-            }
-            else if (location.StartsWith("2"))
-            {
-                return Difficulty.Cruel;
-            }
-            return Difficulty.Merciless;
+            return Int32.Parse(location.Substring(0, 1));
         }
 
         private string name;
-        private Difficulty difficulty;
+        private int part;
         private ZoneType type;
 
-        private Zone(string name, Difficulty difficulty, ZoneType type)
+        private Zone(string name, int part, ZoneType type)
         {
             this.name = name;
-            this.difficulty = difficulty;
+            this.part = part;
             this.type = type;
         }
 
-        public static Zone create(string name, Difficulty difficulty)
+        public static Zone create(string name, int part)
         {
-            return new Zone(name, difficulty, ZoneType.DEFAULT);
+            return new Zone(name, part, ZoneType.DEFAULT);
         }
 
-        public static Zone createActZone(string name, Difficulty difficulty)
+        public static Zone createActZone(string name, int part)
         {
-            return new Zone(name, difficulty, ZoneType.ACT);
+            return new Zone(name, part, ZoneType.ACT);
         }
 
         public ZoneType Type()
@@ -146,14 +130,14 @@ namespace POELiveSplitComponent.Component
             return false;
         }
 
-        public Zone clone(Difficulty newDiff)
+        public Zone clone(int newPart)
         {
-            return new Zone(name, newDiff, type);
+            return new Zone(name, newPart, type);
         }
 
         public override string ToString()
         {
-            return name + " (" + difficulty + ")";
+            return name + " (Part " + part + ")";
         }
 
         public override bool Equals(object obj)
@@ -163,14 +147,12 @@ namespace POELiveSplitComponent.Component
             {
                 return false;
             }
-            return name.Equals(zone.name) && difficulty.Equals(zone.difficulty);
+            return name.Equals(zone.name) && part == zone.part;
         }
 
         public override int GetHashCode()
         {
-            return name.GetHashCode() * 23 + difficulty.GetHashCode();
+            return name.GetHashCode() * 23 + part;
         }
-
-        public enum Difficulty { Normal, Cruel, Merciless }
     }
 }
