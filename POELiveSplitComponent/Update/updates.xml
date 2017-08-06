@@ -32,4 +32,12 @@
 			<change>Add option to autosplit on Labyrinth zones for Lab speedrunning.</change>
 		</changelog>
 	</update>
+	<update version="0.0.5">
+		<files>
+			<file path="Components/POELiveSplitComponent.dll" status="changed" />
+		</files>
+		<changelog>
+			<change>Update list of zones to split on for the Fall of Oriath.</change>
+		</changelog>
+	</update>
 </updates>
