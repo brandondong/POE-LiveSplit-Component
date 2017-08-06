@@ -12,7 +12,8 @@ namespace POELiveSplitComponent.Component
         private const string LOG_KEY = "log.location";
         private const string LOAD_REMOVAL_FLAG = "load.removal";
         private const string AUTO_SPLIT_FLAG = "auto.split";
-        private const string SPLIT_ZONES = "split.zones";
+        private const string SPLIT_ZONES = "split.zones.on";
+        private const string SPLIT_ZONE = "split.zone";
         private const string SPLIT_LABYRINTH = "split.labyrinth";
 
         private string logLocation = "C:/Program Files (x86)/Grinding Gear Games/Path of Exile/logs/client.txt";
@@ -60,24 +61,19 @@ namespace POELiveSplitComponent.Component
             settingsNode.AppendChild(SettingsHelper.ToElement(document, AUTO_SPLIT_FLAG, AutoSplitEnabled));
             settingsNode.AppendChild(SettingsHelper.ToElement(document, SPLIT_LABYRINTH, SplitInLabyrinth));
 
-            string serialized = SerializeZones();
-            settingsNode.AppendChild(SettingsHelper.ToElement(document, SPLIT_ZONES, serialized));
+            XmlElement parent = SettingsHelper.ToElement(document, SPLIT_ZONES, (string)null);
+            SerializeZones(parent, document);
+            settingsNode.AppendChild(parent);
 
             return settingsNode;
         }
 
-        private string SerializeZones()
+        private void SerializeZones(XmlElement parent, XmlDocument document)
         {
-            HashSet<string> splitZoneStrings = new HashSet<string>();
             foreach (IZone zone in SplitZones)
             {
-                splitZoneStrings.Add(zone.Serialize());
+                SettingsHelper.CreateSetting(document, parent, SPLIT_ZONE, zone.Serialize());
             }
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(HashSet<string>));
-            StringWriter textWriter = new StringWriter();
-            xmlSerializer.Serialize(textWriter, splitZoneStrings);
-            string serialized = textWriter.ToString();
-            return serialized;
         }
 
         public void SetSettings(XmlNode settings)
@@ -103,7 +99,7 @@ namespace POELiveSplitComponent.Component
                 }
                 if (element[SPLIT_ZONES] != null)
                 {
-                    HashSet<string> deserialized = DeserializeZones(element[SPLIT_ZONES].InnerText);
+                    HashSet<string> deserialized = DeserializeZones(element[SPLIT_ZONES]);
                     SplitZones = new HashSet<IZone>();
                     foreach (Zone zone in Zone.ZONES)
                     {
@@ -116,11 +112,14 @@ namespace POELiveSplitComponent.Component
             }
         }
 
-        private HashSet<string> DeserializeZones(string innerText)
+        private HashSet<string> DeserializeZones(XmlElement element)
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(HashSet<string>));
-            StringReader textReader = new StringReader(innerText);
-            return (HashSet<string>)xmlSerializer.Deserialize(textReader);
+            HashSet<string> zones = new HashSet<string>();
+            foreach (XmlNode child in element.GetElementsByTagName(SPLIT_ZONE))
+            {
+                zones.Add(child.InnerText);
+            }
+            return zones;
         }
     }
 }
