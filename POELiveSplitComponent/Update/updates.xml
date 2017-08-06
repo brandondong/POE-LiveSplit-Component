@@ -32,7 +32,7 @@
 			<change>Add option to autosplit on Labyrinth zones for Lab speedrunning.</change>
 		</changelog>
 	</update>
-	<update version="0.0.5">
+	<update version="1.0.5">
 		<files>
 			<file path="Components/POELiveSplitComponent.dll" status="changed" />
 		</files>
