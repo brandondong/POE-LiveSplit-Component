@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LiveSplit.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,9 +17,12 @@ namespace POELiveSplitComponent.Component
     {
         private ComponentSettings settings;
 
-        public SettingsControl(ComponentSettings settings)
+        private LiveSplitState state;
+
+        public SettingsControl(ComponentSettings settings, LiveSplitState state)
         {
             this.settings = settings;
+            this.state = state;
             InitializeComponent();
             foreach (Zone zone in Zone.ZONES)
             {
@@ -109,6 +113,11 @@ namespace POELiveSplitComponent.Component
             {
                 checkedListZones.SetItemChecked(i, checkSelectAll.Checked);
             }
+        }
+
+        private void HandleGenerateSplits(object sender, EventArgs e)
+        {
+
         }
     }
 }

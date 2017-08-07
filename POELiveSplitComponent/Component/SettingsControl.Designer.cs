@@ -46,12 +46,14 @@
             this.loadRemovalToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.clientLocationToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.createSplitsButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.createSplitsButton);
             this.groupBox1.Controls.Add(this.checkSelectAll);
             this.groupBox1.Controls.Add(this.checkLabyrinth);
             this.groupBox1.Controls.Add(this.checkedListZones);
@@ -59,7 +61,7 @@
             this.groupBox1.Controls.Add(this.checkAutoSplit);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(448, 219);
+            this.groupBox1.Size = new System.Drawing.Size(448, 228);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Auto Split";
@@ -78,7 +80,7 @@
             // checkLabyrinth
             // 
             this.checkLabyrinth.AutoSize = true;
-            this.checkLabyrinth.Location = new System.Drawing.Point(12, 186);
+            this.checkLabyrinth.Location = new System.Drawing.Point(284, 186);
             this.checkLabyrinth.Name = "checkLabyrinth";
             this.checkLabyrinth.Size = new System.Drawing.Size(140, 17);
             this.checkLabyrinth.TabIndex = 9;
@@ -123,7 +125,7 @@
             // 
             this.groupBox2.Controls.Add(this.linkLoadSetup);
             this.groupBox2.Controls.Add(this.checkLoadRemoval);
-            this.groupBox2.Location = new System.Drawing.Point(12, 248);
+            this.groupBox2.Location = new System.Drawing.Point(12, 255);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(448, 86);
             this.groupBox2.TabIndex = 1;
@@ -161,7 +163,7 @@
             // 
             // testButton
             // 
-            this.testButton.Location = new System.Drawing.Point(24, 395);
+            this.testButton.Location = new System.Drawing.Point(24, 402);
             this.testButton.Name = "testButton";
             this.testButton.Size = new System.Drawing.Size(75, 23);
             this.testButton.TabIndex = 4;
@@ -171,7 +173,7 @@
             // 
             // browseButton
             // 
-            this.browseButton.Location = new System.Drawing.Point(296, 369);
+            this.browseButton.Location = new System.Drawing.Point(296, 376);
             this.browseButton.Name = "browseButton";
             this.browseButton.Size = new System.Drawing.Size(75, 23);
             this.browseButton.TabIndex = 3;
@@ -181,7 +183,7 @@
             // 
             // textLogLocation
             // 
-            this.textLogLocation.Location = new System.Drawing.Point(24, 369);
+            this.textLogLocation.Location = new System.Drawing.Point(24, 376);
             this.textLogLocation.Name = "textLogLocation";
             this.textLogLocation.Size = new System.Drawing.Size(266, 20);
             this.textLogLocation.TabIndex = 2;
@@ -191,7 +193,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(21, 352);
+            this.label1.Location = new System.Drawing.Point(21, 359);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(109, 13);
             this.label1.TabIndex = 1;
@@ -201,6 +203,16 @@
             // 
             this.openFileDialog.FileName = "openFileDialog1";
             this.openFileDialog.Filter = "Text files|*.txt";
+            // 
+            // createSplitsButton
+            // 
+            this.createSplitsButton.Location = new System.Drawing.Point(12, 186);
+            this.createSplitsButton.Name = "createSplitsButton";
+            this.createSplitsButton.Size = new System.Drawing.Size(106, 23);
+            this.createSplitsButton.TabIndex = 11;
+            this.createSplitsButton.Text = "Generate Splits";
+            this.createSplitsButton.UseVisualStyleBackColor = true;
+            this.createSplitsButton.Click += new System.EventHandler(this.HandleGenerateSplits);
             // 
             // SettingsControl
             // 
@@ -213,7 +225,7 @@
             this.Controls.Add(this.textLogLocation);
             this.Controls.Add(this.label1);
             this.Name = "SettingsControl";
-            this.Size = new System.Drawing.Size(476, 436);
+            this.Size = new System.Drawing.Size(476, 448);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -242,6 +254,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox checkLabyrinth;
         private System.Windows.Forms.CheckBox checkSelectAll;
+        private System.Windows.Forms.Button createSplitsButton;
     }
 }
 
