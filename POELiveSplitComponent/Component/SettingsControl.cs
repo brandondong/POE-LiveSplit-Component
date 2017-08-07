@@ -117,7 +117,32 @@ namespace POELiveSplitComponent.Component
 
         private void HandleGenerateSplits(object sender, EventArgs e)
         {
-
+            if (state.CurrentPhase != TimerPhase.NotRunning)
+            {
+                MessageBox.Show("Splits cannot be changed while the timer is running or has not been reset.",
+                    "Generate Splits", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            if (MessageBox.Show("Your current split segments will be overwritten.\nAre you sure you want to proceed?",
+                "Confirm Generate Splits", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+            {
+                return;
+            }
+            state.Run.Clear();
+            for (int i = 0; i < checkedListZones.Items.Count; i++)
+            {
+                if (checkedListZones.GetItemChecked(i))
+                {
+                    state.Run.AddSegment(checkedListZones.Items[i].ToString());
+                }
+            }
+            if (state.Run.Count == 0)
+            {
+                state.Run.AddSegment("");
+            }
+            state.Form.Invalidate();
+            MessageBox.Show("Splits generated successfully.\n\nDue to LiveSplit API restrictions, the Splits Editor needs to be reopened to view the updated changes.",
+                "Generate Splits", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
