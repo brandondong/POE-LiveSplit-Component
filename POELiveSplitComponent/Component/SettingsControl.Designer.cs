@@ -30,9 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.radioSplitCustom = new System.Windows.Forms.RadioButton();
-            this.radioSplitAllZones = new System.Windows.Forms.RadioButton();
-            this.radioSplitByActs = new System.Windows.Forms.RadioButton();
+            this.checkSelectAll = new System.Windows.Forms.CheckBox();
+            this.checkLabyrinth = new System.Windows.Forms.CheckBox();
             this.checkedListZones = new System.Windows.Forms.CheckedListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.checkAutoSplit = new System.Windows.Forms.CheckBox();
@@ -47,17 +46,14 @@
             this.loadRemovalToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.clientLocationToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.checkLabyrinth = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.checkSelectAll);
             this.groupBox1.Controls.Add(this.checkLabyrinth);
-            this.groupBox1.Controls.Add(this.radioSplitCustom);
-            this.groupBox1.Controls.Add(this.radioSplitAllZones);
-            this.groupBox1.Controls.Add(this.radioSplitByActs);
             this.groupBox1.Controls.Add(this.checkedListZones);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.checkAutoSplit);
@@ -68,40 +64,27 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Auto Split";
             // 
-            // radioSplitCustom
+            // checkSelectAll
             // 
-            this.radioSplitCustom.AutoSize = true;
-            this.radioSplitCustom.Location = new System.Drawing.Point(187, 48);
-            this.radioSplitCustom.Name = "radioSplitCustom";
-            this.radioSplitCustom.Size = new System.Drawing.Size(60, 17);
-            this.radioSplitCustom.TabIndex = 8;
-            this.radioSplitCustom.Text = "Custom";
-            this.radioSplitCustom.UseVisualStyleBackColor = true;
-            this.radioSplitCustom.CheckedChanged += new System.EventHandler(this.HandleSplitByChanged);
+            this.checkSelectAll.AutoSize = true;
+            this.checkSelectAll.Location = new System.Drawing.Point(284, 163);
+            this.checkSelectAll.Name = "checkSelectAll";
+            this.checkSelectAll.Size = new System.Drawing.Size(117, 17);
+            this.checkSelectAll.TabIndex = 10;
+            this.checkSelectAll.Text = "Select/Deselect All";
+            this.checkSelectAll.UseVisualStyleBackColor = true;
+            this.checkSelectAll.CheckedChanged += new System.EventHandler(this.HandleSelectAll);
             // 
-            // radioSplitAllZones
+            // checkLabyrinth
             // 
-            this.radioSplitAllZones.AutoSize = true;
-            this.radioSplitAllZones.Location = new System.Drawing.Point(112, 48);
-            this.radioSplitAllZones.Name = "radioSplitAllZones";
-            this.radioSplitAllZones.Size = new System.Drawing.Size(69, 17);
-            this.radioSplitAllZones.TabIndex = 7;
-            this.radioSplitAllZones.Text = "All Zones";
-            this.radioSplitAllZones.UseVisualStyleBackColor = true;
-            this.radioSplitAllZones.CheckedChanged += new System.EventHandler(this.HandleSplitByChanged);
-            // 
-            // radioSplitByActs
-            // 
-            this.radioSplitByActs.AutoSize = true;
-            this.radioSplitByActs.Checked = true;
-            this.radioSplitByActs.Location = new System.Drawing.Point(60, 48);
-            this.radioSplitByActs.Name = "radioSplitByActs";
-            this.radioSplitByActs.Size = new System.Drawing.Size(46, 17);
-            this.radioSplitByActs.TabIndex = 6;
-            this.radioSplitByActs.TabStop = true;
-            this.radioSplitByActs.Text = "Acts";
-            this.radioSplitByActs.UseVisualStyleBackColor = true;
-            this.radioSplitByActs.CheckedChanged += new System.EventHandler(this.HandleSplitByChanged);
+            this.checkLabyrinth.AutoSize = true;
+            this.checkLabyrinth.Location = new System.Drawing.Point(12, 186);
+            this.checkLabyrinth.Name = "checkLabyrinth";
+            this.checkLabyrinth.Size = new System.Drawing.Size(140, 17);
+            this.checkLabyrinth.TabIndex = 9;
+            this.checkLabyrinth.Text = "Split on Labyrinth Zones";
+            this.checkLabyrinth.UseVisualStyleBackColor = true;
+            this.checkLabyrinth.CheckedChanged += new System.EventHandler(this.HandleCheckLabyrinth);
             // 
             // checkedListZones
             // 
@@ -112,7 +95,6 @@
             this.checkedListZones.Size = new System.Drawing.Size(266, 109);
             this.checkedListZones.TabIndex = 5;
             this.checkedListZones.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.HandleItemChecked);
-            this.checkedListZones.SelectedIndexChanged += new System.EventHandler(this.ZoneSelectedIndexChanged);
             // 
             // label2
             // 
@@ -220,17 +202,6 @@
             this.openFileDialog.FileName = "openFileDialog1";
             this.openFileDialog.Filter = "Text files|*.txt";
             // 
-            // checkLabyrinth
-            // 
-            this.checkLabyrinth.AutoSize = true;
-            this.checkLabyrinth.Location = new System.Drawing.Point(12, 186);
-            this.checkLabyrinth.Name = "checkLabyrinth";
-            this.checkLabyrinth.Size = new System.Drawing.Size(140, 17);
-            this.checkLabyrinth.TabIndex = 9;
-            this.checkLabyrinth.Text = "Split on Labyrinth Zones";
-            this.checkLabyrinth.UseVisualStyleBackColor = true;
-            this.checkLabyrinth.CheckedChanged += new System.EventHandler(this.HandleCheckLabyrinth);
-            // 
             // SettingsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -269,10 +240,8 @@
         private System.Windows.Forms.LinkLabel linkLoadSetup;
         private System.Windows.Forms.CheckedListBox checkedListZones;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.RadioButton radioSplitCustom;
-        private System.Windows.Forms.RadioButton radioSplitAllZones;
-        private System.Windows.Forms.RadioButton radioSplitByActs;
         private System.Windows.Forms.CheckBox checkLabyrinth;
+        private System.Windows.Forms.CheckBox checkSelectAll;
     }
 }
 

@@ -44,13 +44,6 @@ namespace POELiveSplitComponent.Component
         public ComponentSettings()
         {
             SplitZones = new HashSet<IZone>();
-            foreach (Zone zone in Zone.ZONES)
-            {
-                if (zone.Type() == ZoneType.ACT)
-                {
-                    SplitZones.Add(zone);
-                }
-            }
         }
 
         public XmlNode GetSettings(XmlDocument document)

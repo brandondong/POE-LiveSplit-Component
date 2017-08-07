@@ -5,7 +5,7 @@ namespace POELiveSplitComponent.Component
 
     enum ZoneType
     {
-        DEFAULT, ACT, LABYRINTH
+        DEFAULT, LABYRINTH
     }
 
     interface IZone

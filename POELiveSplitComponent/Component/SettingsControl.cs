@@ -34,33 +34,11 @@ namespace POELiveSplitComponent.Component
             textLogLocation.Text = settings.LogLocation;
             checkLabyrinth.Checked = settings.SplitInLabyrinth;
 
-            bool isSplitByAct = true;
-            bool isSplitAll = true;
             for (int i = 0; i < checkedListZones.Items.Count; i++)
             {
                 Zone zone = (Zone)checkedListZones.Items[i];
                 bool shouldSplit = settings.SplitZones.Contains(zone);
-                if (shouldSplit != (zone.Type() == ZoneType.ACT))
-                {
-                    isSplitByAct = false;
-                }
-                if (!shouldSplit)
-                {
-                    isSplitAll = false;
-                }
                 checkedListZones.SetItemChecked(i, shouldSplit);
-            }
-            if (isSplitByAct)
-            {
-                radioSplitByActs.Checked = true;
-            }
-            else if (isSplitAll)
-            {
-                radioSplitAllZones.Checked = true;
-            }
-            else
-            {
-                radioSplitCustom.Checked = true;
             }
         }
 
@@ -107,30 +85,6 @@ namespace POELiveSplitComponent.Component
             Process.Start("https://github.com/brandondong/POE-LiveSplit-Component/blob/master/README.md");
         }
 
-        private void HandleSplitByChanged(object sender, EventArgs e)
-        {
-            if (radioSplitAllZones.Checked)
-            {
-                for (int i = 0; i < checkedListZones.Items.Count; i++)
-                {
-                    checkedListZones.SetItemChecked(i, true);
-                }
-            }
-            else if (radioSplitByActs.Checked)
-            {
-                for (int i = 0; i < checkedListZones.Items.Count; i++)
-                {
-                    Zone zone = (Zone)checkedListZones.Items[i];
-                    checkedListZones.SetItemChecked(i, zone.Type() == ZoneType.ACT);
-                }
-            }
-        }
-
-        private void ZoneSelectedIndexChanged(object sender, EventArgs e)
-        {
-            radioSplitCustom.Checked = true;
-        }
-
         private void HandleItemChecked(object sender, ItemCheckEventArgs e)
         {
             Zone zone = (Zone)checkedListZones.Items[e.Index];
@@ -147,6 +101,14 @@ namespace POELiveSplitComponent.Component
         private void HandleCheckLabyrinth(object sender, EventArgs e)
         {
             settings.SplitInLabyrinth = checkLabyrinth.Checked;
+        }
+
+        private void HandleSelectAll(object sender, EventArgs e)
+        {
+            for (int i = 0; i < checkedListZones.Items.Count; i++)
+            {
+                checkedListZones.SetItemChecked(i, checkSelectAll.Checked);
+            }
         }
     }
 }

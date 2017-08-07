@@ -23,7 +23,7 @@ namespace POELiveSplitComponent.Component
                 create("The Ship Graveyard", 1),
                 create("The Cavern of Wrath", 1),
                 create("The Cavern of Anger", 1),
-                createActZone("The Southern Forest", 1),
+                create("The Southern Forest", 1),
                 create("The Forest Encampment", 1),
                 create("The Riverways", 1),
                 create("The Western Forest", 1),
@@ -38,7 +38,7 @@ namespace POELiveSplitComponent.Component
                 create("The Northern Forest", 1),
                 create("The Caverns", 1),
                 create("The Ancient Pyramid", 1),
-                createActZone("The City of Sarn", 1),
+                create("The City of Sarn", 1),
                 create("The Sarn Encampment", 1),
                 create("The Slums", 1),
                 create("The Crematorium", 1),
@@ -57,7 +57,7 @@ namespace POELiveSplitComponent.Component
                 create("The Library", 1),
                 create("The Sceptre of God", 1),
                 create("The Upper Sceptre of God", 1),
-                createActZone("The Aqueduct", 1),
+                create("The Aqueduct", 1),
                 create("Highgate", 1),
                 create("The Dried Lake", 1),
                 create("The Mines Level 1", 1),
@@ -71,7 +71,7 @@ namespace POELiveSplitComponent.Component
                 create("The Belly of the Beast Level 2", 1),
                 create("The Harvest", 1),
                 create("The Ascent", 1),
-                createActZone("The Slave Pens", 1),
+                create("The Slave Pens", 1),
                 create("Overseer's Tower", 1),
                 create("The Control Blocks", 1),
                 create("Oriath Square", 1),
@@ -82,7 +82,7 @@ namespace POELiveSplitComponent.Component
                 create("The Ossuary", 1),
                 create("The Reliquary", 1),
                 create("The Cathedral Rooftop", 1),
-                createActZone("Lioneye's Watch", 2),
+                create("Lioneye's Watch", 2),
                 create("The Coast", 2),
                 create("The Mud Flats", 2),
                 create("The Karui Fortress", 2),
@@ -96,7 +96,7 @@ namespace POELiveSplitComponent.Component
                 create("The Cavern of Anger", 2),
                 create("The Beacon", 2),
                 create("The Brine King's Reef", 2),
-                createActZone("The Bridge Encampment", 2),
+                create("The Bridge Encampment", 2),
                 create("The Broken Bridge", 2),
                 create("The Crossroads", 2),
                 create("The Fellshrine Ruins", 2),
@@ -111,7 +111,7 @@ namespace POELiveSplitComponent.Component
                 create("The Vaal City", 2),
                 create("The Temple of Decay Level 1", 2),
                 create("The Temple of Decay Level 2", 2),
-                createActZone("The Sarn Ramparts", 2),
+                create("The Sarn Ramparts", 2),
                 create("The Sarn Encampment", 2),
                 create("The Toxic Conduits", 2),
                 create("Doedre's Cesspool", 2),
@@ -126,7 +126,7 @@ namespace POELiveSplitComponent.Component
                 create("The Lunaris Temple Level 1", 2),
                 create("The Lunaris Temple Level 2", 2),
                 create("The Bath House", 2),
-                createActZone("The Blood Aqueduct", 2),
+                create("The Blood Aqueduct", 2),
                 create("Highgate", 2),
                 create("The Descent", 2),
                 create("The Vastiri Desert", 2),
@@ -137,7 +137,7 @@ namespace POELiveSplitComponent.Component
                 create("The Refinery", 2),
                 create("The Belly of the Beast", 2),
                 create("The Rotting Core", 2),
-                createActZone("Oriath Docks", 2),
+                create("Oriath Docks", 2),
                 create("The Cathedral Rooftop", 2),
                 create("The Ravaged Square", 2),
                 create("The Torched Courts", 2),
@@ -165,28 +165,21 @@ namespace POELiveSplitComponent.Component
 
         private string name;
         private int part;
-        private ZoneType type;
 
-        private Zone(string name, int part, ZoneType type)
+        private Zone(string name, int part)
         {
             this.name = name;
             this.part = part;
-            this.type = type;
         }
 
         public static Zone create(string name, int part)
         {
-            return new Zone(name, part, ZoneType.DEFAULT);
-        }
-
-        public static Zone createActZone(string name, int part)
-        {
-            return new Zone(name, part, ZoneType.ACT);
+            return new Zone(name, part);
         }
 
         public ZoneType Type()
         {
-            return type;
+            return ZoneType.DEFAULT;
         }
 
         public string Serialize()
@@ -197,11 +190,6 @@ namespace POELiveSplitComponent.Component
         public bool IsInLabyrinth()
         {
             return false;
-        }
-
-        public Zone clone(int newPart)
-        {
-            return new Zone(name, newPart, type);
         }
 
         public override string ToString()
