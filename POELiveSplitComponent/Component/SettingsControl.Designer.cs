@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.createSplitsButton = new System.Windows.Forms.Button();
             this.checkSelectAll = new System.Windows.Forms.CheckBox();
             this.checkLabyrinth = new System.Windows.Forms.CheckBox();
             this.checkedListZones = new System.Windows.Forms.CheckedListBox();
@@ -46,30 +47,41 @@
             this.loadRemovalToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.clientLocationToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.createSplitsButton = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.createSplitsButton);
             this.groupBox1.Controls.Add(this.checkSelectAll);
-            this.groupBox1.Controls.Add(this.checkLabyrinth);
             this.groupBox1.Controls.Add(this.checkedListZones);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.checkAutoSplit);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(448, 228);
+            this.groupBox1.Size = new System.Drawing.Size(448, 212);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Auto Split";
             // 
+            // createSplitsButton
+            // 
+            this.createSplitsButton.Location = new System.Drawing.Point(12, 178);
+            this.createSplitsButton.Name = "createSplitsButton";
+            this.createSplitsButton.Size = new System.Drawing.Size(106, 23);
+            this.createSplitsButton.TabIndex = 11;
+            this.createSplitsButton.Text = "Generate Splits";
+            this.createSplitsButton.UseVisualStyleBackColor = true;
+            this.createSplitsButton.Click += new System.EventHandler(this.HandleGenerateSplits);
+            // 
             // checkSelectAll
             // 
             this.checkSelectAll.AutoSize = true;
-            this.checkSelectAll.Location = new System.Drawing.Point(284, 163);
+            this.checkSelectAll.Location = new System.Drawing.Point(284, 155);
             this.checkSelectAll.Name = "checkSelectAll";
             this.checkSelectAll.Size = new System.Drawing.Size(117, 17);
             this.checkSelectAll.TabIndex = 10;
@@ -80,11 +92,11 @@
             // checkLabyrinth
             // 
             this.checkLabyrinth.AutoSize = true;
-            this.checkLabyrinth.Location = new System.Drawing.Point(284, 186);
+            this.checkLabyrinth.Location = new System.Drawing.Point(12, 19);
             this.checkLabyrinth.Name = "checkLabyrinth";
-            this.checkLabyrinth.Size = new System.Drawing.Size(140, 17);
+            this.checkLabyrinth.Size = new System.Drawing.Size(149, 17);
             this.checkLabyrinth.TabIndex = 9;
-            this.checkLabyrinth.Text = "Split on Labyrinth Zones";
+            this.checkLabyrinth.Text = "Enable Lab Speedrunning";
             this.checkLabyrinth.UseVisualStyleBackColor = true;
             this.checkLabyrinth.CheckedChanged += new System.EventHandler(this.HandleCheckLabyrinth);
             // 
@@ -92,7 +104,7 @@
             // 
             this.checkedListZones.CheckOnClick = true;
             this.checkedListZones.FormattingEnabled = true;
-            this.checkedListZones.Location = new System.Drawing.Point(12, 71);
+            this.checkedListZones.Location = new System.Drawing.Point(12, 63);
             this.checkedListZones.Name = "checkedListZones";
             this.checkedListZones.Size = new System.Drawing.Size(266, 109);
             this.checkedListZones.TabIndex = 5;
@@ -101,7 +113,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 48);
+            this.label2.Location = new System.Drawing.Point(9, 40);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(45, 13);
             this.label2.TabIndex = 1;
@@ -125,7 +137,7 @@
             // 
             this.groupBox2.Controls.Add(this.linkLoadSetup);
             this.groupBox2.Controls.Add(this.checkLoadRemoval);
-            this.groupBox2.Location = new System.Drawing.Point(12, 255);
+            this.groupBox2.Location = new System.Drawing.Point(12, 230);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(448, 86);
             this.groupBox2.TabIndex = 1;
@@ -163,7 +175,7 @@
             // 
             // testButton
             // 
-            this.testButton.Location = new System.Drawing.Point(24, 402);
+            this.testButton.Location = new System.Drawing.Point(24, 454);
             this.testButton.Name = "testButton";
             this.testButton.Size = new System.Drawing.Size(75, 23);
             this.testButton.TabIndex = 4;
@@ -173,7 +185,7 @@
             // 
             // browseButton
             // 
-            this.browseButton.Location = new System.Drawing.Point(296, 376);
+            this.browseButton.Location = new System.Drawing.Point(296, 428);
             this.browseButton.Name = "browseButton";
             this.browseButton.Size = new System.Drawing.Size(75, 23);
             this.browseButton.TabIndex = 3;
@@ -183,7 +195,7 @@
             // 
             // textLogLocation
             // 
-            this.textLogLocation.Location = new System.Drawing.Point(24, 376);
+            this.textLogLocation.Location = new System.Drawing.Point(24, 428);
             this.textLogLocation.Name = "textLogLocation";
             this.textLogLocation.Size = new System.Drawing.Size(266, 20);
             this.textLogLocation.TabIndex = 2;
@@ -193,7 +205,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(21, 359);
+            this.label1.Location = new System.Drawing.Point(21, 411);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(109, 13);
             this.label1.TabIndex = 1;
@@ -204,20 +216,33 @@
             this.openFileDialog.FileName = "openFileDialog1";
             this.openFileDialog.Filter = "Text files|*.txt";
             // 
-            // createSplitsButton
+            // groupBox3
             // 
-            this.createSplitsButton.Location = new System.Drawing.Point(12, 186);
-            this.createSplitsButton.Name = "createSplitsButton";
-            this.createSplitsButton.Size = new System.Drawing.Size(106, 23);
-            this.createSplitsButton.TabIndex = 11;
-            this.createSplitsButton.Text = "Generate Splits";
-            this.createSplitsButton.UseVisualStyleBackColor = true;
-            this.createSplitsButton.Click += new System.EventHandler(this.HandleGenerateSplits);
+            this.groupBox3.Controls.Add(this.label3);
+            this.groupBox3.Controls.Add(this.checkLabyrinth);
+            this.groupBox3.Location = new System.Drawing.Point(12, 322);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(448, 79);
+            this.groupBox3.TabIndex = 10;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Lab Speedrunning";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(9, 39);
+            this.label3.MaximumSize = new System.Drawing.Size(420, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(401, 26);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Starts the timer on the first labyrinth zone entered and splits on subsequent lab" +
+    "yrinth zones.";
             // 
             // SettingsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.testButton);
             this.Controls.Add(this.browseButton);
@@ -225,11 +250,13 @@
             this.Controls.Add(this.textLogLocation);
             this.Controls.Add(this.label1);
             this.Name = "SettingsControl";
-            this.Size = new System.Drawing.Size(476, 448);
+            this.Size = new System.Drawing.Size(476, 488);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -255,6 +282,8 @@
         private System.Windows.Forms.CheckBox checkLabyrinth;
         private System.Windows.Forms.CheckBox checkSelectAll;
         private System.Windows.Forms.Button createSplitsButton;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label3;
     }
 }
 
