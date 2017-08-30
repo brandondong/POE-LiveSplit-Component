@@ -48,4 +48,12 @@
 			<change>Add ability to automatically generate splits from selected zones.</change>
 		</changelog>
 	</update>
+	<update version="1.0.7">
+		<files>
+			<file path="Components/POELiveSplitComponent.dll" status="changed" />
+		</files>
+		<changelog>
+			<change>Changed lab speedrunning to start the timer automatically upon entering the first lab zone.</change>
+		</changelog>
+	</update>
 </updates>
