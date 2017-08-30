@@ -160,7 +160,14 @@ namespace POELiveSplitComponent.Component
 
         private static int ParsePart(string location)
         {
-            return Int32.Parse(location.Substring(0, 1));
+            try
+            {
+                return Int32.Parse(location.Substring(0, 1));
+            }
+            catch (FormatException)
+            {
+                return 1;
+            }
         }
 
         private string name;

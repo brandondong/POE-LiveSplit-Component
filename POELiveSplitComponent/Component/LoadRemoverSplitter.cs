@@ -5,13 +5,16 @@ using System.Collections.Generic;
 namespace POELiveSplitComponent.Component
 {
     class LoadRemoverSplitter
-    {   private LiveSplitState state;
+    {
+        private static LabyrinthZone LAB_ENTRANCE = new LabyrinthZone("Labyrinth_Airlock");
+        private LiveSplitState state;
         private ComponentSettings settings;
         private TimerModel timer;
         private long loadTimes = 0;
         private long? startTimestamp;
         private string zoneName;
         private HashSet<IZone> encounteredZones = new HashSet<IZone>();
+        private IZone previousZone;
 
         public LoadRemoverSplitter(LiveSplitState state, ComponentSettings settings)
         {
@@ -21,7 +24,7 @@ namespace POELiveSplitComponent.Component
             timer.CurrentState = state;
             state.OnStart += HandleResetRuns;
         }
-        
+
         public void HandleLoadStart(long timestamp)
         {
             if (settings.LoadRemovalEnabled)
@@ -45,17 +48,31 @@ namespace POELiveSplitComponent.Component
                 state.LoadingTimes = TimeSpan.FromMilliseconds(loadTimes);
             }
 
-            if (settings.AutoSplitEnabled)
+            if (zoneName != null)
             {
-                if (zoneName != null)
+                IZone zone = Zone.Parse(zoneName, location);
+
+                if (settings.LabSpeedrunningEnabled && zone.Type() == ZoneType.LABYRINTH)
                 {
-                    IZone zone = Zone.Parse(zoneName, location);
-                    if (!encounteredZones.Contains(zone) && (settings.SplitZones.Contains(zone) || (settings.SplitInLabyrinth && zone.Type() == ZoneType.LABYRINTH)))
+                    if (state.CurrentPhase == TimerPhase.NotRunning && LAB_ENTRANCE.Equals(previousZone))
+                    {
+                        timer.Start();
+                    }
+                    else if (!encounteredZones.Contains(zone))
                     {
                         timer.Split();
                         encounteredZones.Add(zone);
                     }
                 }
+                if (settings.AutoSplitEnabled)
+                {
+                    if (!encounteredZones.Contains(zone) && settings.SplitZones.Contains(zone))
+                    {
+                        timer.Split();
+                        encounteredZones.Add(zone);
+                    }
+                }
+                previousZone = zone;
             }
         }
 

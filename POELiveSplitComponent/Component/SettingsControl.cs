@@ -36,7 +36,7 @@ namespace POELiveSplitComponent.Component
             checkAutoSplit.Checked = settings.AutoSplitEnabled;
             checkLoadRemoval.Checked = settings.LoadRemovalEnabled;
             textLogLocation.Text = settings.LogLocation;
-            checkLabyrinth.Checked = settings.SplitInLabyrinth;
+            checkLabyrinth.Checked = settings.LabSpeedrunningEnabled;
 
             for (int i = 0; i < checkedListZones.Items.Count; i++)
             {
@@ -104,7 +104,7 @@ namespace POELiveSplitComponent.Component
 
         private void HandleCheckLabyrinth(object sender, EventArgs e)
         {
-            settings.SplitInLabyrinth = checkLabyrinth.Checked;
+            settings.LabSpeedrunningEnabled = checkLabyrinth.Checked;
         }
 
         private void HandleSelectAll(object sender, EventArgs e)

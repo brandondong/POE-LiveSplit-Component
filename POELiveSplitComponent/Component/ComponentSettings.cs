@@ -37,7 +37,7 @@ namespace POELiveSplitComponent.Component
 
         public HashSet<IZone> SplitZones { get; private set; }
 
-        public bool SplitInLabyrinth = false;
+        public bool LabSpeedrunningEnabled = false;
 
         public Action HandleLogLocationChanged { get; set; }
 
@@ -52,7 +52,7 @@ namespace POELiveSplitComponent.Component
             settingsNode.AppendChild(SettingsHelper.ToElement(document, LOG_KEY, LogLocation));
             settingsNode.AppendChild(SettingsHelper.ToElement(document, LOAD_REMOVAL_FLAG, LoadRemovalEnabled));
             settingsNode.AppendChild(SettingsHelper.ToElement(document, AUTO_SPLIT_FLAG, AutoSplitEnabled));
-            settingsNode.AppendChild(SettingsHelper.ToElement(document, SPLIT_LABYRINTH, SplitInLabyrinth));
+            settingsNode.AppendChild(SettingsHelper.ToElement(document, SPLIT_LABYRINTH, LabSpeedrunningEnabled));
 
             XmlElement parent = SettingsHelper.ToElement(document, SPLIT_ZONES, (string)null);
             SerializeZones(parent, document);
@@ -88,7 +88,7 @@ namespace POELiveSplitComponent.Component
                 }
                 if (element[SPLIT_LABYRINTH] != null)
                 {
-                    SplitInLabyrinth = bool.Parse(element[SPLIT_LABYRINTH].InnerText);
+                    LabSpeedrunningEnabled = bool.Parse(element[SPLIT_LABYRINTH].InnerText);
                 }
                 if (element[SPLIT_ZONES] != null)
                 {
