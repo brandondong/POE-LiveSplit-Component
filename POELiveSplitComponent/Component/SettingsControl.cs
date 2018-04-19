@@ -105,6 +105,7 @@ namespace POELiveSplitComponent.Component
         private void HandleCheckLabyrinth(object sender, EventArgs e)
         {
             settings.LabSpeedrunningEnabled = checkLabyrinth.Checked;
+            checkAutoSplit.Enabled = !checkLabyrinth.Checked;
         }
 
         private void HandleSelectAll(object sender, EventArgs e)
