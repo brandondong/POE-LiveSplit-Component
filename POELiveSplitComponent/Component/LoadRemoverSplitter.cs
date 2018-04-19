@@ -6,13 +6,13 @@ namespace POELiveSplitComponent.Component
 {
     class LoadRemoverSplitter
     {
-        private static LabyrinthZone LAB_ENTRANCE = new LabyrinthZone("Labyrinth_Airlock");
+        // Zone that lab runners must enter before the lab. Unique zone name.
+        private static IZone LAB_ENTRANCE = Zone.Parse("Aspirants' Plaza", new HashSet<IZone>());
         private LiveSplitState state;
         private ComponentSettings settings;
         private TimerModel timer;
         private long loadTimes = 0;
         private long? startTimestamp;
-        private string zoneName;
         private HashSet<IZone> encounteredZones = new HashSet<IZone>();
         private IZone previousZone;
 
@@ -34,12 +34,7 @@ namespace POELiveSplitComponent.Component
             }
         }
 
-        public void HandleZoneName(string zoneName)
-        {
-            this.zoneName = zoneName;
-        }
-
-        public void HandleLoadEnd(long timestamp, string location)
+        public void HandleLoadEnd(long timestamp, string zoneName)
         {
             if (settings.LoadRemovalEnabled)
             {
@@ -47,40 +42,38 @@ namespace POELiveSplitComponent.Component
                 state.IsGameTimePaused = false;
                 state.LoadingTimes = TimeSpan.FromMilliseconds(loadTimes);
             }
+                        
+            IZone zone = Zone.Parse(zoneName, encounteredZones);
 
-            if (zoneName != null)
+            if (settings.LabSpeedrunningEnabled)
             {
-                IZone zone = Zone.Parse(zoneName, location);
-
-                if (settings.LabSpeedrunningEnabled && zone.Type() == ZoneType.LABYRINTH)
+                if (state.CurrentPhase == TimerPhase.NotRunning && LAB_ENTRANCE.Equals(previousZone))
                 {
-                    if (state.CurrentPhase == TimerPhase.NotRunning && LAB_ENTRANCE.Equals(previousZone))
-                    {
-                        timer.Start();
-                    }
-                    else if (!encounteredZones.Contains(zone))
-                    {
-                        timer.Split();
-                        encounteredZones.Add(zone);
-                    }
+                    // Start the timer on the first zone of the lab.
+                    timer.Start();
                 }
-                if (settings.AutoSplitEnabled)
+                else
                 {
-                    if (!encounteredZones.Contains(zone) && settings.SplitZones.Contains(zone))
-                    {
-                        timer.Split();
-                        encounteredZones.Add(zone);
-                    }
+                    // And split on subsequent zones.
+                    timer.Split();
                 }
-                previousZone = zone;
             }
+            else if (settings.AutoSplitEnabled)
+            {
+                if (!encounteredZones.Contains(zone) && settings.SplitZones.Contains(zone))
+                {
+                    timer.Split();
+                }
+                // Keep track of all encountered zones for part prediction.
+                encounteredZones.Add(zone);
+            }
+            previousZone = zone;
         }
 
         private void HandleResetRuns(object sender, EventArgs e)
         {
             loadTimes = 0;
             startTimestamp = null;
-            zoneName = null;
             encounteredZones = new HashSet<IZone>();
         }
     }
