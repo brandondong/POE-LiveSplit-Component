@@ -56,4 +56,12 @@
 			<change>Changed lab speedrunning to start the timer automatically upon entering the first lab zone.</change>
 		</changelog>
 	</update>
+    <update version="1.0.8">
+		<files>
+			<file path="Components/POELiveSplitComponent.dll" status="changed" />
+		</files>
+		<changelog>
+			<change>Fix autosplitting after log line removal in patch 3.2.2c.</change>
+		</changelog>
+	</update>
 </updates>
