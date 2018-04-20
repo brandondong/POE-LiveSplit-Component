@@ -35,4 +35,7 @@ Follow these additional instructions if you want to use load removal.
 
 You now have two timers: the top timer uses Game Time (subtracting load screens) and the bottom uses Real Time.
 
+## Limitations
+Autosplitting will likely split incorrectly for speedruns strictly starting in the part 2 storyline. The logs only contain zone names so it is impossible to distinguish between certain zones and their part 1 and part 2 equivalents from the logs alone. The tool does its best to guess based on the zones traversed so far and should have no problems for a typical speedrun starting in part 1.
+
 For issues and suggestions, please use https://github.com/brandondong/POE-LiveSplit-Component/issues.
