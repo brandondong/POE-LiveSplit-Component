@@ -9,15 +9,10 @@ The component can be configured to automatically split upon entering specific zo
 ## Load Removal
 Load screen time is automatically subtracted from your run. This is done by reading the timestamps on client logs.
 
-### Timer accuracy
-The pausing and unpausing of the game timer is an illusion with respect to time calculation. The calculation is done simply by using the LiveSplit real time timer (which was never paused) and subtracting the load times calculated with client log timestamp intervals. As such, any timer inaccuracies can only be from LiveSplit itself or from the timestamps GGG provides. File read latency plays no role in the final time.
-
-The lines in the log file that are used as basis for load screen start and end are "Got Instance Details" and "Entering area..." respectively. From testing, the logs report that I have entered an area slightly before my load screens are finished. Unfortunately, this is the last line the log file reports and may lead to an overestimation of game time. Surprisingly, /played is even more unforgiving and reports my loadscreens as even shorter than they really are.
-
 [Demonstration](http://i.imgur.com/v3BaEQY.gif)
 
 ## Setup
-1. Go to the official LiveSplit [download page](http://livesplit.org/downloads/) and download the latest version (either link is fine)
+1. If you do not have LiveSplit already, [download](http://livesplit.org/downloads/) the latest version (either link is fine)
 2. Extract the zip file and run the LiveSplit application executable
 3. Right click on the timer and select "Edit Splits"
 4. Type "Path of Exile" as the Game Name and click the Activate button below the number of attempts
@@ -37,5 +32,15 @@ You now have two timers: the top timer uses Game Time (subtracting load screens)
 
 ## Limitations
 Autosplitting will likely split incorrectly for speedruns strictly starting in the part 2 storyline. The logs only contain zone names so it is impossible to distinguish between certain zones and their part 1 and part 2 equivalents from the logs alone. The tool does its best to guess based on the zones traversed so far and should have no problems for a typical speedrun starting in part 1.
+
+### Load Removal Timer Accuracy
+The lines in the log file that are used as basis for load screen start and end are "Got Instance Details" and "You have entered ..." respectively. From testing, the logs report that I have entered an area slightly before my load screens are finished. Unfortunately, this is the last line the log file reports and may lead to an overestimation of game time. Surprisingly, /played exhibits similar behaviour.
+
+## Development Setup
+To build the project, this repository must be cloned recursively.
+
+`git clone --recursive`
+
+It should be able to compile without any further configuration when opening the project with Visual Studio 2015.
 
 For issues and suggestions, please use https://github.com/brandondong/POE-LiveSplit-Component/issues.
