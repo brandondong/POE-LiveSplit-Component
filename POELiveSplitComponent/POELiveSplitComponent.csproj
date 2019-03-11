@@ -89,18 +89,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\POE-LiveSplit\LiveSplit\LiveSplit.Core\LiveSplit.Core.csproj">
+    <Folder Include="dll\" />
+    <Folder Include="Update\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LiveSplit\LiveSplit\LiveSplit.Core\LiveSplit.Core.csproj">
       <Project>{6de847db-20a3-4848-aeee-1b4364aecdfb}</Project>
       <Name>LiveSplit.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\POE-LiveSplit\LiveSplit\UpdateManager\UpdateManager.csproj">
+    <ProjectReference Include="..\LiveSplit\LiveSplit\UpdateManager\UpdateManager.csproj">
       <Project>{56dea3a0-2eb7-493b-b50f-a5e3aa8ae52a}</Project>
       <Name>UpdateManager</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="dll\" />
-    <Folder Include="Update\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

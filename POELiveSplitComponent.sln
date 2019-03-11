@@ -5,9 +5,9 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POELiveSplitComponent", "POELiveSplitComponent\POELiveSplitComponent.csproj", "{3C331AFE-831A-4B14-B507-7BDEC1BDED02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveSplit.Core", "..\POE-LiveSplit\LiveSplit\LiveSplit.Core\LiveSplit.Core.csproj", "{6DE847DB-20A3-4848-AEEE-1B4364AECDFB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveSplit.Core", "LiveSplit\LiveSplit\LiveSplit.Core\LiveSplit.Core.csproj", "{6DE847DB-20A3-4848-AEEE-1B4364AECDFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateManager", "..\POE-LiveSplit\LiveSplit\UpdateManager\UpdateManager.csproj", "{56DEA3A0-2EB7-493B-B50F-A5E3AA8AE52A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateManager", "LiveSplit\LiveSplit\UpdateManager\UpdateManager.csproj", "{56DEA3A0-2EB7-493B-B50F-A5E3AA8AE52A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
