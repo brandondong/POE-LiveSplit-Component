@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeedrunComSharp", "LiveSpl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{766B2954-A48E-489C-A171-F0FB635CD323}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POELiveSplitComponentTests", "POELiveSplitComponentTests\POELiveSplitComponentTests.csproj", "{62BE908B-96E7-4E1E-BD3F-8823AC4915AC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug with API Calls|Any CPU = Debug with API Calls|Any CPU
@@ -63,6 +65,14 @@ Global
 		{924AAFFE-5B89-49E2-99AD-EC9373CC838D}.Release Candidate|Any CPU.Build.0 = Release|Any CPU
 		{924AAFFE-5B89-49E2-99AD-EC9373CC838D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{924AAFFE-5B89-49E2-99AD-EC9373CC838D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62BE908B-96E7-4E1E-BD3F-8823AC4915AC}.Debug with API Calls|Any CPU.ActiveCfg = Debug|Any CPU
+		{62BE908B-96E7-4E1E-BD3F-8823AC4915AC}.Debug with API Calls|Any CPU.Build.0 = Debug|Any CPU
+		{62BE908B-96E7-4E1E-BD3F-8823AC4915AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62BE908B-96E7-4E1E-BD3F-8823AC4915AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62BE908B-96E7-4E1E-BD3F-8823AC4915AC}.Release Candidate|Any CPU.ActiveCfg = Release|Any CPU
+		{62BE908B-96E7-4E1E-BD3F-8823AC4915AC}.Release Candidate|Any CPU.Build.0 = Release|Any CPU
+		{62BE908B-96E7-4E1E-BD3F-8823AC4915AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62BE908B-96E7-4E1E-BD3F-8823AC4915AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

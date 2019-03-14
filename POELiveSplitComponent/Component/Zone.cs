@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace POELiveSplitComponent.Component
 {
-    class Zone : IZone
+    public class Zone : IZone
     {
         public static readonly List<Zone> ZONES = initZones();
 
@@ -153,7 +153,8 @@ namespace POELiveSplitComponent.Component
                 create("The Desecrated Chambers", 2, act10Home),
                 create("The Reliquary", 2, act10Home),
                 create("The Canals", 2, act10Home),
-                create("The Feeding Trough", 2, act10Home)
+                create("The Feeding Trough", 2, act10Home),
+                create("Oriath", 2, act10Home)
             };
             return new List<Zone>(zones);
         }
@@ -216,6 +217,15 @@ namespace POELiveSplitComponent.Component
 
         public string Serialize()
         {
+            return ToString();
+        }
+
+        public string SplitName()
+        {
+            if (part == 1)
+            {
+                return name;
+            }
             return ToString();
         }
 

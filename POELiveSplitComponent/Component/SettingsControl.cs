@@ -91,7 +91,7 @@ namespace POELiveSplitComponent.Component
 
         private void HandleItemChecked(object sender, ItemCheckEventArgs e)
         {
-            Zone zone = (Zone)checkedListZones.Items[e.Index];
+            IZone zone = (IZone)checkedListZones.Items[e.Index];
             if (e.NewValue == CheckState.Checked)
             {
                 settings.SplitZones.Add(zone);
@@ -134,7 +134,7 @@ namespace POELiveSplitComponent.Component
             {
                 if (checkedListZones.GetItemChecked(i))
                 {
-                    state.Run.AddSegment(checkedListZones.Items[i].ToString());
+                    state.Run.AddSegment(((IZone)checkedListZones.Items[i]).SplitName());
                 }
             }
             if (state.Run.Count == 0)
