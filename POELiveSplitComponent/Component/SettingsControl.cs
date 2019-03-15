@@ -24,10 +24,6 @@ namespace POELiveSplitComponent.Component
             this.settings = settings;
             this.state = state;
             InitializeComponent();
-            foreach (Zone zone in Zone.ZONES)
-            {
-                checkedListZones.Items.Add(zone, false);
-            }
             XmlRefresh();
         }
 
@@ -37,12 +33,29 @@ namespace POELiveSplitComponent.Component
             checkLoadRemoval.Checked = settings.LoadRemovalEnabled;
             textLogLocation.Text = settings.LogLocation;
             checkLabyrinth.Checked = settings.LabSpeedrunningEnabled;
+            bool isZoneCriteria = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones;
+            radioZones.Checked = isZoneCriteria;
+            radioLevels.Checked = !isZoneCriteria;
 
-            for (int i = 0; i < checkedListZones.Items.Count; i++)
+            updateCheckedList();
+        }
+
+        private void updateCheckedList()
+        {
+            checkedSplitList.Items.Clear();
+            if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones)
             {
-                Zone zone = (Zone)checkedListZones.Items[i];
-                bool shouldSplit = settings.SplitZones.Contains(zone);
-                checkedListZones.SetItemChecked(i, shouldSplit);
+                foreach (Zone zone in Zone.ZONES)
+                {
+                    checkedSplitList.Items.Add(zone, settings.SplitZones.Contains(zone));
+                }
+            }
+            else
+            {
+                for (int i = 2; i <= 100; i++)
+                {
+                    checkedSplitList.Items.Add(i, settings.SplitLevels.Contains(i));
+                }
             }
         }
 
@@ -91,14 +104,29 @@ namespace POELiveSplitComponent.Component
 
         private void HandleItemChecked(object sender, ItemCheckEventArgs e)
         {
-            IZone zone = (IZone)checkedListZones.Items[e.Index];
-            if (e.NewValue == CheckState.Checked)
+            if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones)
             {
-                settings.SplitZones.Add(zone);
+                IZone zone = (IZone)checkedSplitList.Items[e.Index];
+                if (e.NewValue == CheckState.Checked)
+                {
+                    settings.SplitZones.Add(zone);
+                }
+                else
+                {
+                    settings.SplitZones.Remove(zone);
+                }
             }
             else
             {
-                settings.SplitZones.Remove(zone);
+                int level = (int)checkedSplitList.Items[e.Index];
+                if (e.NewValue == CheckState.Checked)
+                {
+                    settings.SplitLevels.Add(level);
+                }
+                else
+                {
+                    settings.SplitLevels.Remove(level);
+                }
             }
         }
 
@@ -110,9 +138,9 @@ namespace POELiveSplitComponent.Component
 
         private void HandleSelectAll(object sender, EventArgs e)
         {
-            for (int i = 0; i < checkedListZones.Items.Count; i++)
+            for (int i = 0; i < checkedSplitList.Items.Count; i++)
             {
-                checkedListZones.SetItemChecked(i, checkSelectAll.Checked);
+                checkedSplitList.SetItemChecked(i, checkSelectAll.Checked);
             }
         }
 
@@ -130,20 +158,42 @@ namespace POELiveSplitComponent.Component
                 return;
             }
             state.Run.Clear();
-            for (int i = 0; i < checkedListZones.Items.Count; i++)
+            bool isZoneCriteria = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones;
+            for (int i = 0; i < checkedSplitList.Items.Count; i++)
             {
-                if (checkedListZones.GetItemChecked(i))
+                if (checkedSplitList.GetItemChecked(i))
                 {
-                    state.Run.AddSegment(((IZone)checkedListZones.Items[i]).SplitName());
+                    if (isZoneCriteria)
+                    {
+                        state.Run.AddSegment(((IZone)checkedSplitList.Items[i]).SplitName());
+                    }
+                    else
+                    {
+                        state.Run.AddSegment(String.Format("Level {0}", checkedSplitList.Items[i]));
+                    }
                 }
             }
             if (state.Run.Count == 0)
             {
                 state.Run.AddSegment("");
             }
+            state.Run.HasChanged = true;
             state.Form.Invalidate();
             MessageBox.Show("Splits generated successfully.\n\nDue to LiveSplit API restrictions, the Splits Editor needs to be reopened to view the updated changes.",
                 "Generate Splits", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void HandleSplitCriteriaChanged(object sender, EventArgs e)
+        {
+            if (radioZones.Checked)
+            {
+                settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Zones;
+            }
+            else
+            {
+                settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Levels;
+            }
+            updateCheckedList();
         }
     }
 }
