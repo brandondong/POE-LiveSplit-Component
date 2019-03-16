@@ -86,5 +86,45 @@ namespace POELiveSplitComponent.Component.Tests
             Assert.AreEqual(1, settings.SplitLevels.Count);
             Assert.AreEqual(@"C:\Program Files (x86)\Grinding Gear Games\Path of Exile\logs\Client.txt", settings.LogLocation);
         }
+
+        [TestMethod()]
+        public void GetAndSetDefaultSettingsTest()
+        {
+            XmlDocument xml = new XmlDocument();
+            ComponentSettings settings = new ComponentSettings();
+            XmlNode node = settings.GetSettings(xml);
+
+            settings = new ComponentSettings();
+            settings.SetSettings(node);
+            Assert.IsTrue(settings.AutoSplitEnabled);
+            Assert.IsFalse(settings.LoadRemovalEnabled);
+            Assert.IsFalse(settings.LabSpeedrunningEnabled);
+            Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
+            Assert.AreEqual(0, settings.SplitZones.Count);
+            Assert.AreEqual(0, settings.SplitLevels.Count);
+        }
+
+        [TestMethod()]
+        public void GetAndSetCustomSettingsTest()
+        {
+            XmlDocument xml = new XmlDocument();
+            ComponentSettings settings = new ComponentSettings();
+            settings.AutoSplitEnabled = false;
+            settings.LoadRemovalEnabled = true;
+            settings.LabSpeedrunningEnabled = true;
+            settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Levels;
+            settings.SplitZones.Add(Zone.ZONES[0]);
+            settings.SplitLevels.Add(100);
+            XmlNode node = settings.GetSettings(xml);
+
+            settings = new ComponentSettings();
+            settings.SetSettings(node);
+            Assert.IsFalse(settings.AutoSplitEnabled);
+            Assert.IsTrue(settings.LoadRemovalEnabled);
+            Assert.IsTrue(settings.LabSpeedrunningEnabled);
+            Assert.AreEqual(ComponentSettings.SplitCriteria.Levels, settings.CriteriaToSplit);
+            Assert.IsTrue(new HashSet<IZone> { Zone.ZONES[0] }.SetEquals(settings.SplitZones));
+            Assert.IsTrue(new HashSet<int> { 100 }.SetEquals(settings.SplitLevels));
+        }
     }
 }

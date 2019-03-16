@@ -30,5 +30,14 @@ namespace POELiveSplitComponent.Component.Tests
             Assert.AreEqual("Lioneye's Watch", TEST_ZONE_1.SplitName());
             Assert.AreEqual("Lioneye's Watch (Part 2)", TEST_ZONE_2.SplitName());
         }
+
+        [TestMethod()]
+        public void EqualityTest()
+        {
+            Zone lioneyes1 = Zone.ZONES.Find(z => z.Serialize().Equals("Lioneye's Watch (Part 1)"));
+            Zone lioneyes2 = Zone.ZONES.Find(z => z.Serialize().Equals("Lioneye's Watch (Part 2)"));
+            Assert.AreEqual(lioneyes1, TEST_ZONE_1);
+            Assert.AreEqual(lioneyes2, TEST_ZONE_2);
+        }
     }
 }

@@ -19,7 +19,9 @@ namespace POELiveSplitComponent.Component
 
         public POEComponent(LiveSplitState state)
         {
-            LoadRemoverSplitter remover = new LoadRemoverSplitter(state, settings);
+            TimerModel timer = new TimerModel();
+            timer.CurrentState = state;
+            LoadRemoverSplitter remover = new LoadRemoverSplitter(timer, settings);
             reader = new ClientReader(settings, remover);
             reader.Start();
             control = new SettingsControl(settings, state);

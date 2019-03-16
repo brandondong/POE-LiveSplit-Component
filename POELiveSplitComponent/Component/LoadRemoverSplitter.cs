@@ -8,29 +8,26 @@ namespace POELiveSplitComponent.Component
     {
         // Zone that lab runners must enter before the lab. Unique zone name.
         private static IZone LAB_ENTRANCE = Zone.Parse("Aspirants' Plaza", new HashSet<IZone>());
-        private LiveSplitState state;
         private ComponentSettings settings;
-        private TimerModel timer;
+        private ITimerModel timer;
         private long loadTimes = 0;
         private long? startTimestamp;
         private HashSet<IZone> encounteredZones = new HashSet<IZone>();
         private HashSet<int> levelsReached = new HashSet<int>();
         private IZone previousZone;
 
-        public LoadRemoverSplitter(LiveSplitState state, ComponentSettings settings)
+        public LoadRemoverSplitter(ITimerModel timer, ComponentSettings settings)
         {
-            this.state = state;
             this.settings = settings;
-            timer = new TimerModel();
-            timer.CurrentState = state;
-            state.OnStart += HandleResetRuns;
+            this.timer = timer;
+            timer.CurrentState.OnStart += HandleResetRuns;
         }
 
         public void HandleLoadStart(long timestamp)
         {
             if (settings.LoadRemovalEnabled)
             {
-                state.IsGameTimePaused = true;
+                timer.CurrentState.IsGameTimePaused = true;
                 startTimestamp = timestamp;
             }
         }
@@ -40,8 +37,8 @@ namespace POELiveSplitComponent.Component
             if (settings.LoadRemovalEnabled)
             {
                 loadTimes += timestamp - startTimestamp.GetValueOrDefault(timestamp);
-                state.IsGameTimePaused = false;
-                state.LoadingTimes = TimeSpan.FromMilliseconds(loadTimes);
+                timer.CurrentState.IsGameTimePaused = false;
+                timer.CurrentState.LoadingTimes = TimeSpan.FromMilliseconds(loadTimes);
             }
                         
             IZone zone = Zone.Parse(zoneName, encounteredZones);
@@ -49,7 +46,7 @@ namespace POELiveSplitComponent.Component
             // The lab speedrunning mode always takes precedence.
             if (settings.LabSpeedrunningEnabled)
             {
-                if (state.CurrentPhase == TimerPhase.NotRunning && LAB_ENTRANCE.Equals(previousZone))
+                if (timer.CurrentState.CurrentPhase == TimerPhase.NotRunning && LAB_ENTRANCE.Equals(previousZone))
                 {
                     // Start the timer on the first zone of the lab.
                     timer.Start();

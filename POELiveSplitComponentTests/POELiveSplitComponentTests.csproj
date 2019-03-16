@@ -53,10 +53,15 @@
   <ItemGroup>
     <Compile Include="Component\ClientParserTests.cs" />
     <Compile Include="Component\ComponentSettingsTests.cs" />
+    <Compile Include="Component\LoadRemoverSplitterTests.cs" />
     <Compile Include="Component\ZoneTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LiveSplit\LiveSplit\LiveSplit.Core\LiveSplit.Core.csproj">
+      <Project>{6DE847DB-20A3-4848-AEEE-1B4364AECDFB}</Project>
+      <Name>LiveSplit.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\POELiveSplitComponent\POELiveSplitComponent.csproj">
       <Project>{3C331AFE-831A-4B14-B507-7BDEC1BDED02}</Project>
       <Name>POELiveSplitComponent</Name>
