@@ -53,6 +53,7 @@
     <Compile Include="Component\ClientParser.cs" />
     <Compile Include="Component\ClientReader.cs" />
     <Compile Include="Component\ComponentSettings.cs" />
+    <Compile Include="Component\IClientEventHandler.cs" />
     <Compile Include="Component\IZone.cs" />
     <Compile Include="Component\SettingsControl.cs">
       <SubType>UserControl</SubType>

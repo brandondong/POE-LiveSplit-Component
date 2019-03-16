@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace POELiveSplitComponent.Component
 {
-    class LoadRemoverSplitter
+    public class LoadRemoverSplitter : IClientEventHandler
     {
         // Zone that lab runners must enter before the lab. Unique zone name.
         private static IZone LAB_ENTRANCE = Zone.Parse("Aspirants' Plaza", new HashSet<IZone>());
@@ -14,6 +14,7 @@ namespace POELiveSplitComponent.Component
         private long loadTimes = 0;
         private long? startTimestamp;
         private HashSet<IZone> encounteredZones = new HashSet<IZone>();
+        private HashSet<int> levelsReached = new HashSet<int>();
         private IZone previousZone;
 
         public LoadRemoverSplitter(LiveSplitState state, ComponentSettings settings)
@@ -45,6 +46,7 @@ namespace POELiveSplitComponent.Component
                         
             IZone zone = Zone.Parse(zoneName, encounteredZones);
 
+            // The lab speedrunning mode always takes precedence.
             if (settings.LabSpeedrunningEnabled)
             {
                 if (state.CurrentPhase == TimerPhase.NotRunning && LAB_ENTRANCE.Equals(previousZone))
@@ -58,7 +60,7 @@ namespace POELiveSplitComponent.Component
                     timer.Split();
                 }
             }
-            else if (settings.AutoSplitEnabled)
+            else if (settings.AutoSplitEnabled && settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones)
             {
                 if (!encounteredZones.Contains(zone) && settings.SplitZones.Contains(zone))
                 {
@@ -70,11 +72,25 @@ namespace POELiveSplitComponent.Component
             previousZone = zone;
         }
 
+        public void HandleLevelUp(long timestamp, int level)
+        {
+            if (!settings.LabSpeedrunningEnabled && settings.AutoSplitEnabled && settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Levels)
+            {
+                // A single character can technically reach the same level twice but this is more to handle muling.
+                if (!levelsReached.Contains(level) && settings.SplitLevels.Contains(level))
+                {
+                    timer.Split();
+                }
+                levelsReached.Add(level);
+            }
+        }
+
         private void HandleResetRuns(object sender, EventArgs e)
         {
             loadTimes = 0;
             startTimestamp = null;
             encounteredZones = new HashSet<IZone>();
+            levelsReached = new HashSet<int>();
         }
     }
 }
