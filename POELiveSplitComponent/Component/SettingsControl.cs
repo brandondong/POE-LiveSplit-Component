@@ -36,6 +36,8 @@ namespace POELiveSplitComponent.Component
             bool isZoneCriteria = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones;
             radioZones.Checked = isZoneCriteria;
             radioLevels.Checked = !isZoneCriteria;
+            checkIcons.Checked = settings.GenerateWithIcons;
+            checkIcons.Visible = isZoneCriteria;
 
             updateCheckedList();
         }
@@ -165,7 +167,13 @@ namespace POELiveSplitComponent.Component
                 {
                     if (isZoneCriteria)
                     {
-                        state.Run.AddSegment(((IZone)checkedSplitList.Items[i]).SplitName());
+                        IZone zone = (IZone)checkedSplitList.Items[i];
+                        Image icon = null;
+                        if (settings.GenerateWithIcons)
+                        {
+                            icon = iconForType(Zone.ICONTYPES[zone]);
+                        }
+                        state.Run.AddSegment(zone.SplitName(), default(Time), default(Time), icon);
                     }
                     else
                     {
@@ -183,6 +191,19 @@ namespace POELiveSplitComponent.Component
                 "Generate Splits", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        private Image iconForType(Zone.IconType type)
+        {
+            if (type == Zone.IconType.NoWp)
+            {
+                return Properties.Resources.NoWpIcon;
+            }
+            else if (type == Zone.IconType.Town)
+            {
+                return Properties.Resources.TownIcon;
+            }
+            return Properties.Resources.WpIcon;
+        }
+
         private void HandleSplitCriteriaChanged(object sender, EventArgs e)
         {
             if (radioZones.Checked)
@@ -193,7 +214,13 @@ namespace POELiveSplitComponent.Component
             {
                 settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Levels;
             }
+            checkIcons.Visible = radioZones.Checked;
             updateCheckedList();
+        }
+
+        private void HandleIconsChecked(object sender, EventArgs e)
+        {
+            settings.GenerateWithIcons = checkIcons.Checked;
         }
     }
 }

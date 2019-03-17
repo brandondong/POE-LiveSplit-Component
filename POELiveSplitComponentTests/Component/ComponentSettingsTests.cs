@@ -23,6 +23,7 @@ namespace POELiveSplitComponent.Component.Tests
             Assert.IsTrue(settings.AutoSplitEnabled);
             Assert.IsFalse(settings.LoadRemovalEnabled);
             Assert.IsFalse(settings.LabSpeedrunningEnabled);
+            Assert.IsTrue(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
             Assert.AreEqual(0, settings.SplitZones.Count);
             Assert.AreEqual(0, settings.SplitLevels.Count);
@@ -49,6 +50,7 @@ namespace POELiveSplitComponent.Component.Tests
             Assert.IsTrue(settings.AutoSplitEnabled);
             Assert.IsTrue(settings.LoadRemovalEnabled);
             Assert.IsFalse(settings.LabSpeedrunningEnabled);
+            Assert.IsTrue(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
             Assert.AreEqual(2, settings.SplitZones.Count);
             Assert.AreEqual(0, settings.SplitLevels.Count);
@@ -81,6 +83,7 @@ namespace POELiveSplitComponent.Component.Tests
             Assert.IsTrue(settings.AutoSplitEnabled);
             Assert.IsFalse(settings.LoadRemovalEnabled);
             Assert.IsFalse(settings.LabSpeedrunningEnabled);
+            Assert.IsTrue(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Levels, settings.CriteriaToSplit);
             Assert.AreEqual(3, settings.SplitZones.Count);
             Assert.AreEqual(1, settings.SplitLevels.Count);
@@ -99,6 +102,7 @@ namespace POELiveSplitComponent.Component.Tests
             Assert.IsTrue(settings.AutoSplitEnabled);
             Assert.IsFalse(settings.LoadRemovalEnabled);
             Assert.IsFalse(settings.LabSpeedrunningEnabled);
+            Assert.IsTrue(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
             Assert.AreEqual(0, settings.SplitZones.Count);
             Assert.AreEqual(0, settings.SplitLevels.Count);
@@ -112,6 +116,7 @@ namespace POELiveSplitComponent.Component.Tests
             settings.AutoSplitEnabled = false;
             settings.LoadRemovalEnabled = true;
             settings.LabSpeedrunningEnabled = true;
+            settings.GenerateWithIcons = false;
             settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Levels;
             settings.SplitZones.Add(Zone.ZONES[0]);
             settings.SplitLevels.Add(100);
@@ -122,9 +127,61 @@ namespace POELiveSplitComponent.Component.Tests
             Assert.IsFalse(settings.AutoSplitEnabled);
             Assert.IsTrue(settings.LoadRemovalEnabled);
             Assert.IsTrue(settings.LabSpeedrunningEnabled);
+            Assert.IsFalse(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Levels, settings.CriteriaToSplit);
             Assert.IsTrue(new HashSet<IZone> { Zone.ZONES[0] }.SetEquals(settings.SplitZones));
             Assert.IsTrue(new HashSet<int> { 100 }.SetEquals(settings.SplitLevels));
+        }
+
+        [TestMethod()]
+        public void CancelTest()
+        {
+            ComponentSettings settings = new ComponentSettings();
+            settings.AutoSplitEnabled = false;
+            settings.LoadRemovalEnabled = true;
+            settings.LabSpeedrunningEnabled = true;
+            settings.GenerateWithIcons = false;
+            settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Levels;
+            settings.SplitZones.Add(Zone.ZONES[0]);
+            settings.SplitLevels.Add(100);
+            
+            // Emulate a cancel.
+            XmlDocument xml = new XmlDocument();
+            settings.SetSettings(new ComponentSettings().GetSettings(xml));
+            Assert.IsTrue(settings.AutoSplitEnabled);
+            Assert.IsFalse(settings.LoadRemovalEnabled);
+            Assert.IsFalse(settings.LabSpeedrunningEnabled);
+            Assert.IsTrue(settings.GenerateWithIcons);
+            Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
+            Assert.AreEqual(0, settings.SplitZones.Count);
+            Assert.AreEqual(0, settings.SplitLevels.Count);
+        }
+
+        [TestMethod()]
+        public void CancelMissingPropsTest()
+        {
+            ComponentSettings settings = new ComponentSettings();
+            settings.AutoSplitEnabled = false;
+            settings.LoadRemovalEnabled = true;
+            settings.LabSpeedrunningEnabled = true;
+            settings.GenerateWithIcons = false;
+            settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Levels;
+            settings.SplitZones.Add(Zone.ZONES[0]);
+            settings.SplitLevels.Add(100);
+
+            // Emulate a cancel where the properties were fetched from file.
+            // Never has been observed but we'll handle it anyways.
+            XmlDocument xml = new XmlDocument();
+            xml.LoadXml("<AutoSplitterSettings><load.removal>True</load.removal></AutoSplitterSettings>");
+            XmlNode nodeSettings = xml.FirstChild;
+            settings.SetSettings(nodeSettings);
+            Assert.IsTrue(settings.AutoSplitEnabled);
+            Assert.IsTrue(settings.LoadRemovalEnabled);
+            Assert.IsFalse(settings.LabSpeedrunningEnabled);
+            Assert.IsTrue(settings.GenerateWithIcons);
+            Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
+            Assert.AreEqual(0, settings.SplitZones.Count);
+            Assert.AreEqual(0, settings.SplitLevels.Count);
         }
     }
 }

@@ -20,8 +20,11 @@ namespace POELiveSplitComponent.Component
         private const string SPLIT_CRITERIA = "split.criteria";
         private const string SPLIT_LEVELS = "split.levels.on";
         private const string SPLIT_LEVEL = "split.level";
+        private const string GENERATE_WITH_ICONS = "generate.with.icons";
 
-        private string logLocation = @"C:\Program Files (x86)\Grinding Gear Games\Path of Exile\logs\Client.txt";
+        private const string DEFAULT_LOG_LOCATION = @"C:\Program Files (x86)\Grinding Gear Games\Path of Exile\logs\Client.txt";
+
+        private string logLocation;
 
         public string LogLocation
         {
@@ -36,22 +39,35 @@ namespace POELiveSplitComponent.Component
             }
         }
 
-        public bool LoadRemovalEnabled = false;
+        public bool LoadRemovalEnabled;
 
-        public bool AutoSplitEnabled = true;
+        public bool AutoSplitEnabled;
 
         public HashSet<IZone> SplitZones { get; private set; }
 
-        public bool LabSpeedrunningEnabled = false;
+        public bool LabSpeedrunningEnabled;
 
-        public SplitCriteria CriteriaToSplit = SplitCriteria.Zones;
+        public SplitCriteria CriteriaToSplit;
 
         public HashSet<int> SplitLevels { get; private set; }
+
+        public bool GenerateWithIcons;
 
         public Action HandleLogLocationChanged { get; set; }
 
         public ComponentSettings()
         {
+            setDefaults();
+        }
+
+        private void setDefaults()
+        {
+            AutoSplitEnabled = true;
+            LoadRemovalEnabled = false;
+            LabSpeedrunningEnabled = false;
+            GenerateWithIcons = true;
+            CriteriaToSplit = SplitCriteria.Zones;
+            logLocation = DEFAULT_LOG_LOCATION;
             SplitZones = new HashSet<IZone>();
             SplitLevels = new HashSet<int>();
         }
@@ -64,6 +80,7 @@ namespace POELiveSplitComponent.Component
             SettingsHelper.CreateSetting(document, settingsNode, AUTO_SPLIT_FLAG, AutoSplitEnabled);
             SettingsHelper.CreateSetting(document, settingsNode, SPLIT_LABYRINTH, LabSpeedrunningEnabled);
             SettingsHelper.CreateSetting(document, settingsNode, SPLIT_CRITERIA, CriteriaToSplit);
+            SettingsHelper.CreateSetting(document, settingsNode, GENERATE_WITH_ICONS, GenerateWithIcons);
 
             settingsNode.AppendChild(SerializeZones(document));
             settingsNode.AppendChild(SerializeLevels(document));
@@ -93,6 +110,7 @@ namespace POELiveSplitComponent.Component
 
         public void SetSettings(XmlNode settings)
         {
+            setDefaults();
             XmlElement element = (XmlElement)settings;
             if (!element.IsEmpty)
             {
@@ -116,10 +134,13 @@ namespace POELiveSplitComponent.Component
                 {
                     CriteriaToSplit = (SplitCriteria)Enum.Parse(typeof(SplitCriteria), element[SPLIT_CRITERIA].InnerText);
                 }
+                if (element[GENERATE_WITH_ICONS] != null)
+                {
+                    GenerateWithIcons = bool.Parse(element[GENERATE_WITH_ICONS].InnerText);
+                }
                 if (element[SPLIT_ZONES] != null)
                 {
                     HashSet<string> deserialized = DeserializeZones(element[SPLIT_ZONES]);
-                    SplitZones = new HashSet<IZone>();
                     foreach (Zone zone in Zone.ZONES)
                     {
                         if (deserialized.Contains(zone.Serialize()))

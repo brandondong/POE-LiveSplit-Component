@@ -39,5 +39,50 @@ namespace POELiveSplitComponent.Component.Tests
             Assert.AreEqual(lioneyes1, TEST_ZONE_1);
             Assert.AreEqual(lioneyes2, TEST_ZONE_2);
         }
+
+        [TestMethod()]
+        public void ParseNoPart2Test()
+        {
+            Assert.AreEqual("The Sceptre of God (Part 1)", Zone.Parse("The Sceptre of God", new HashSet<IZone>()).Serialize());
+        }
+
+        [TestMethod()]
+        public void ParseNoRequirementTest()
+        {
+            Assert.AreEqual("The Bridge Encampment (Part 2)", Zone.Parse("The Bridge Encampment", new HashSet<IZone>()).Serialize());
+        }
+
+        [TestMethod()]
+        public void ParseHasPrereqTest()
+        {
+            IZone bloodAqueduct = Zone.Parse("The Blood Aqueduct", new HashSet<IZone>());
+            Assert.AreEqual("Highgate (Part 2)", Zone.Parse("Highgate", new HashSet<IZone>() { bloodAqueduct }).Serialize());
+        }
+
+        [TestMethod()]
+        public void ParseMissingPrereqTest()
+        {
+            Assert.AreEqual("Highgate (Part 1)", Zone.Parse("Highgate", new HashSet<IZone>()).Serialize());
+        }
+
+        [TestMethod()]
+        public void ParseWrongPartPrereqTest()
+        {
+            Assert.AreEqual("The Coast (Part 1)", Zone.Parse("The Coast", new HashSet<IZone>() { TEST_ZONE_1 }).Serialize());
+        }
+
+        [TestMethod()]
+        public void ParseCorrectPartPrereqTest()
+        {
+            Assert.AreEqual("The Coast (Part 2)", Zone.Parse("The Coast", new HashSet<IZone>() { TEST_ZONE_2 }).Serialize());
+        }
+
+        [TestMethod()]
+        public void IconTest()
+        {
+            Assert.AreEqual(Zone.IconType.Town, Zone.ICONTYPES[TEST_ZONE_1]);
+            Assert.AreEqual(Zone.IconType.Wp, Zone.ICONTYPES[Zone.Parse("The Coast", new HashSet<IZone>())]);
+            Assert.AreEqual(Zone.IconType.NoWp, Zone.ICONTYPES[Zone.Parse("The Tidal Island", new HashSet<IZone>())]);
+        }
     }
 }

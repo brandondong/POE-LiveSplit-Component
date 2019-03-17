@@ -49,6 +49,7 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.checkIcons = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -56,6 +57,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.checkIcons);
             this.groupBox1.Controls.Add(this.checkAutoSplit);
             this.groupBox1.Controls.Add(this.radioLevels);
             this.groupBox1.Controls.Add(this.radioZones);
@@ -262,6 +264,19 @@
             this.label3.Text = "Starts the timer on the first labyrinth zone entered and splits on subsequent lab" +
     " zones.";
             // 
+            // checkIcons
+            // 
+            this.checkIcons.AutoSize = true;
+            this.checkIcons.Checked = true;
+            this.checkIcons.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkIcons.Location = new System.Drawing.Point(125, 244);
+            this.checkIcons.Name = "checkIcons";
+            this.checkIcons.Size = new System.Drawing.Size(77, 17);
+            this.checkIcons.TabIndex = 15;
+            this.checkIcons.Text = "With Icons";
+            this.checkIcons.UseVisualStyleBackColor = true;
+            this.checkIcons.CheckedChanged += new System.EventHandler(this.HandleIconsChecked);
+            // 
             // SettingsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -308,6 +323,7 @@
         private System.Windows.Forms.RadioButton radioZones;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.CheckBox checkAutoSplit;
+        private System.Windows.Forms.CheckBox checkIcons;
     }
 }
 
