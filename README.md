@@ -2,14 +2,14 @@
 Load screen time removal and auto splitting for Path of Exile speedrunning.
 
 ## Auto Splitting
-The component can be configured to automatically split upon entering specific zones for the first time. This can be used to track progress across sections of the game without the inconvenience of having to manually trigger a split. Note that runs will most likely still have to be ended by the player as races typically do not end on zone entrances but on boss kills or reaching a specific level.
+The component can be configured to automatically split upon entering specific zones or reaching required levels for the first time. This can be used to track progress across sections of the game without the inconvenience of having to manually trigger a split.
 
-[Demonstration](http://i.imgur.com/at31aiP.gif)
+[Demonstration](https://i.imgur.com/EN9RCRy.gif)
 
 ## Load Removal
-Load screen time is automatically subtracted from your run. This is done by reading the timestamps on client logs.
+Load screen time can be automatically subtracted from your run. This is done by reading the timestamps on client logs.
 
-[Demonstration](http://i.imgur.com/v3BaEQY.gif)
+[Demonstration](https://i.imgur.com/kEhAmBg.gif)
 
 ## Setup
 1. If you do not have LiveSplit already, [download](http://livesplit.org/downloads/) the latest version (either link is fine)
