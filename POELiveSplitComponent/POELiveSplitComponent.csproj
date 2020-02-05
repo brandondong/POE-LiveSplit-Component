@@ -50,19 +50,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Component\ClientParser.cs" />
-    <Compile Include="Component\ClientReader.cs" />
-    <Compile Include="Component\ComponentSettings.cs" />
-    <Compile Include="Component\IClientEventHandler.cs" />
-    <Compile Include="Component\IZone.cs" />
+    <Compile Include="Component\GameClient\ClientParser.cs" />
+    <Compile Include="Component\GameClient\ClientReader.cs" />
+    <Compile Include="Component\Settings\ComponentSettings.cs" />
+    <Compile Include="Component\GameClient\IClientEventHandler.cs" />
+    <Compile Include="Component\Timer\IZone.cs" />
     <Compile Include="Component\SettingsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Component\SettingsControl.Designer.cs">
       <DependentUpon>SettingsControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Component\LoadRemoverSplitter.cs" />
-    <Compile Include="Component\Zone.cs" />
+    <Compile Include="Component\Timer\LoadRemoverSplitter.cs" />
+    <Compile Include="Component\Timer\Zone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Component\POEComponent.cs" />
     <Compile Include="Component\POEComponentFactory.cs" />

@@ -1,9 +1,11 @@
 ﻿using LiveSplit.Options;
+using POELiveSplitComponent.Component.Settings;
+using POELiveSplitComponent.Component.Timer;
 using System;
 using System.IO;
 using System.Threading;
 
-namespace POELiveSplitComponent.Component
+namespace POELiveSplitComponent.Component.GameClient
 {
     class ClientReader
     {

@@ -1,8 +1,10 @@
 ﻿using System;
 using LiveSplit.Model;
 using System.Collections.Generic;
+using POELiveSplitComponent.Component.Settings;
+using POELiveSplitComponent.Component.GameClient;
 
-namespace POELiveSplitComponent.Component
+namespace POELiveSplitComponent.Component.Timer
 {
     public class LoadRemoverSplitter : IClientEventHandler
     {

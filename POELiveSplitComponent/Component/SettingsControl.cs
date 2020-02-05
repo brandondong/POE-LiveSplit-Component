@@ -1,14 +1,10 @@
 ﻿using LiveSplit.Model;
+using POELiveSplitComponent.Component.Settings;
+using POELiveSplitComponent.Component.Timer;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace POELiveSplitComponent.Component
@@ -187,7 +183,9 @@ namespace POELiveSplitComponent.Component
             }
             state.Run.HasChanged = true;
             state.Form.Invalidate();
-            MessageBox.Show("Splits generated successfully.\n\nDue to LiveSplit API restrictions, the Splits Editor needs to be reopened to view the updated changes.",
+            MessageBox.Show("Splits generated successfully.\n\n" + 
+                "The splits can be edited in the Splits Editor after saving and reopening.\n" + 
+                "If the split names do not match the order of your zone progression, they can be reordered using that editor.",
                 "Generate Splits", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 

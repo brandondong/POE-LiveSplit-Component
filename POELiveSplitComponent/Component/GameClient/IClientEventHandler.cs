@@ -1,4 +1,4 @@
-﻿namespace POELiveSplitComponent.Component
+﻿namespace POELiveSplitComponent.Component.GameClient
 {
     public interface IClientEventHandler
     {

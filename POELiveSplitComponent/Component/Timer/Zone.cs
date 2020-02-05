@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace POELiveSplitComponent.Component
+namespace POELiveSplitComponent.Component.Timer
 {
     public class Zone : IZone
     {

@@ -1,12 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using POELiveSplitComponent.Component;
-using System;
+using POELiveSplitComponent.Component.Timer;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace POELiveSplitComponent.Component.Tests
+namespace POELiveSplitComponentTests.Component.Timer
 {
     [TestClass()]
     public class ZoneTests

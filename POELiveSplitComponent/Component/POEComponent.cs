@@ -1,9 +1,11 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using System.Xml;
 using LiveSplit.Model;
 using LiveSplit.UI;
 using LiveSplit.UI.Components;
+using POELiveSplitComponent.Component.GameClient;
+using POELiveSplitComponent.Component.Settings;
+using POELiveSplitComponent.Component.Timer;
 
 namespace POELiveSplitComponent.Component
 {

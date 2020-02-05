@@ -1,12 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using POELiveSplitComponent.Component;
+using POELiveSplitComponent.Component.GameClient;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace POELiveSplitComponent.Component.Tests
+namespace POELiveSplitComponentTests.Component.GameClient
 {
     [TestClass()]
     public class ClientParserTests

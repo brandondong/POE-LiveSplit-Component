@@ -1,15 +1,12 @@
 ﻿using LiveSplit.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using POELiveSplitComponent.Component;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using LiveSplit.Model.Input;
 using System.Runtime.Serialization;
+using POELiveSplitComponent.Component.Settings;
+using POELiveSplitComponent.Component.Timer;
 
-namespace POELiveSplitComponent.Component.Tests
+namespace POELiveSplitComponentTests.Component.Timer
 {
     [TestClass()]
     public class LoadRemoverSplitterTests

@@ -1,11 +1,10 @@
 ﻿using LiveSplit.UI;
 using System.Collections.Generic;
-using System.IO;
 using System.Xml;
-using System.Xml.Serialization;
 using System;
+using POELiveSplitComponent.Component.Timer;
 
-namespace POELiveSplitComponent.Component
+namespace POELiveSplitComponent.Component.Settings
 {
     public class ComponentSettings
     {

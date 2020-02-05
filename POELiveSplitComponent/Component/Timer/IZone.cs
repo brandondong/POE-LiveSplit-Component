@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace POELiveSplitComponent.Component
+﻿namespace POELiveSplitComponent.Component.Timer
 {
 
     public interface IZone

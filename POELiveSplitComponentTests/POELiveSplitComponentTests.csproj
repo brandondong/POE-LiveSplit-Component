@@ -46,15 +46,17 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Component\ClientParserTests.cs" />
-    <Compile Include="Component\ComponentSettingsTests.cs" />
-    <Compile Include="Component\LoadRemoverSplitterTests.cs" />
-    <Compile Include="Component\ZoneTests.cs" />
+    <Compile Include="Component\GameClient\ClientParserTests.cs" />
+    <Compile Include="Component\Settings\ComponentSettingsTests.cs" />
+    <Compile Include="Component\Timer\LoadRemoverSplitterTests.cs" />
+    <Compile Include="Component\Timer\ZoneTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
