@@ -10,12 +10,15 @@ namespace POELiveSplitComponent.Component.Settings
     {
         public enum SplitCriteria { Zones, Levels };
 
+        public enum LabSplitMode { AllZones, Trials };
+
         private const string LOG_KEY = "log.location";
         private const string LOAD_REMOVAL_FLAG = "load.removal";
         private const string AUTO_SPLIT_FLAG = "auto.split";
         private const string SPLIT_ZONES = "split.zones.on";
         private const string SPLIT_ZONE = "split.zone";
         private const string SPLIT_LABYRINTH = "split.labyrinth";
+        private const string SPLIT_LABYRINTH_TYPE = "split.labyrinth.type";
         private const string SPLIT_CRITERIA = "split.criteria";
         private const string SPLIT_LEVELS = "split.levels.on";
         private const string SPLIT_LEVEL = "split.level";
@@ -46,6 +49,8 @@ namespace POELiveSplitComponent.Component.Settings
 
         public bool LabSpeedrunningEnabled;
 
+        public LabSplitMode LabSplitType;
+
         public SplitCriteria CriteriaToSplit;
 
         public HashSet<int> SplitLevels { get; private set; }
@@ -64,6 +69,7 @@ namespace POELiveSplitComponent.Component.Settings
             AutoSplitEnabled = true;
             LoadRemovalEnabled = false;
             LabSpeedrunningEnabled = false;
+            LabSplitType = LabSplitMode.AllZones;
             GenerateWithIcons = true;
             CriteriaToSplit = SplitCriteria.Zones;
             logLocation = DEFAULT_LOG_LOCATION;
@@ -78,6 +84,7 @@ namespace POELiveSplitComponent.Component.Settings
             SettingsHelper.CreateSetting(document, settingsNode, LOAD_REMOVAL_FLAG, LoadRemovalEnabled);
             SettingsHelper.CreateSetting(document, settingsNode, AUTO_SPLIT_FLAG, AutoSplitEnabled);
             SettingsHelper.CreateSetting(document, settingsNode, SPLIT_LABYRINTH, LabSpeedrunningEnabled);
+            SettingsHelper.CreateSetting(document, settingsNode, SPLIT_LABYRINTH_TYPE, LabSplitType);
             SettingsHelper.CreateSetting(document, settingsNode, SPLIT_CRITERIA, CriteriaToSplit);
             SettingsHelper.CreateSetting(document, settingsNode, GENERATE_WITH_ICONS, GenerateWithIcons);
 
@@ -85,26 +92,6 @@ namespace POELiveSplitComponent.Component.Settings
             settingsNode.AppendChild(SerializeLevels(document));
 
             return settingsNode;
-        }
-
-        private XmlElement SerializeZones(XmlDocument document)
-        {
-            XmlElement parent = SettingsHelper.ToElement(document, SPLIT_ZONES, (string)null);
-            foreach (IZone zone in SplitZones)
-            {
-                SettingsHelper.CreateSetting(document, parent, SPLIT_ZONE, zone.Serialize());
-            }
-            return parent;
-        }
-
-        private XmlElement SerializeLevels(XmlDocument document)
-        {
-            XmlElement parent = SettingsHelper.ToElement(document, SPLIT_LEVELS, (string)null);
-            foreach (int level in SplitLevels)
-            {
-                SettingsHelper.CreateSetting(document, parent, SPLIT_LEVEL, level);
-            }
-            return parent;
         }
 
         public void SetSettings(XmlNode settings)
@@ -128,6 +115,10 @@ namespace POELiveSplitComponent.Component.Settings
                 if (element[SPLIT_LABYRINTH] != null)
                 {
                     LabSpeedrunningEnabled = bool.Parse(element[SPLIT_LABYRINTH].InnerText);
+                }
+                if (element[SPLIT_LABYRINTH_TYPE] != null)
+                {
+                    LabSplitType = (LabSplitMode)Enum.Parse(typeof(LabSplitMode), element[SPLIT_LABYRINTH_TYPE].InnerText);
                 }
                 if (element[SPLIT_CRITERIA] != null)
                 {
@@ -156,6 +147,26 @@ namespace POELiveSplitComponent.Component.Settings
                     }
                 }
             }
+        }
+
+        private XmlElement SerializeZones(XmlDocument document)
+        {
+            XmlElement parent = SettingsHelper.ToElement(document, SPLIT_ZONES, (string)null);
+            foreach (IZone zone in SplitZones)
+            {
+                SettingsHelper.CreateSetting(document, parent, SPLIT_ZONE, zone.Serialize());
+            }
+            return parent;
+        }
+
+        private XmlElement SerializeLevels(XmlDocument document)
+        {
+            XmlElement parent = SettingsHelper.ToElement(document, SPLIT_LEVELS, (string)null);
+            foreach (int level in SplitLevels)
+            {
+                SettingsHelper.CreateSetting(document, parent, SPLIT_LEVEL, level);
+            }
+            return parent;
         }
 
         private HashSet<string> DeserializeZones(XmlElement element)

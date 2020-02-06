@@ -130,8 +130,16 @@ namespace POELiveSplitComponent.Component
 
         private void HandleCheckLabyrinth(object sender, EventArgs e)
         {
-            settings.LabSpeedrunningEnabled = checkLabyrinth.Checked;
-            checkAutoSplit.Enabled = !checkLabyrinth.Checked;
+            bool enableLabMode = checkLabyrinth.Checked;
+            settings.LabSpeedrunningEnabled = enableLabMode;
+            checkAutoSplit.Enabled = !enableLabMode;
+            createSplitsButton.Enabled = !enableLabMode;
+            checkIcons.Enabled = !enableLabMode;
+            checkSelectAll.Enabled = !enableLabMode;
+            radioZones.Enabled = !enableLabMode;
+            radioLevels.Enabled = !enableLabMode;
+            checkedSplitList.Enabled = !enableLabMode;
+            labelSplitOn.Enabled = !enableLabMode;
         }
 
         private void HandleSelectAll(object sender, EventArgs e)

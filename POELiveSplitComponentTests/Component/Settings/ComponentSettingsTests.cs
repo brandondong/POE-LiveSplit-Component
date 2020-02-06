@@ -20,6 +20,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsTrue(settings.AutoSplitEnabled);
             Assert.IsFalse(settings.LoadRemovalEnabled);
             Assert.IsFalse(settings.LabSpeedrunningEnabled);
+            Assert.AreEqual(ComponentSettings.LabSplitMode.AllZones, settings.LabSplitType);
             Assert.IsTrue(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
             Assert.AreEqual(0, settings.SplitZones.Count);
@@ -47,6 +48,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsTrue(settings.AutoSplitEnabled);
             Assert.IsTrue(settings.LoadRemovalEnabled);
             Assert.IsFalse(settings.LabSpeedrunningEnabled);
+            Assert.AreEqual(ComponentSettings.LabSplitMode.AllZones, settings.LabSplitType);
             Assert.IsTrue(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
             Assert.AreEqual(2, settings.SplitZones.Count);
@@ -99,6 +101,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsTrue(settings.AutoSplitEnabled);
             Assert.IsFalse(settings.LoadRemovalEnabled);
             Assert.IsFalse(settings.LabSpeedrunningEnabled);
+            Assert.AreEqual(ComponentSettings.LabSplitMode.AllZones, settings.LabSplitType);
             Assert.IsTrue(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
             Assert.AreEqual(0, settings.SplitZones.Count);
@@ -113,6 +116,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             settings.AutoSplitEnabled = false;
             settings.LoadRemovalEnabled = true;
             settings.LabSpeedrunningEnabled = true;
+            settings.LabSplitType = ComponentSettings.LabSplitMode.Trials;
             settings.GenerateWithIcons = false;
             settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Levels;
             settings.SplitZones.Add(Zone.ZONES[0]);
@@ -124,6 +128,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsFalse(settings.AutoSplitEnabled);
             Assert.IsTrue(settings.LoadRemovalEnabled);
             Assert.IsTrue(settings.LabSpeedrunningEnabled);
+            Assert.AreEqual(ComponentSettings.LabSplitMode.Trials, settings.LabSplitType);
             Assert.IsFalse(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Levels, settings.CriteriaToSplit);
             Assert.IsTrue(new HashSet<IZone> { Zone.ZONES[0] }.SetEquals(settings.SplitZones));
@@ -137,6 +142,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             settings.AutoSplitEnabled = false;
             settings.LoadRemovalEnabled = true;
             settings.LabSpeedrunningEnabled = true;
+            settings.LabSplitType = ComponentSettings.LabSplitMode.Trials;
             settings.GenerateWithIcons = false;
             settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Levels;
             settings.SplitZones.Add(Zone.ZONES[0]);
@@ -148,6 +154,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsTrue(settings.AutoSplitEnabled);
             Assert.IsFalse(settings.LoadRemovalEnabled);
             Assert.IsFalse(settings.LabSpeedrunningEnabled);
+            Assert.AreEqual(ComponentSettings.LabSplitMode.AllZones, settings.LabSplitType);
             Assert.IsTrue(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
             Assert.AreEqual(0, settings.SplitZones.Count);
@@ -161,6 +168,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             settings.AutoSplitEnabled = false;
             settings.LoadRemovalEnabled = true;
             settings.LabSpeedrunningEnabled = true;
+            settings.LabSplitType = ComponentSettings.LabSplitMode.Trials;
             settings.GenerateWithIcons = false;
             settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Levels;
             settings.SplitZones.Add(Zone.ZONES[0]);
@@ -175,6 +183,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsTrue(settings.AutoSplitEnabled);
             Assert.IsTrue(settings.LoadRemovalEnabled);
             Assert.IsFalse(settings.LabSpeedrunningEnabled);
+            Assert.AreEqual(ComponentSettings.LabSplitMode.AllZones, settings.LabSplitType);
             Assert.IsTrue(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
             Assert.AreEqual(0, settings.SplitZones.Count);

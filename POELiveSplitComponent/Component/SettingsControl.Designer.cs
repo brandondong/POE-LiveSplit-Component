@@ -30,13 +30,14 @@
         {
             this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkIcons = new System.Windows.Forms.CheckBox();
             this.checkAutoSplit = new System.Windows.Forms.CheckBox();
             this.radioLevels = new System.Windows.Forms.RadioButton();
             this.radioZones = new System.Windows.Forms.RadioButton();
             this.createSplitsButton = new System.Windows.Forms.Button();
             this.checkSelectAll = new System.Windows.Forms.CheckBox();
             this.checkedSplitList = new System.Windows.Forms.CheckedListBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.labelSplitOn = new System.Windows.Forms.Label();
             this.checkLabyrinth = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.linkLoadSetup = new System.Windows.Forms.LinkLabel();
@@ -49,7 +50,6 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.checkIcons = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -64,13 +64,26 @@
             this.groupBox1.Controls.Add(this.createSplitsButton);
             this.groupBox1.Controls.Add(this.checkSelectAll);
             this.groupBox1.Controls.Add(this.checkedSplitList);
-            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.labelSplitOn);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(448, 272);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Auto Split";
+            // 
+            // checkIcons
+            // 
+            this.checkIcons.AutoSize = true;
+            this.checkIcons.Checked = true;
+            this.checkIcons.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkIcons.Location = new System.Drawing.Point(125, 244);
+            this.checkIcons.Name = "checkIcons";
+            this.checkIcons.Size = new System.Drawing.Size(77, 17);
+            this.checkIcons.TabIndex = 15;
+            this.checkIcons.Text = "With Icons";
+            this.checkIcons.UseVisualStyleBackColor = true;
+            this.checkIcons.CheckedChanged += new System.EventHandler(this.HandleIconsChecked);
             // 
             // checkAutoSplit
             // 
@@ -141,14 +154,14 @@
             this.checkedSplitList.TabIndex = 5;
             this.checkedSplitList.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.HandleItemChecked);
             // 
-            // label2
+            // labelSplitOn
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 40);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Split on:";
+            this.labelSplitOn.AutoSize = true;
+            this.labelSplitOn.Location = new System.Drawing.Point(9, 40);
+            this.labelSplitOn.Name = "labelSplitOn";
+            this.labelSplitOn.Size = new System.Drawing.Size(45, 13);
+            this.labelSplitOn.TabIndex = 1;
+            this.labelSplitOn.Text = "Split on:";
             // 
             // checkLabyrinth
             // 
@@ -264,19 +277,6 @@
             this.label3.Text = "Starts the timer on the first labyrinth zone entered and splits on subsequent lab" +
     " zones.";
             // 
-            // checkIcons
-            // 
-            this.checkIcons.AutoSize = true;
-            this.checkIcons.Checked = true;
-            this.checkIcons.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkIcons.Location = new System.Drawing.Point(125, 244);
-            this.checkIcons.Name = "checkIcons";
-            this.checkIcons.Size = new System.Drawing.Size(77, 17);
-            this.checkIcons.TabIndex = 15;
-            this.checkIcons.Text = "With Icons";
-            this.checkIcons.UseVisualStyleBackColor = true;
-            this.checkIcons.CheckedChanged += new System.EventHandler(this.HandleIconsChecked);
-            // 
             // SettingsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -313,7 +313,7 @@
         private System.Windows.Forms.Button testButton;
         private System.Windows.Forms.LinkLabel linkLoadSetup;
         private System.Windows.Forms.CheckedListBox checkedSplitList;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelSplitOn;
         private System.Windows.Forms.CheckBox checkLabyrinth;
         private System.Windows.Forms.CheckBox checkSelectAll;
         private System.Windows.Forms.Button createSplitsButton;
