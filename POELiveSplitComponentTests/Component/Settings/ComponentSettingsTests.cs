@@ -19,7 +19,6 @@ namespace POELiveSplitComponentTests.Component.Settings
             settings.SetSettings(nodeSettings);
             Assert.IsTrue(settings.AutoSplitEnabled);
             Assert.IsFalse(settings.LoadRemovalEnabled);
-            Assert.IsFalse(settings.LabSpeedrunningEnabled);
             Assert.AreEqual(ComponentSettings.LabSplitMode.AllZones, settings.LabSplitType);
             Assert.IsTrue(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
@@ -47,7 +46,6 @@ namespace POELiveSplitComponentTests.Component.Settings
             settings.SetSettings(nodeSettings);
             Assert.IsTrue(settings.AutoSplitEnabled);
             Assert.IsTrue(settings.LoadRemovalEnabled);
-            Assert.IsFalse(settings.LabSpeedrunningEnabled);
             Assert.AreEqual(ComponentSettings.LabSplitMode.AllZones, settings.LabSplitType);
             Assert.IsTrue(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
@@ -81,9 +79,40 @@ namespace POELiveSplitComponentTests.Component.Settings
             settings.SetSettings(nodeSettings);
             Assert.IsTrue(settings.AutoSplitEnabled);
             Assert.IsFalse(settings.LoadRemovalEnabled);
-            Assert.IsFalse(settings.LabSpeedrunningEnabled);
             Assert.IsTrue(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Levels, settings.CriteriaToSplit);
+            Assert.AreEqual(3, settings.SplitZones.Count);
+            Assert.AreEqual(1, settings.SplitLevels.Count);
+            Assert.AreEqual(@"C:\Program Files (x86)\Grinding Gear Games\Path of Exile\logs\Client.txt", settings.LogLocation);
+        }
+
+        [TestMethod()]
+        public void SetSettingsWithLegacyLabTest()
+        {
+            XmlDocument xml = new XmlDocument();
+            xml.LoadXml(
+@"<AutoSplitterSettings>
+   <log.location>C:\Program Files (x86)\Grinding Gear Games\Path of Exile\logs\Client.txt</log.location>
+   <load.removal>False</load.removal>
+   <auto.split>True</auto.split>
+   <split.labyrinth>True</split.labyrinth>
+   <split.criteria>Levels</split.criteria>
+   <split.zones.on>
+      <split.zone>Lioneye's Watch (Part 1)</split.zone>
+      <split.zone>The Mud Flats (Part 1)</split.zone>
+      <split.zone>The Ledge (Part 1)</split.zone>
+   </split.zones.on>
+   <split.levels.on>
+      <split.level>3</split.level>
+   </split.levels.on>
+</AutoSplitterSettings>");
+            XmlNode nodeSettings = xml.FirstChild;
+            ComponentSettings settings = new ComponentSettings();
+            settings.SetSettings(nodeSettings);
+            Assert.IsTrue(settings.AutoSplitEnabled);
+            Assert.IsFalse(settings.LoadRemovalEnabled);
+            Assert.IsTrue(settings.GenerateWithIcons);
+            Assert.AreEqual(ComponentSettings.SplitCriteria.Labyrinth, settings.CriteriaToSplit);
             Assert.AreEqual(3, settings.SplitZones.Count);
             Assert.AreEqual(1, settings.SplitLevels.Count);
             Assert.AreEqual(@"C:\Program Files (x86)\Grinding Gear Games\Path of Exile\logs\Client.txt", settings.LogLocation);
@@ -100,7 +129,6 @@ namespace POELiveSplitComponentTests.Component.Settings
             settings.SetSettings(node);
             Assert.IsTrue(settings.AutoSplitEnabled);
             Assert.IsFalse(settings.LoadRemovalEnabled);
-            Assert.IsFalse(settings.LabSpeedrunningEnabled);
             Assert.AreEqual(ComponentSettings.LabSplitMode.AllZones, settings.LabSplitType);
             Assert.IsTrue(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
@@ -115,7 +143,6 @@ namespace POELiveSplitComponentTests.Component.Settings
             ComponentSettings settings = new ComponentSettings();
             settings.AutoSplitEnabled = false;
             settings.LoadRemovalEnabled = true;
-            settings.LabSpeedrunningEnabled = true;
             settings.LabSplitType = ComponentSettings.LabSplitMode.Trials;
             settings.GenerateWithIcons = false;
             settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Levels;
@@ -127,7 +154,6 @@ namespace POELiveSplitComponentTests.Component.Settings
             settings.SetSettings(node);
             Assert.IsFalse(settings.AutoSplitEnabled);
             Assert.IsTrue(settings.LoadRemovalEnabled);
-            Assert.IsTrue(settings.LabSpeedrunningEnabled);
             Assert.AreEqual(ComponentSettings.LabSplitMode.Trials, settings.LabSplitType);
             Assert.IsFalse(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Levels, settings.CriteriaToSplit);
@@ -141,7 +167,6 @@ namespace POELiveSplitComponentTests.Component.Settings
             ComponentSettings settings = new ComponentSettings();
             settings.AutoSplitEnabled = false;
             settings.LoadRemovalEnabled = true;
-            settings.LabSpeedrunningEnabled = true;
             settings.LabSplitType = ComponentSettings.LabSplitMode.Trials;
             settings.GenerateWithIcons = false;
             settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Levels;
@@ -153,7 +178,6 @@ namespace POELiveSplitComponentTests.Component.Settings
             settings.SetSettings(new ComponentSettings().GetSettings(xml));
             Assert.IsTrue(settings.AutoSplitEnabled);
             Assert.IsFalse(settings.LoadRemovalEnabled);
-            Assert.IsFalse(settings.LabSpeedrunningEnabled);
             Assert.AreEqual(ComponentSettings.LabSplitMode.AllZones, settings.LabSplitType);
             Assert.IsTrue(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
@@ -167,10 +191,9 @@ namespace POELiveSplitComponentTests.Component.Settings
             ComponentSettings settings = new ComponentSettings();
             settings.AutoSplitEnabled = false;
             settings.LoadRemovalEnabled = true;
-            settings.LabSpeedrunningEnabled = true;
             settings.LabSplitType = ComponentSettings.LabSplitMode.Trials;
             settings.GenerateWithIcons = false;
-            settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Levels;
+            settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Labyrinth;
             settings.SplitZones.Add(Zone.ZONES[0]);
             settings.SplitLevels.Add(100);
 
@@ -182,7 +205,6 @@ namespace POELiveSplitComponentTests.Component.Settings
             settings.SetSettings(nodeSettings);
             Assert.IsTrue(settings.AutoSplitEnabled);
             Assert.IsTrue(settings.LoadRemovalEnabled);
-            Assert.IsFalse(settings.LabSpeedrunningEnabled);
             Assert.AreEqual(ComponentSettings.LabSplitMode.AllZones, settings.LabSplitType);
             Assert.IsTrue(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);

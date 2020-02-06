@@ -28,18 +28,24 @@ namespace POELiveSplitComponent.Component
             checkAutoSplit.Checked = settings.AutoSplitEnabled;
             checkLoadRemoval.Checked = settings.LoadRemovalEnabled;
             textLogLocation.Text = settings.LogLocation;
-            checkLabyrinth.Checked = settings.LabSpeedrunningEnabled;
-            bool isZoneCriteria = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones;
-            radioZones.Checked = isZoneCriteria;
-            radioLevels.Checked = !isZoneCriteria;
+            radioZones.Checked = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones;
+            radioLevels.Checked = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Levels;
+            radioLab.Checked = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Labyrinth;
             checkIcons.Checked = settings.GenerateWithIcons;
-            checkIcons.Visible = isZoneCriteria;
+            radioAllLab.Checked = settings.LabSplitType == ComponentSettings.LabSplitMode.AllZones;
+            radioAspirant.Checked = settings.LabSplitType == ComponentSettings.LabSplitMode.Trials;
 
-            updateCheckedList();
+            updateSplitCriteriaSpecificArea();
         }
 
-        private void updateCheckedList()
+        private void updateSplitCriteriaSpecificArea()
         {
+            groupBoxLab.Visible = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Labyrinth;
+
+            panelSplitList.Visible = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones || 
+                settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Levels;
+            checkIcons.Visible = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones;
+
             checkedSplitList.Items.Clear();
             if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones)
             {
@@ -48,7 +54,7 @@ namespace POELiveSplitComponent.Component
                     checkedSplitList.Items.Add(zone, settings.SplitZones.Contains(zone));
                 }
             }
-            else
+            else if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Levels)
             {
                 for (int i = 2; i <= 100; i++)
                 {
@@ -114,7 +120,7 @@ namespace POELiveSplitComponent.Component
                     settings.SplitZones.Remove(zone);
                 }
             }
-            else
+            else if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Levels)
             {
                 int level = (int)checkedSplitList.Items[e.Index];
                 if (e.NewValue == CheckState.Checked)
@@ -126,20 +132,6 @@ namespace POELiveSplitComponent.Component
                     settings.SplitLevels.Remove(level);
                 }
             }
-        }
-
-        private void HandleCheckLabyrinth(object sender, EventArgs e)
-        {
-            bool enableLabMode = checkLabyrinth.Checked;
-            settings.LabSpeedrunningEnabled = enableLabMode;
-            checkAutoSplit.Enabled = !enableLabMode;
-            createSplitsButton.Enabled = !enableLabMode;
-            checkIcons.Enabled = !enableLabMode;
-            checkSelectAll.Enabled = !enableLabMode;
-            radioZones.Enabled = !enableLabMode;
-            radioLevels.Enabled = !enableLabMode;
-            checkedSplitList.Enabled = !enableLabMode;
-            labelSplitOn.Enabled = !enableLabMode;
         }
 
         private void HandleSelectAll(object sender, EventArgs e)
@@ -216,12 +208,27 @@ namespace POELiveSplitComponent.Component
             {
                 settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Zones;
             }
-            else
+            else if (radioLevels.Checked)
             {
                 settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Levels;
             }
-            checkIcons.Visible = radioZones.Checked;
-            updateCheckedList();
+            else if (radioLab.Checked)
+            {
+                settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Labyrinth;
+            }
+            updateSplitCriteriaSpecificArea();
+        }
+
+        private void HandleLabTypeChanged(object sender, EventArgs e)
+        {
+            if (radioAllLab.Checked)
+            {
+                settings.LabSplitType = ComponentSettings.LabSplitMode.AllZones;
+            }
+            else if (radioAspirant.Checked)
+            {
+                settings.LabSplitType = ComponentSettings.LabSplitMode.Trials;
+            }
         }
 
         private void HandleIconsChecked(object sender, EventArgs e)

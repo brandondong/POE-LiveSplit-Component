@@ -45,35 +45,37 @@ namespace POELiveSplitComponent.Component.Timer
                         
             IZone zone = Zone.Parse(zoneName, encounteredZones);
 
-            // The lab speedrunning mode always takes precedence.
-            if (settings.LabSpeedrunningEnabled)
+            if (settings.AutoSplitEnabled)
             {
-                if (timer.CurrentState.CurrentPhase == TimerPhase.NotRunning && LAB_ENTRANCE.Equals(previousZone))
+                if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Labyrinth)
                 {
-                    // Start the timer on the first zone of the lab.
-                    timer.Start();
+                    if (timer.CurrentState.CurrentPhase == TimerPhase.NotRunning && LAB_ENTRANCE.Equals(previousZone))
+                    {
+                        // Start the timer on the first zone of the lab.
+                        timer.Start();
+                    }
+                    else
+                    {
+                        // And split on subsequent zones.
+                        timer.Split();
+                    }
                 }
-                else
+                else if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones)
                 {
-                    // And split on subsequent zones.
-                    timer.Split();
+                    if (!encounteredZones.Contains(zone) && settings.SplitZones.Contains(zone))
+                    {
+                        timer.Split();
+                    }
+                    // Keep track of all encountered zones for part prediction.
+                    encounteredZones.Add(zone);
                 }
-            }
-            else if (settings.AutoSplitEnabled && settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones)
-            {
-                if (!encounteredZones.Contains(zone) && settings.SplitZones.Contains(zone))
-                {
-                    timer.Split();
-                }
-                // Keep track of all encountered zones for part prediction.
-                encounteredZones.Add(zone);
             }
             previousZone = zone;
         }
 
         public void HandleLevelUp(long timestamp, int level)
         {
-            if (!settings.LabSpeedrunningEnabled && settings.AutoSplitEnabled && settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Levels)
+            if (settings.AutoSplitEnabled && settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Levels)
             {
                 // A single character can technically reach the same level twice but this is more to handle muling.
                 if (!levelsReached.Contains(level) && settings.SplitLevels.Contains(level))

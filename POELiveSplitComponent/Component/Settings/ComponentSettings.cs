@@ -8,7 +8,7 @@ namespace POELiveSplitComponent.Component.Settings
 {
     public class ComponentSettings
     {
-        public enum SplitCriteria { Zones, Levels };
+        public enum SplitCriteria { Zones, Levels, Labyrinth };
 
         public enum LabSplitMode { AllZones, Trials };
 
@@ -17,12 +17,12 @@ namespace POELiveSplitComponent.Component.Settings
         private const string AUTO_SPLIT_FLAG = "auto.split";
         private const string SPLIT_ZONES = "split.zones.on";
         private const string SPLIT_ZONE = "split.zone";
-        private const string SPLIT_LABYRINTH = "split.labyrinth";
         private const string SPLIT_LABYRINTH_TYPE = "split.labyrinth.type";
         private const string SPLIT_CRITERIA = "split.criteria";
         private const string SPLIT_LEVELS = "split.levels.on";
         private const string SPLIT_LEVEL = "split.level";
         private const string GENERATE_WITH_ICONS = "generate.with.icons";
+        private const string LEGACY_SPLIT_LABYRINTH = "split.labyrinth";
 
         private const string DEFAULT_LOG_LOCATION = @"C:\Program Files (x86)\Grinding Gear Games\Path of Exile\logs\Client.txt";
 
@@ -47,8 +47,6 @@ namespace POELiveSplitComponent.Component.Settings
 
         public HashSet<IZone> SplitZones { get; private set; }
 
-        public bool LabSpeedrunningEnabled;
-
         public LabSplitMode LabSplitType;
 
         public SplitCriteria CriteriaToSplit;
@@ -68,7 +66,6 @@ namespace POELiveSplitComponent.Component.Settings
         {
             AutoSplitEnabled = true;
             LoadRemovalEnabled = false;
-            LabSpeedrunningEnabled = false;
             LabSplitType = LabSplitMode.AllZones;
             GenerateWithIcons = true;
             CriteriaToSplit = SplitCriteria.Zones;
@@ -83,7 +80,6 @@ namespace POELiveSplitComponent.Component.Settings
             SettingsHelper.CreateSetting(document, settingsNode, LOG_KEY, LogLocation);
             SettingsHelper.CreateSetting(document, settingsNode, LOAD_REMOVAL_FLAG, LoadRemovalEnabled);
             SettingsHelper.CreateSetting(document, settingsNode, AUTO_SPLIT_FLAG, AutoSplitEnabled);
-            SettingsHelper.CreateSetting(document, settingsNode, SPLIT_LABYRINTH, LabSpeedrunningEnabled);
             SettingsHelper.CreateSetting(document, settingsNode, SPLIT_LABYRINTH_TYPE, LabSplitType);
             SettingsHelper.CreateSetting(document, settingsNode, SPLIT_CRITERIA, CriteriaToSplit);
             SettingsHelper.CreateSetting(document, settingsNode, GENERATE_WITH_ICONS, GenerateWithIcons);
@@ -111,10 +107,6 @@ namespace POELiveSplitComponent.Component.Settings
                 if (element[AUTO_SPLIT_FLAG] != null)
                 {
                     AutoSplitEnabled = bool.Parse(element[AUTO_SPLIT_FLAG].InnerText);
-                }
-                if (element[SPLIT_LABYRINTH] != null)
-                {
-                    LabSpeedrunningEnabled = bool.Parse(element[SPLIT_LABYRINTH].InnerText);
                 }
                 if (element[SPLIT_LABYRINTH_TYPE] != null)
                 {
@@ -145,6 +137,11 @@ namespace POELiveSplitComponent.Component.Settings
                     {
                         SplitLevels.Add(Int32.Parse(child.InnerText));
                     }
+                }
+                if (element[LEGACY_SPLIT_LABYRINTH] != null && bool.Parse(element[LEGACY_SPLIT_LABYRINTH].InnerText))
+                {
+                    // Override to support old split settings.
+                    CriteriaToSplit = SplitCriteria.Labyrinth;
                 }
             }
         }

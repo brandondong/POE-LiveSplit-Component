@@ -169,9 +169,8 @@ namespace POELiveSplitComponentTests.Component.Timer
         public void NoSplitWhenInLabModeTest()
         {
             ComponentSettings settings = new ComponentSettings();
-            settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Levels;
+            settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Labyrinth;
             settings.SplitLevels.Add(10);
-            settings.LabSpeedrunningEnabled = true;
             MockTimerModel timer = new MockTimerModel();
 
             LoadRemoverSplitter splitter = new LoadRemoverSplitter(timer, settings);
