@@ -10,6 +10,7 @@ namespace POELiveSplitComponent.Component.Timer
     {
         // Zone that lab runners must enter before the lab. Unique zone name.
         private static IZone LAB_ENTRANCE = Zone.Parse("Aspirants' Plaza", new HashSet<IZone>());
+        private static IZone ASPIRANTS_TRIAL = Zone.Parse("Aspirant's Trial", new HashSet<IZone>());
         private ComponentSettings settings;
         private ITimerModel timer;
         private long loadTimes = 0;
@@ -17,6 +18,7 @@ namespace POELiveSplitComponent.Component.Timer
         private HashSet<IZone> encounteredZones = new HashSet<IZone>();
         private HashSet<int> levelsReached = new HashSet<int>();
         private IZone previousZone;
+        private bool labStarted = false;
 
         public LoadRemoverSplitter(ITimerModel timer, ComponentSettings settings)
         {
@@ -49,14 +51,9 @@ namespace POELiveSplitComponent.Component.Timer
             {
                 if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Labyrinth)
                 {
-                    if (timer.CurrentState.CurrentPhase == TimerPhase.NotRunning && LAB_ENTRANCE.Equals(previousZone))
+                    if (labStarted && (settings.LabSplitType == ComponentSettings.LabSplitMode.AllZones ||
+                        (settings.LabSplitType == ComponentSettings.LabSplitMode.Trials && ASPIRANTS_TRIAL.Equals(zone))))
                     {
-                        // Start the timer on the first zone of the lab.
-                        timer.Start();
-                    }
-                    else
-                    {
-                        // And split on subsequent zones.
                         timer.Split();
                     }
                 }
@@ -86,12 +83,25 @@ namespace POELiveSplitComponent.Component.Timer
             }
         }
 
+        public void HandleIzaroDialogue(long timestamp, string dialogue)
+        {
+            // Izaro can sometimes give a long speech when first entering. Check that this is not the case.
+            int numWords = dialogue.Split(new char[] { ' ' }).Length;
+            if (timer.CurrentState.CurrentPhase == TimerPhase.NotRunning && LAB_ENTRANCE.Equals(previousZone) && numWords < 20)
+            {
+                // The dialogue should be triggered upon activating the lab device.
+                timer.Start();
+                labStarted = true;
+            }
+        }
+
         private void HandleResetRuns(object sender, EventArgs e)
         {
             loadTimes = 0;
             startTimestamp = null;
             encounteredZones = new HashSet<IZone>();
             levelsReached = new HashSet<int>();
+            labStarted = false;
         }
     }
 }

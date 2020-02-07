@@ -5,11 +5,15 @@ namespace POELiveSplitComponent.Component.GameClient
 {
     public class ClientParser
     {
-        private static readonly Regex START = new Regex(@"^[^ ]+ [^ ]+ (\d+).*Got Instance Details");
+        private static readonly string TIMESTAMP_SECTION = @"^[^ ]+ [^ ]+ (\d+)";
 
-        private static readonly Regex ZONE_NAME = new Regex(@"^[^ ]+ [^ ]+ (\d+).*You have entered (.*)\.$");
+        private static readonly Regex START = new Regex(TIMESTAMP_SECTION + @".*Got Instance Details");
 
-        private static readonly Regex LEVEL_UP = new Regex(@"^[^ ]+ [^ ]+ (\d+).* is now level (\d+)$");
+        private static readonly Regex ZONE_NAME = new Regex(TIMESTAMP_SECTION + @".*You have entered (.*)\.$");
+
+        private static readonly Regex LEVEL_UP = new Regex(TIMESTAMP_SECTION + @".* is now level (\d+)$");
+
+        private static readonly Regex IZARO_DIALOGUE = new Regex(TIMESTAMP_SECTION + @".*Izaro: (.*)");
 
         private IClientEventHandler splitter;
 
@@ -38,7 +42,14 @@ namespace POELiveSplitComponent.Component.GameClient
             if (match.Success)
             {
                 GroupCollection groups = match.Groups;
-                splitter.HandleLevelUp(long.Parse(groups[1].Value), Int32.Parse(groups[2].Value));
+                splitter.HandleLevelUp(long.Parse(groups[1].Value), int.Parse(groups[2].Value));
+            }
+            match = IZARO_DIALOGUE.Match(s);
+            if (match.Success)
+            {
+                GroupCollection groups = match.Groups;
+                splitter.HandleIzaroDialogue(long.Parse(groups[1].Value), groups[2].Value);
+
             }
         }
     }

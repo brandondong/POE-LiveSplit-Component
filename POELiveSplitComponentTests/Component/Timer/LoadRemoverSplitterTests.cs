@@ -204,5 +204,64 @@ namespace POELiveSplitComponentTests.Component.Timer
             splitter.HandleLoadEnd(8, "Lioneye's Watch");
             Assert.AreEqual(2, timer.NumSplits);
         }
+
+        [TestMethod()]
+        public void LabAllZonesTest()
+        {
+            ComponentSettings settings = new ComponentSettings();
+            settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Labyrinth;
+            MockTimerModel timer = new MockTimerModel();
+
+            LoadRemoverSplitter splitter = new LoadRemoverSplitter(timer, settings);
+            splitter.HandleIzaroDialogue(1, "...");
+            Assert.AreEqual(0, timer.NumStarts);
+            // Enter Aspirants' Plaza.
+            splitter.HandleLoadStart(3);
+            splitter.HandleLoadEnd(4, "Aspirants' Plaza");
+            Assert.AreEqual(0, timer.NumSplits);
+            // Intro Izaro dialogue.
+            splitter.HandleIzaroDialogue(5, "You stand before the gates of the lord's labyrinth. Within these walls the Lady of Justice doth preside. She shall weigh your mind in one hand, your heart another. Should she find you wanting, death will be your sentence. Should she find you worthy, you will be given the loyalty and love of an empire. Choose wisely. Strike quickly. Trust completely. And may you find the ending that you deserve.");
+            Assert.AreEqual(0, timer.NumStarts);
+            // Activated lab device.
+            splitter.HandleIzaroDialogue(6, "Justice will prevail.");
+            Assert.AreEqual(1, timer.NumStarts);
+            Assert.AreEqual(0, timer.NumSplits);
+            // Run through some zones.
+            splitter.HandleLoadStart(7);
+            splitter.HandleLoadEnd(8, "...");
+            Assert.AreEqual(1, timer.NumSplits);
+            splitter.HandleLoadStart(8);
+            splitter.HandleLoadEnd(9, "...");
+            Assert.AreEqual(2, timer.NumSplits);
+        }
+
+        [TestMethod()]
+        public void LabOnlyTrialsTest()
+        {
+            ComponentSettings settings = new ComponentSettings();
+            settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Labyrinth;
+            settings.LabSplitType = ComponentSettings.LabSplitMode.Trials;
+            MockTimerModel timer = new MockTimerModel();
+
+            LoadRemoverSplitter splitter = new LoadRemoverSplitter(timer, settings);
+            // Enter Aspirants' Plaza.
+            splitter.HandleLoadStart(3);
+            splitter.HandleLoadEnd(4, "Aspirants' Plaza");
+            // Activated lab device.
+            splitter.HandleIzaroDialogue(6, "Justice will prevail.");
+            Assert.AreEqual(1, timer.NumStarts);
+            Assert.AreEqual(0, timer.NumSplits);
+            // Run through an intermediate lab zone.
+            splitter.HandleLoadStart(7);
+            splitter.HandleLoadEnd(8, "...");
+            Assert.AreEqual(0, timer.NumSplits);
+            // Arrive at Aspirant's Trial.
+            splitter.HandleLoadStart(8);
+            splitter.HandleLoadEnd(9, "Aspirant's Trial");
+            Assert.AreEqual(1, timer.NumSplits);
+            splitter.HandleLoadStart(10);
+            splitter.HandleLoadEnd(11, "Aspirant's Trial");
+            Assert.AreEqual(2, timer.NumSplits);
+        }
     }
 }

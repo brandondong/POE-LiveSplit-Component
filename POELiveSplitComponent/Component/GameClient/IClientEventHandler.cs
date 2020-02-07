@@ -5,5 +5,6 @@
         void HandleLoadStart(long timestamp);
         void HandleLoadEnd(long timestamp, string zoneName);
         void HandleLevelUp(long timestamp, int level);
+        void HandleIzaroDialogue(long timestamp, string dialogue);
     }
 }
