@@ -59,7 +59,7 @@ namespace POELiveSplitComponent.Component.Timer
                 }
                 else if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones)
                 {
-                    if (!encounteredZones.Contains(zone) && settings.SplitZones.Contains(zone))
+                    if (ShouldSplitForCrtieraZone(zone))
                     {
                         timer.Split();
                     }
@@ -68,6 +68,29 @@ namespace POELiveSplitComponent.Component.Timer
                 }
             }
             previousZone = zone;
+        }
+
+        private bool ShouldSplitForCrtieraZone(IZone zone)
+        {
+            if (!settings.SplitZones.Contains(zone))
+            {
+                return false;
+            }
+            if (!encounteredZones.Contains(zone))
+            {
+                return true;
+            }
+            // Special handling for cases where multiple splits are created for the same zone.
+            // Despite having seen the zone already, split anyways if the current split name matches exactly.
+            // See https://github.com/brandondong/POE-LiveSplit-Component/issues/8 for more details.
+            IList<ISegment> segments = timer.CurrentState.Run;
+            int currentIndex = timer.CurrentState.CurrentSplitIndex;
+            if (segments == null || currentIndex >= segments.Count)
+            {
+                return false;
+            }
+            ISegment currentSplit = segments[currentIndex];
+            return zone.SplitName() == currentSplit.Name;
         }
 
         public void HandleLevelUp(long timestamp, int level)
