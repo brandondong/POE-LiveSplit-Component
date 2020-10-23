@@ -1,4 +1,4 @@
-﻿using LiveSplit.Model;
+using LiveSplit.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using LiveSplit.Model.Input;
@@ -233,6 +233,9 @@ namespace POELiveSplitComponentTests.Component.Timer
             splitter.HandleLoadStart(8);
             splitter.HandleLoadEnd(9, "...");
             Assert.AreEqual(2, timer.NumSplits);
+            // Izaro death
+            splitter.HandleIzaroDialogue(10, "I die for the Empire!");
+            Assert.AreEqual(3, timer.NumSplits);
         }
 
         [TestMethod()]
@@ -262,6 +265,9 @@ namespace POELiveSplitComponentTests.Component.Timer
             splitter.HandleLoadStart(10);
             splitter.HandleLoadEnd(11, "Aspirant's Trial");
             Assert.AreEqual(2, timer.NumSplits);
+            // Izaro death
+            splitter.HandleIzaroDialogue(12, "You are free!");
+            Assert.AreEqual(3, timer.NumSplits);
         }
     }
 }
