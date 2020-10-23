@@ -64,7 +64,8 @@ namespace POELiveSplitComponentTests.Component.Timer
 
             public void Reset()
             {
-                throw new NotImplementedException();
+                NumSplits = 0;
+                NumStarts = 0;
             }
 
             public void Reset(bool updateSplits)
@@ -268,6 +269,33 @@ namespace POELiveSplitComponentTests.Component.Timer
             // Izaro death
             splitter.HandleIzaroDialogue(12, "You are free!");
             Assert.AreEqual(3, timer.NumSplits);
+        }
+
+        [TestMethod()]
+        public void LabOnlyPlazaReset()
+        {
+            ComponentSettings settings = new ComponentSettings();
+            settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Labyrinth;
+            settings.LabSplitType = ComponentSettings.LabSplitMode.Trials;
+            MockTimerModel timer = new MockTimerModel();
+
+            LoadRemoverSplitter splitter = new LoadRemoverSplitter(timer, settings);
+            // Enter Aspirants' Plaza.
+            splitter.HandleLoadStart(3);
+            splitter.HandleLoadEnd(4, "Aspirants' Plaza");
+            // Activated lab device.
+            splitter.HandleIzaroDialogue(6, "Justice will prevail.");
+            Assert.AreEqual(1, timer.NumStarts);
+            Assert.AreEqual(0, timer.NumSplits);
+            // Run through an intermediate lab zone.
+            splitter.HandleLoadStart(7);
+            splitter.HandleLoadEnd(8, "...");
+            Assert.AreEqual(0, timer.NumSplits);
+            // Enter Aspirants' Plaza resets timer
+            splitter.HandleLoadStart(9);
+            splitter.HandleLoadEnd(10, "Aspirants' Plaza");
+            Assert.AreEqual(0, timer.NumStarts);
+            Assert.AreEqual(0, timer.NumSplits);
         }
     }
 }
