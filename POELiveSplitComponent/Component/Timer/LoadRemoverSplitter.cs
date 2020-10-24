@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Linq;
 using LiveSplit.Model;
 using System.Collections.Generic;
 using POELiveSplitComponent.Component.Settings;
@@ -19,6 +20,16 @@ namespace POELiveSplitComponent.Component.Timer
         private HashSet<int> levelsReached = new HashSet<int>();
         private IZone previousZone;
         private bool labStarted = false;
+
+        readonly List<string> IzaroDeathLines = new List<string>()
+        {
+            "I die for the Empire!",
+            "You are free!",
+            "Your destination is more dangerous than the journey, ascendant.",
+            "Triumphant at last!",
+            "The trap of tyranny is inescapable.",
+            "Delight in your gilded dungeon, ascendant.",
+        };
 
         public LoadRemoverSplitter(ITimerModel timer, ComponentSettings settings)
         {
@@ -55,6 +66,11 @@ namespace POELiveSplitComponent.Component.Timer
                         (settings.LabSplitType == ComponentSettings.LabSplitMode.Trials && ASPIRANTS_TRIAL.Equals(zone))))
                     {
                         timer.Split();
+                    }
+                    else if (labStarted && LAB_ENTRANCE.Equals(zone))
+                    {
+                        timer.Reset();
+                        labStarted = false;
                     }
                 }
                 else if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones)
@@ -110,7 +126,15 @@ namespace POELiveSplitComponent.Component.Timer
         {
             // Izaro can sometimes give a long speech when first entering. Check that this is not the case.
             int numWords = dialogue.Split(new char[] { ' ' }).Length;
-            if (timer.CurrentState.CurrentPhase == TimerPhase.NotRunning && LAB_ENTRANCE.Equals(previousZone) && numWords < 20)
+            if (labStarted)
+            {
+                // when Izaro dies, he states one of a handful of phrases, call a split when he says them to finish the run
+                if (IzaroDeathLines.Any(s => dialogue.Contains(s)))
+                {
+                    timer.Split();
+                }
+            }
+            else if ((timer.CurrentState.CurrentPhase == TimerPhase.NotRunning || timer.CurrentState.CurrentPhase == TimerPhase.Ended) && LAB_ENTRANCE.Equals(previousZone) && numWords < 20)
             {
                 // The dialogue should be triggered upon activating the lab device.
                 timer.Start();
