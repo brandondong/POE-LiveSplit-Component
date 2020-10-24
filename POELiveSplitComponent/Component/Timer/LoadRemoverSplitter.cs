@@ -62,15 +62,15 @@ namespace POELiveSplitComponent.Component.Timer
             {
                 if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Labyrinth)
                 {
-                    if (labStarted && (settings.LabSplitType == ComponentSettings.LabSplitMode.AllZones ||
-                        (settings.LabSplitType == ComponentSettings.LabSplitMode.Trials && ASPIRANTS_TRIAL.Equals(zone))))
-                    {
-                        timer.Split();
-                    }
-                    else if (labStarted && LAB_ENTRANCE.Equals(zone))
+                    if (labStarted && LAB_ENTRANCE.Equals(zone))
                     {
                         timer.Reset();
                         labStarted = false;
+                    }
+                    else if (labStarted && (settings.LabSplitType == ComponentSettings.LabSplitMode.AllZones ||
+                        (settings.LabSplitType == ComponentSettings.LabSplitMode.Trials && ASPIRANTS_TRIAL.Equals(zone))))
+                    {
+                        timer.Split();
                     }
                 }
                 else if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones)
