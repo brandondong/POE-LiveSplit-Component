@@ -82,4 +82,13 @@
 			<change>Added an option to only split on Aspirant's Trial zones for lab speedrunning.</change>
 		</changelog>
 	</update>
+	<update version="1.0.11">
+		<files>
+			<file path="Components/POELiveSplitComponent.dll" status="changed" />
+		</files>
+		<changelog>
+			<change>Automatically split when killing Izaro for lab speedrunning. @TehHammer</change>
+			<change>Changed lab speedrunning to reset the timer automatically upon re-entering Aspirants' Plaza. @TehHammer</change>
+		</changelog>
+	</update>
 </updates>
