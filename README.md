@@ -13,7 +13,7 @@ Load screen time can be automatically subtracted from your run. This is done by 
 
 ## Setup
 1. If you do not have LiveSplit already, [download](http://livesplit.org/downloads/) the latest version (either link is fine)
-2. Extract the zip file and run the LiveSplit application executable
+2. Extract the zip file into a convenient folder (and which does not require Administrator access) and run the LiveSplit application executable
 3. Right click on the timer and select "Edit Splits"
 4. Type "Path of Exile" as the Game Name and click the Activate button below the number of attempts
 5. To configure settings such as selecting which zones will result in an automatic split upon entering, click the Settings button next to the Activate button
