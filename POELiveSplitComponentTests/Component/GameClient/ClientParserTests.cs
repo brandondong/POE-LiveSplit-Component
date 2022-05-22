@@ -134,14 +134,5 @@ namespace POELiveSplitComponentTests.Component.GameClient
             parser.ProcessLine("2019/03/15 19:48:46 177561171 a50 [INFO Client 784] : Nerf (Shadow) is now level 25");
             expected.AssertEventProcessed();
         }
-
-        [TestMethod()]
-        public void ProcessIzaroDialogue()
-        {
-            ExpectedIzaroDialogue expected = new ExpectedIzaroDialogue(911705671, "Delight in your gilded dungeon, ascendant.");
-            ClientParser parser = new ClientParser(expected);
-            parser.ProcessLine("2020/02/05 23:51:54 911705671 ac9 [INFO Client 10980] Izaro: Delight in your gilded dungeon, ascendant.");
-            expected.AssertEventProcessed();
-        }
     }
 }

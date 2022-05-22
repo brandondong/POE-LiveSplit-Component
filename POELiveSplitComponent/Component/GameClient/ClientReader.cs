@@ -61,6 +61,7 @@ namespace POELiveSplitComponent.Component.GameClient
         public void Stop()
         {
             threadCount++;
+            parser.Stop();
         }
     }
 }
