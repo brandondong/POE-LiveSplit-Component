@@ -38,7 +38,7 @@ namespace POELiveSplitComponentTests.Component.Settings
    <split.labyrinth>False</split.labyrinth>
    <split.zones.on>
       <split.zone>Lioneye's Watch (Part 1)</split.zone>
-      <split.zone>Oriath (Part 2)</split.zone>
+      <split.zone>Oriath Docks (Part 2)</split.zone>
    </split.zones.on>
 </AutoSplitterSettings>");
             XmlNode nodeSettings = xml.FirstChild;

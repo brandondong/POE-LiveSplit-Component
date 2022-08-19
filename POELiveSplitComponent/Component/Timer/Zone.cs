@@ -160,7 +160,7 @@ namespace POELiveSplitComponent.Component.Timer
             add(new Zone("The Reliquary", 2), IconType.Wp, act10Home);
             add(new Zone("The Canals", 2), IconType.NoWp, act10Home);
             add(new Zone("The Feeding Trough", 2), IconType.NoWp, act10Home);
-            add(new Zone("Oriath", 2), IconType.Town, act10Home);
+            add(new Zone("Karui Shores", 2), IconType.Town, act10Home);
         }
 
         private static void add(Zone zone, IconType icon, Zone requirement = null)
