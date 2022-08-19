@@ -91,4 +91,12 @@
 			<change>Changed lab speedrunning to reset the timer automatically upon re-entering Aspirants' Plaza. @TehHammer</change>
 		</changelog>
 	</update>
+	<update version="1.0.12">
+		<files>
+			<file path="Components/POELiveSplitComponent.dll" status="changed" />
+		</files>
+		<changelog>
+			<change>Added Karui Shores zone.</change>
+		</changelog>
+	</update>
 </updates>
