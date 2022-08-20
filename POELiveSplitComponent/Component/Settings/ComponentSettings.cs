@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Xml;
 using System;
 using POELiveSplitComponent.Component.Timer;
+using LiveSplit.Options;
 
 namespace POELiveSplitComponent.Component.Settings
 {
@@ -47,6 +48,8 @@ namespace POELiveSplitComponent.Component.Settings
 
         public HashSet<IZone> SplitZones { get; private set; }
 
+        public HashSet<int> SplitZoneLevels { get; private set; }
+
         public LabSplitMode LabSplitType;
 
         public SplitCriteria CriteriaToSplit;
@@ -71,11 +74,13 @@ namespace POELiveSplitComponent.Component.Settings
             CriteriaToSplit = SplitCriteria.Zones;
             logLocation = DEFAULT_LOG_LOCATION;
             SplitZones = new HashSet<IZone>();
+            SplitZoneLevels = new HashSet<int>();
             SplitLevels = new HashSet<int>();
         }
 
         public XmlNode GetSettings(XmlDocument document)
         {
+            // Serialize settings into a new XmlNode.
             XmlElement settingsNode = document.CreateElement("Settings");
             SettingsHelper.CreateSetting(document, settingsNode, LOG_KEY, LogLocation);
             SettingsHelper.CreateSetting(document, settingsNode, LOAD_REMOVAL_FLAG, LoadRemovalEnabled);
@@ -92,57 +97,71 @@ namespace POELiveSplitComponent.Component.Settings
 
         public void SetSettings(XmlNode settings)
         {
+            // Deserialize settings.
             setDefaults();
-            XmlElement element = (XmlElement)settings;
-            if (!element.IsEmpty)
+            try
             {
-                if (element[LOG_KEY] != null)
+                XmlElement element = (XmlElement)settings;
+                if (!element.IsEmpty)
                 {
-                    LogLocation = element[LOG_KEY].InnerText;
-                }
-                if (element[LOAD_REMOVAL_FLAG] != null)
-                {
-                    LoadRemovalEnabled = bool.Parse(element[LOAD_REMOVAL_FLAG].InnerText);
-                }
-                if (element[AUTO_SPLIT_FLAG] != null)
-                {
-                    AutoSplitEnabled = bool.Parse(element[AUTO_SPLIT_FLAG].InnerText);
-                }
-                if (element[SPLIT_LABYRINTH_TYPE] != null)
-                {
-                    LabSplitType = (LabSplitMode)Enum.Parse(typeof(LabSplitMode), element[SPLIT_LABYRINTH_TYPE].InnerText);
-                }
-                if (element[SPLIT_CRITERIA] != null)
-                {
-                    CriteriaToSplit = (SplitCriteria)Enum.Parse(typeof(SplitCriteria), element[SPLIT_CRITERIA].InnerText);
-                }
-                if (element[GENERATE_WITH_ICONS] != null)
-                {
-                    GenerateWithIcons = bool.Parse(element[GENERATE_WITH_ICONS].InnerText);
-                }
-                if (element[SPLIT_ZONES] != null)
-                {
-                    HashSet<string> deserialized = DeserializeZones(element[SPLIT_ZONES]);
-                    foreach (Zone zone in Zone.ZONES)
+                    if (element[LOG_KEY] != null)
                     {
-                        if (deserialized.Contains(zone.Serialize()))
+                        LogLocation = element[LOG_KEY].InnerText;
+                    }
+                    if (element[LOAD_REMOVAL_FLAG] != null)
+                    {
+                        LoadRemovalEnabled = bool.Parse(element[LOAD_REMOVAL_FLAG].InnerText);
+                    }
+                    if (element[AUTO_SPLIT_FLAG] != null)
+                    {
+                        AutoSplitEnabled = bool.Parse(element[AUTO_SPLIT_FLAG].InnerText);
+                    }
+                    if (element[SPLIT_LABYRINTH_TYPE] != null)
+                    {
+                        LabSplitType = (LabSplitMode)Enum.Parse(typeof(LabSplitMode), element[SPLIT_LABYRINTH_TYPE].InnerText);
+                    }
+                    if (element[SPLIT_CRITERIA] != null)
+                    {
+                        CriteriaToSplit = (SplitCriteria)Enum.Parse(typeof(SplitCriteria), element[SPLIT_CRITERIA].InnerText);
+                    }
+                    if (element[GENERATE_WITH_ICONS] != null)
+                    {
+                        GenerateWithIcons = bool.Parse(element[GENERATE_WITH_ICONS].InnerText);
+                    }
+                    if (element[SPLIT_ZONES] != null)
+                    {
+                        XmlElement zonesElement = element[SPLIT_ZONES];
+                        HashSet<string> deserialized = DeserializeZones(zonesElement);
+                        foreach (Zone zone in Zone.ZONES)
                         {
-                            SplitZones.Add(zone);
+                            if (deserialized.Contains(zone.Serialize()))
+                            {
+                                SplitZones.Add(zone);
+                            }
+                        }
+                        foreach (XmlNode child in zonesElement.GetElementsByTagName(SPLIT_LEVEL))
+                        {
+                            SplitZoneLevels.Add(Int32.Parse(child.InnerText));
                         }
                     }
-                }
-                if (element[SPLIT_LEVELS] != null)
-                {
-                    foreach (XmlNode child in element[SPLIT_LEVELS].GetElementsByTagName(SPLIT_LEVEL))
+                    if (element[SPLIT_LEVELS] != null)
                     {
-                        SplitLevels.Add(Int32.Parse(child.InnerText));
+                        foreach (XmlNode child in element[SPLIT_LEVELS].GetElementsByTagName(SPLIT_LEVEL))
+                        {
+                            SplitLevels.Add(Int32.Parse(child.InnerText));
+                        }
+                    }
+                    if (element[LEGACY_SPLIT_LABYRINTH] != null && bool.Parse(element[LEGACY_SPLIT_LABYRINTH].InnerText))
+                    {
+                        // Override to support old split settings.
+                        CriteriaToSplit = SplitCriteria.Labyrinth;
                     }
                 }
-                if (element[LEGACY_SPLIT_LABYRINTH] != null && bool.Parse(element[LEGACY_SPLIT_LABYRINTH].InnerText))
-                {
-                    // Override to support old split settings.
-                    CriteriaToSplit = SplitCriteria.Labyrinth;
-                }
+            }
+            catch (Exception e)
+            {
+                // Corrupted splits file somehow, maybe user error.
+                Log.Error(e);
             }
         }
 
@@ -152,6 +171,10 @@ namespace POELiveSplitComponent.Component.Settings
             foreach (IZone zone in SplitZones)
             {
                 SettingsHelper.CreateSetting(document, parent, SPLIT_ZONE, zone.Serialize());
+            }
+            foreach (int level in SplitZoneLevels)
+            {
+                SettingsHelper.CreateSetting(document, parent, SPLIT_LEVEL, level);
             }
             return parent;
         }

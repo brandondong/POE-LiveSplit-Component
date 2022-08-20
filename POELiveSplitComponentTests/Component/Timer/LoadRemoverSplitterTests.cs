@@ -167,6 +167,51 @@ namespace POELiveSplitComponentTests.Component.Timer
         }
 
         [TestMethod()]
+        public void HandleSplitZonesPlusLevelTest()
+        {
+            ComponentSettings settings = new ComponentSettings();
+            settings.SplitZones.Add(LIONEYES1);
+            settings.SplitZoneLevels.Add(70);
+            settings.SplitLevels.Add(2);
+            MockTimerModel timer = new MockTimerModel();
+
+            LoadRemoverSplitter splitter = new LoadRemoverSplitter(timer, settings);
+            // Split on zone.
+            splitter.HandleLoadStart(1);
+            splitter.HandleLoadEnd(2, "Lioneye's Watch");
+            Assert.AreEqual(1, timer.NumSplits);
+            // Not splitting on normal level settings.
+            splitter.HandleLevelUp(3, 2);
+            Assert.AreEqual(1, timer.NumSplits);
+            // But should split on levels added through the zone settings.
+            splitter.HandleLevelUp(3, 70);
+            Assert.AreEqual(2, timer.NumSplits);
+        }
+
+        [TestMethod()]
+        public void HandleAutosplitDisabledTest()
+        {
+            foreach (ComponentSettings.SplitCriteria c in Enum.GetValues(typeof(ComponentSettings.SplitCriteria)))
+            {
+                ComponentSettings settings = new ComponentSettings();
+                settings.CriteriaToSplit = c;
+                settings.SplitZones.Add(LIONEYES1);
+                settings.SplitZoneLevels.Add(70);
+                settings.SplitLevels.Add(10);
+                settings.AutoSplitEnabled = false;
+                MockTimerModel timer = new MockTimerModel();
+
+                LoadRemoverSplitter splitter = new LoadRemoverSplitter(timer, settings);
+                // No splits are performed.
+                splitter.HandleLevelUp(1, 10);
+                splitter.HandleLevelUp(2, 70);
+                splitter.HandleLoadStart(3);
+                splitter.HandleLoadEnd(4, "Lioneye's Watch");
+                Assert.AreEqual(0, timer.NumSplits);
+            }
+        }
+
+        [TestMethod()]
         public void NoSplitWhenInLabModeTest()
         {
             ComponentSettings settings = new ComponentSettings();

@@ -111,15 +111,30 @@ namespace POELiveSplitComponent.Component.Timer
 
         public void HandleLevelUp(long timestamp, int level)
         {
-            if (settings.AutoSplitEnabled && settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Levels)
+            // A single character can technically reach the same level twice but this is more to handle muling.
+            if (!levelsReached.Contains(level) && LevelsToSplitOn().Contains(level))
             {
-                // A single character can technically reach the same level twice but this is more to handle muling.
-                if (!levelsReached.Contains(level) && settings.SplitLevels.Contains(level))
-                {
-                    timer.Split();
-                }
-                levelsReached.Add(level);
+                timer.Split();
             }
+            levelsReached.Add(level);
+        }
+
+        private HashSet<int> LevelsToSplitOn()
+        {
+            if (!settings.AutoSplitEnabled)
+            {
+                return new HashSet<int>();
+            }
+
+            if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Levels)
+            {
+                return settings.SplitLevels;
+            }
+            else if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones)
+            {
+                return settings.SplitZoneLevels;
+            }
+            return new HashSet<int>();
         }
 
         public void HandleIzaroDialogue(long timestamp, string dialogue)

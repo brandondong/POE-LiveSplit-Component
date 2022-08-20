@@ -23,6 +23,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsTrue(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
             Assert.AreEqual(0, settings.SplitZones.Count);
+            Assert.AreEqual(0, settings.SplitZoneLevels.Count);
             Assert.AreEqual(0, settings.SplitLevels.Count);
         }
 
@@ -50,6 +51,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsTrue(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
             Assert.AreEqual(2, settings.SplitZones.Count);
+            Assert.AreEqual(0, settings.SplitZoneLevels.Count);
             Assert.AreEqual(0, settings.SplitLevels.Count);
             Assert.AreEqual("C:/Program Files (x86)/Grinding Gear Games/Path of Exile/logs/client.txt", settings.LogLocation);
         }
@@ -69,6 +71,7 @@ namespace POELiveSplitComponentTests.Component.Settings
       <split.zone>Lioneye's Watch (Part 1)</split.zone>
       <split.zone>The Mud Flats (Part 1)</split.zone>
       <split.zone>The Ledge (Part 1)</split.zone>
+      <split.level>70</split.level>
    </split.zones.on>
    <split.levels.on>
       <split.level>3</split.level>
@@ -82,7 +85,8 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsTrue(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Levels, settings.CriteriaToSplit);
             Assert.AreEqual(3, settings.SplitZones.Count);
-            Assert.AreEqual(1, settings.SplitLevels.Count);
+            Assert.IsTrue(new HashSet<int> { 70 }.SetEquals(settings.SplitZoneLevels));
+            Assert.IsTrue(new HashSet<int> { 3 }.SetEquals(settings.SplitLevels));
             Assert.AreEqual(@"C:\Program Files (x86)\Grinding Gear Games\Path of Exile\logs\Client.txt", settings.LogLocation);
         }
 
@@ -114,6 +118,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsTrue(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Labyrinth, settings.CriteriaToSplit);
             Assert.AreEqual(3, settings.SplitZones.Count);
+            Assert.AreEqual(0, settings.SplitZoneLevels.Count);
             Assert.AreEqual(1, settings.SplitLevels.Count);
             Assert.AreEqual(@"C:\Program Files (x86)\Grinding Gear Games\Path of Exile\logs\Client.txt", settings.LogLocation);
         }
@@ -133,6 +138,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsTrue(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
             Assert.AreEqual(0, settings.SplitZones.Count);
+            Assert.AreEqual(0, settings.SplitZoneLevels.Count);
             Assert.AreEqual(0, settings.SplitLevels.Count);
         }
 
@@ -147,6 +153,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             settings.GenerateWithIcons = false;
             settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Levels;
             settings.SplitZones.Add(Zone.ZONES[0]);
+            settings.SplitZoneLevels.Add(70);
             settings.SplitLevels.Add(100);
             XmlNode node = settings.GetSettings(xml);
 
@@ -158,6 +165,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsFalse(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Levels, settings.CriteriaToSplit);
             Assert.IsTrue(new HashSet<IZone> { Zone.ZONES[0] }.SetEquals(settings.SplitZones));
+            Assert.IsTrue(new HashSet<int> { 70 }.SetEquals(settings.SplitZoneLevels));
             Assert.IsTrue(new HashSet<int> { 100 }.SetEquals(settings.SplitLevels));
         }
 
@@ -171,6 +179,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             settings.GenerateWithIcons = false;
             settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Levels;
             settings.SplitZones.Add(Zone.ZONES[0]);
+            settings.SplitZoneLevels.Add(70);
             settings.SplitLevels.Add(100);
             
             // Emulate a cancel.
@@ -182,6 +191,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsTrue(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
             Assert.AreEqual(0, settings.SplitZones.Count);
+            Assert.AreEqual(0, settings.SplitZoneLevels.Count);
             Assert.AreEqual(0, settings.SplitLevels.Count);
         }
 
@@ -195,6 +205,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             settings.GenerateWithIcons = false;
             settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Labyrinth;
             settings.SplitZones.Add(Zone.ZONES[0]);
+            settings.SplitZoneLevels.Add(70);
             settings.SplitLevels.Add(100);
 
             // Emulate a cancel where the properties were fetched from file.
@@ -209,6 +220,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsTrue(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
             Assert.AreEqual(0, settings.SplitZones.Count);
+            Assert.AreEqual(0, settings.SplitZoneLevels.Count);
             Assert.AreEqual(0, settings.SplitLevels.Count);
         }
     }
