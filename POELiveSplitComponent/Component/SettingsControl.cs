@@ -1,6 +1,7 @@
 ﻿using LiveSplit.Model;
 using POELiveSplitComponent.Component.Settings;
 using POELiveSplitComponent.Component.Timer;
+using POELiveSplitComponent.Component.UI;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -55,14 +56,14 @@ namespace POELiveSplitComponent.Component
                 }
                 for (int i = 70; i <= 100; i++)
                 {
-                    checkedSplitList.Items.Add(i, settings.SplitZoneLevels.Contains(i));
+                    checkedSplitList.Items.Add(new LevelLabel(i), settings.SplitZoneLevels.Contains(i));
                 }
             }
             else if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Levels)
             {
                 for (int i = 2; i <= 100; i++)
                 {
-                    checkedSplitList.Items.Add(i, settings.SplitLevels.Contains(i));
+                    checkedSplitList.Items.Add(new LevelLabel(i), settings.SplitLevels.Contains(i));
                 }
             }
         }
@@ -129,27 +130,27 @@ namespace POELiveSplitComponent.Component
                 }
                 else
                 {
-                    int level = (int)selectedItem;
+                    LevelLabel level = (LevelLabel)selectedItem;
                     if (e.NewValue == CheckState.Checked)
                     {
-                        settings.SplitZoneLevels.Add(level);
+                        settings.SplitZoneLevels.Add(level.Level);
                     }
                     else
                     {
-                        settings.SplitZoneLevels.Remove(level);
+                        settings.SplitZoneLevels.Remove(level.Level);
                     }
                 }
             }
             else if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Levels)
             {
-                int level = (int)selectedItem;
+                LevelLabel level = (LevelLabel)selectedItem;
                 if (e.NewValue == CheckState.Checked)
                 {
-                    settings.SplitLevels.Add(level);
+                    settings.SplitLevels.Add(level.Level);
                 }
                 else
                 {
-                    settings.SplitLevels.Remove(level);
+                    settings.SplitLevels.Remove(level.Level);
                 }
             }
         }
@@ -193,7 +194,7 @@ namespace POELiveSplitComponent.Component
                     }
                     else
                     {
-                        state.Run.AddSegment(String.Format("Level {0}", selectedItem));
+                        state.Run.AddSegment(selectedItem.ToString());
                     }
                 }
             }

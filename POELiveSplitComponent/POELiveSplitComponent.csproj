@@ -63,6 +63,7 @@
     </Compile>
     <Compile Include="Component\Timer\LoadRemoverSplitter.cs" />
     <Compile Include="Component\Timer\Zone.cs" />
+    <Compile Include="Component\UI\LevelLabel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Component\POEComponent.cs" />
     <Compile Include="Component\POEComponentFactory.cs" />
