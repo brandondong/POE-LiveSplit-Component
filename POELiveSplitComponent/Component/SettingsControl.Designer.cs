@@ -30,11 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.panelSplitList = new System.Windows.Forms.Panel();
-            this.checkedSplitList = new System.Windows.Forms.CheckedListBox();
-            this.checkSelectAll = new System.Windows.Forms.CheckBox();
-            this.checkIcons = new System.Windows.Forms.CheckBox();
-            this.createSplitsButton = new System.Windows.Forms.Button();
             this.groupBoxLab = new System.Windows.Forms.GroupBox();
             this.radioAspirant = new System.Windows.Forms.RadioButton();
             this.labelLabDescription = new System.Windows.Forms.Label();
@@ -44,6 +39,11 @@
             this.radioLevels = new System.Windows.Forms.RadioButton();
             this.radioZones = new System.Windows.Forms.RadioButton();
             this.labelSplitOn = new System.Windows.Forms.Label();
+            this.panelSplitList = new System.Windows.Forms.Panel();
+            this.checkedSplitList = new System.Windows.Forms.CheckedListBox();
+            this.checkSelectAll = new System.Windows.Forms.CheckBox();
+            this.checkIcons = new System.Windows.Forms.CheckBox();
+            this.createSplitsButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.linkLoadSetup = new System.Windows.Forms.LinkLabel();
             this.checkLoadRemoval = new System.Windows.Forms.CheckBox();
@@ -54,8 +54,8 @@
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
-            this.panelSplitList.SuspendLayout();
             this.groupBoxLab.SuspendLayout();
+            this.panelSplitList.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -74,6 +74,112 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Auto Split";
+            // 
+            // groupBoxLab
+            // 
+            this.groupBoxLab.Controls.Add(this.radioAspirant);
+            this.groupBoxLab.Controls.Add(this.labelLabDescription);
+            this.groupBoxLab.Controls.Add(this.radioAllLab);
+            this.groupBoxLab.Location = new System.Drawing.Point(12, 88);
+            this.groupBoxLab.Name = "groupBoxLab";
+            this.groupBoxLab.Size = new System.Drawing.Size(415, 60);
+            this.groupBoxLab.TabIndex = 5;
+            this.groupBoxLab.TabStop = false;
+            // 
+            // radioAspirant
+            // 
+            this.radioAspirant.AutoSize = true;
+            this.radioAspirant.Location = new System.Drawing.Point(89, 33);
+            this.radioAspirant.Name = "radioAspirant";
+            this.radioAspirant.Size = new System.Drawing.Size(124, 17);
+            this.radioAspirant.TabIndex = 12;
+            this.radioAspirant.Text = "Aspirant\'s Trial zones";
+            this.radioAspirant.UseVisualStyleBackColor = true;
+            this.radioAspirant.CheckedChanged += new System.EventHandler(this.HandleLabTypeChanged);
+            // 
+            // labelLabDescription
+            // 
+            this.labelLabDescription.AutoSize = true;
+            this.labelLabDescription.Location = new System.Drawing.Point(6, 16);
+            this.labelLabDescription.MaximumSize = new System.Drawing.Size(420, 0);
+            this.labelLabDescription.Name = "labelLabDescription";
+            this.labelLabDescription.Size = new System.Drawing.Size(396, 13);
+            this.labelLabDescription.TabIndex = 10;
+            this.labelLabDescription.Text = "Starts the timer upon using the labyrinth activation device. Splits on all subseq" +
+    "uent:";
+            // 
+            // radioAllLab
+            // 
+            this.radioAllLab.AutoSize = true;
+            this.radioAllLab.Checked = true;
+            this.radioAllLab.Location = new System.Drawing.Point(9, 33);
+            this.radioAllLab.Name = "radioAllLab";
+            this.radioAllLab.Size = new System.Drawing.Size(74, 17);
+            this.radioAllLab.TabIndex = 11;
+            this.radioAllLab.TabStop = true;
+            this.radioAllLab.Text = "Lab zones";
+            this.radioAllLab.UseVisualStyleBackColor = true;
+            this.radioAllLab.CheckedChanged += new System.EventHandler(this.HandleLabTypeChanged);
+            // 
+            // radioLab
+            // 
+            this.radioLab.AutoSize = true;
+            this.radioLab.Location = new System.Drawing.Point(152, 65);
+            this.radioLab.Name = "radioLab";
+            this.radioLab.Size = new System.Drawing.Size(68, 17);
+            this.radioLab.TabIndex = 16;
+            this.radioLab.TabStop = true;
+            this.radioLab.Text = "Labyrinth";
+            this.radioLab.UseVisualStyleBackColor = true;
+            this.radioLab.CheckedChanged += new System.EventHandler(this.HandleSplitCriteriaChanged);
+            // 
+            // checkAutoSplit
+            // 
+            this.checkAutoSplit.AutoSize = true;
+            this.checkAutoSplit.Checked = true;
+            this.checkAutoSplit.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkAutoSplit.Location = new System.Drawing.Point(12, 20);
+            this.checkAutoSplit.Name = "checkAutoSplit";
+            this.checkAutoSplit.Size = new System.Drawing.Size(124, 17);
+            this.checkAutoSplit.TabIndex = 14;
+            this.checkAutoSplit.Text = "Enable Auto Splitting";
+            this.checkAutoSplit.UseVisualStyleBackColor = true;
+            this.checkAutoSplit.CheckedChanged += new System.EventHandler(this.HandleAutoSplitChanged);
+            // 
+            // radioLevels
+            // 
+            this.radioLevels.AutoSize = true;
+            this.radioLevels.Location = new System.Drawing.Point(90, 65);
+            this.radioLevels.Name = "radioLevels";
+            this.radioLevels.Size = new System.Drawing.Size(56, 17);
+            this.radioLevels.TabIndex = 13;
+            this.radioLevels.Text = "Levels";
+            this.toolTip.SetToolTip(this.radioLevels, "Performs a split when the player reaches a specific level.");
+            this.radioLevels.UseVisualStyleBackColor = true;
+            this.radioLevels.CheckedChanged += new System.EventHandler(this.HandleSplitCriteriaChanged);
+            // 
+            // radioZones
+            // 
+            this.radioZones.AutoSize = true;
+            this.radioZones.Checked = true;
+            this.radioZones.Location = new System.Drawing.Point(12, 65);
+            this.radioZones.Name = "radioZones";
+            this.radioZones.Size = new System.Drawing.Size(72, 17);
+            this.radioZones.TabIndex = 12;
+            this.radioZones.TabStop = true;
+            this.radioZones.Text = "Campaign";
+            this.toolTip.SetToolTip(this.radioZones, "Performs a split when the player enters a specific zone for the first time.");
+            this.radioZones.UseVisualStyleBackColor = true;
+            this.radioZones.CheckedChanged += new System.EventHandler(this.HandleSplitCriteriaChanged);
+            // 
+            // labelSplitOn
+            // 
+            this.labelSplitOn.AutoSize = true;
+            this.labelSplitOn.Location = new System.Drawing.Point(9, 49);
+            this.labelSplitOn.Name = "labelSplitOn";
+            this.labelSplitOn.Size = new System.Drawing.Size(59, 13);
+            this.labelSplitOn.TabIndex = 1;
+            this.labelSplitOn.Text = "Split mode:";
             // 
             // panelSplitList
             // 
@@ -129,112 +235,6 @@
             this.createSplitsButton.Text = "Generate Splits";
             this.createSplitsButton.UseVisualStyleBackColor = true;
             this.createSplitsButton.Click += new System.EventHandler(this.HandleGenerateSplits);
-            // 
-            // groupBoxLab
-            // 
-            this.groupBoxLab.Controls.Add(this.radioAspirant);
-            this.groupBoxLab.Controls.Add(this.labelLabDescription);
-            this.groupBoxLab.Controls.Add(this.radioAllLab);
-            this.groupBoxLab.Location = new System.Drawing.Point(12, 88);
-            this.groupBoxLab.Name = "groupBoxLab";
-            this.groupBoxLab.Size = new System.Drawing.Size(415, 60);
-            this.groupBoxLab.TabIndex = 5;
-            this.groupBoxLab.TabStop = false;
-            // 
-            // radioAspirant
-            // 
-            this.radioAspirant.AutoSize = true;
-            this.radioAspirant.Location = new System.Drawing.Point(89, 33);
-            this.radioAspirant.Name = "radioAspirant";
-            this.radioAspirant.Size = new System.Drawing.Size(124, 17);
-            this.radioAspirant.TabIndex = 12;
-            this.radioAspirant.Text = "Aspirant\'s Trial zones";
-            this.radioAspirant.UseVisualStyleBackColor = true;
-            this.radioAspirant.CheckedChanged += new System.EventHandler(this.HandleLabTypeChanged);
-            // 
-            // labelLabDescription
-            // 
-            this.labelLabDescription.AutoSize = true;
-            this.labelLabDescription.Location = new System.Drawing.Point(6, 16);
-            this.labelLabDescription.MaximumSize = new System.Drawing.Size(420, 0);
-            this.labelLabDescription.Name = "labelLabDescription";
-            this.labelLabDescription.Size = new System.Drawing.Size(396, 13);
-            this.labelLabDescription.TabIndex = 10;
-            this.labelLabDescription.Text = "Starts the timer upon using the labyrinth activation device. Splits on all subseq" +
-    "uent:";
-            // 
-            // radioAllLab
-            // 
-            this.radioAllLab.AutoSize = true;
-            this.radioAllLab.Checked = true;
-            this.radioAllLab.Location = new System.Drawing.Point(9, 33);
-            this.radioAllLab.Name = "radioAllLab";
-            this.radioAllLab.Size = new System.Drawing.Size(74, 17);
-            this.radioAllLab.TabIndex = 11;
-            this.radioAllLab.TabStop = true;
-            this.radioAllLab.Text = "Lab zones";
-            this.radioAllLab.UseVisualStyleBackColor = true;
-            this.radioAllLab.CheckedChanged += new System.EventHandler(this.HandleLabTypeChanged);
-            // 
-            // radioLab
-            // 
-            this.radioLab.AutoSize = true;
-            this.radioLab.Location = new System.Drawing.Point(136, 65);
-            this.radioLab.Name = "radioLab";
-            this.radioLab.Size = new System.Drawing.Size(68, 17);
-            this.radioLab.TabIndex = 16;
-            this.radioLab.TabStop = true;
-            this.radioLab.Text = "Labyrinth";
-            this.radioLab.UseVisualStyleBackColor = true;
-            this.radioLab.CheckedChanged += new System.EventHandler(this.HandleSplitCriteriaChanged);
-            // 
-            // checkAutoSplit
-            // 
-            this.checkAutoSplit.AutoSize = true;
-            this.checkAutoSplit.Checked = true;
-            this.checkAutoSplit.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkAutoSplit.Location = new System.Drawing.Point(12, 20);
-            this.checkAutoSplit.Name = "checkAutoSplit";
-            this.checkAutoSplit.Size = new System.Drawing.Size(124, 17);
-            this.checkAutoSplit.TabIndex = 14;
-            this.checkAutoSplit.Text = "Enable Auto Splitting";
-            this.checkAutoSplit.UseVisualStyleBackColor = true;
-            this.checkAutoSplit.CheckedChanged += new System.EventHandler(this.HandleAutoSplitChanged);
-            // 
-            // radioLevels
-            // 
-            this.radioLevels.AutoSize = true;
-            this.radioLevels.Location = new System.Drawing.Point(73, 65);
-            this.radioLevels.Name = "radioLevels";
-            this.radioLevels.Size = new System.Drawing.Size(56, 17);
-            this.radioLevels.TabIndex = 13;
-            this.radioLevels.Text = "Levels";
-            this.toolTip.SetToolTip(this.radioLevels, "Performs a split when the player reaches a specific level.");
-            this.radioLevels.UseVisualStyleBackColor = true;
-            this.radioLevels.CheckedChanged += new System.EventHandler(this.HandleSplitCriteriaChanged);
-            // 
-            // radioZones
-            // 
-            this.radioZones.AutoSize = true;
-            this.radioZones.Checked = true;
-            this.radioZones.Location = new System.Drawing.Point(12, 65);
-            this.radioZones.Name = "radioZones";
-            this.radioZones.Size = new System.Drawing.Size(55, 17);
-            this.radioZones.TabIndex = 12;
-            this.radioZones.TabStop = true;
-            this.radioZones.Text = "Zones";
-            this.toolTip.SetToolTip(this.radioZones, "Performs a split when the player enters a specific zone for the first time.");
-            this.radioZones.UseVisualStyleBackColor = true;
-            this.radioZones.CheckedChanged += new System.EventHandler(this.HandleSplitCriteriaChanged);
-            // 
-            // labelSplitOn
-            // 
-            this.labelSplitOn.AutoSize = true;
-            this.labelSplitOn.Location = new System.Drawing.Point(9, 49);
-            this.labelSplitOn.Name = "labelSplitOn";
-            this.labelSplitOn.Size = new System.Drawing.Size(45, 13);
-            this.labelSplitOn.TabIndex = 1;
-            this.labelSplitOn.Text = "Split on:";
             // 
             // groupBox2
             // 
@@ -331,10 +331,10 @@
             this.Size = new System.Drawing.Size(476, 512);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.panelSplitList.ResumeLayout(false);
-            this.panelSplitList.PerformLayout();
             this.groupBoxLab.ResumeLayout(false);
             this.groupBoxLab.PerformLayout();
+            this.panelSplitList.ResumeLayout(false);
+            this.panelSplitList.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
