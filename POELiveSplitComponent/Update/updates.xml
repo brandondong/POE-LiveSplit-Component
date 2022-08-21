@@ -99,4 +99,12 @@
 			<change>Added Karui Shores zone.</change>
 		</changelog>
 	</update>
+	<update version="1.0.13">
+		<files>
+			<file path="Components/POELiveSplitComponent.dll" status="changed" />
+		</files>
+		<changelog>
+			<change>Added ability to split on levels after the campaign zones.</change>
+		</changelog>
+	</update>
 </updates>

@@ -18,7 +18,7 @@ Load screen time can be automatically subtracted from your run. This is done by 
 4. Type "Path of Exile" as the Game Name and click the Activate button below the number of attempts
 5. To configure settings such as selecting which zones will result in an automatic split upon entering, click the Settings button next to the Activate button
 6. If you are running Path of Exile through Steam, change the log file location in the Settings menu appropriately (the file will most likely be located at C:\Program Files (x86)\Steam\steamapps\common\Path of Exile\logs\Client.txt)
-7. To automatically generate splits from your selected zones, click the "Generate Splits" button
+7. To automatically generate splits from your selected zones/levels, click the "Generate Splits" button
 
 ## Additional Setup Instructions for Load Removal
 Follow these additional instructions if you want to use load removal.
