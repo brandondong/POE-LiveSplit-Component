@@ -53,6 +53,10 @@ namespace POELiveSplitComponent.Component
                 {
                     checkedSplitList.Items.Add(zone, settings.SplitZones.Contains(zone));
                 }
+                for (int i = 70; i <= 100; i++)
+                {
+                    checkedSplitList.Items.Add(i, settings.SplitZoneLevels.Contains(i));
+                }
             }
             else if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Levels)
             {
@@ -108,21 +112,37 @@ namespace POELiveSplitComponent.Component
 
         private void HandleItemChecked(object sender, ItemCheckEventArgs e)
         {
+            object selectedItem = checkedSplitList.Items[e.Index];
             if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones)
             {
-                IZone zone = (IZone)checkedSplitList.Items[e.Index];
-                if (e.NewValue == CheckState.Checked)
+                if (selectedItem is IZone)
                 {
-                    settings.SplitZones.Add(zone);
+                    IZone zone = (IZone)selectedItem;
+                    if (e.NewValue == CheckState.Checked)
+                    {
+                        settings.SplitZones.Add(zone);
+                    }
+                    else
+                    {
+                        settings.SplitZones.Remove(zone);
+                    }
                 }
                 else
                 {
-                    settings.SplitZones.Remove(zone);
+                    int level = (int)selectedItem;
+                    if (e.NewValue == CheckState.Checked)
+                    {
+                        settings.SplitZoneLevels.Add(level);
+                    }
+                    else
+                    {
+                        settings.SplitZoneLevels.Remove(level);
+                    }
                 }
             }
             else if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Levels)
             {
-                int level = (int)checkedSplitList.Items[e.Index];
+                int level = (int)selectedItem;
                 if (e.NewValue == CheckState.Checked)
                 {
                     settings.SplitLevels.Add(level);
@@ -156,14 +176,14 @@ namespace POELiveSplitComponent.Component
                 return;
             }
             state.Run.Clear();
-            bool isZoneCriteria = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones;
             for (int i = 0; i < checkedSplitList.Items.Count; i++)
             {
                 if (checkedSplitList.GetItemChecked(i))
                 {
-                    if (isZoneCriteria)
+                    object selectedItem = checkedSplitList.Items[i];
+                    if (selectedItem is IZone)
                     {
-                        IZone zone = (IZone)checkedSplitList.Items[i];
+                        IZone zone = (IZone)selectedItem;
                         Image icon = null;
                         if (settings.GenerateWithIcons)
                         {
@@ -173,7 +193,7 @@ namespace POELiveSplitComponent.Component
                     }
                     else
                     {
-                        state.Run.AddSegment(String.Format("Level {0}", checkedSplitList.Items[i]));
+                        state.Run.AddSegment(String.Format("Level {0}", selectedItem));
                     }
                 }
             }
