@@ -143,6 +143,29 @@ namespace POELiveSplitComponentTests.Component.Timer
         }
 
         [TestMethod()]
+        public void HandleSplitZones_TimerResetTest()
+        {
+            ComponentSettings settings = new ComponentSettings();
+            settings.SplitZones.Add(LIONEYES1);
+            MockTimerModel timer = new MockTimerModel();
+
+            LoadRemoverSplitter splitter = new LoadRemoverSplitter(timer, settings);
+            splitter.HandleLoadStart(1);
+            splitter.HandleLoadEnd(2, "Lioneye's Watch");
+            Assert.AreEqual(1, timer.NumSplits);
+            // Already entered this zone.
+            splitter.HandleLoadStart(6);
+            splitter.HandleLoadEnd(7, "Lioneye's Watch");
+            Assert.AreEqual(1, timer.NumSplits);
+
+            // Reset timer.
+            splitter.HandleResetRuns();
+            splitter.HandleLoadStart(1);
+            splitter.HandleLoadEnd(2, "Lioneye's Watch");
+            Assert.AreEqual(2, timer.NumSplits);
+        }
+
+        [TestMethod()]
         public void HandleLevelUpTest()
         {
             ComponentSettings settings = new ComponentSettings();

@@ -24,6 +24,7 @@ namespace POELiveSplitComponent.Component
             TimerModel timer = new TimerModel();
             timer.CurrentState = state;
             LoadRemoverSplitter remover = new LoadRemoverSplitter(timer, settings);
+            timer.CurrentState.OnStart += (s, e) => remover.HandleResetRuns();
             reader = new ClientReader(settings, remover);
             reader.Start();
             control = new SettingsControl(settings, state);

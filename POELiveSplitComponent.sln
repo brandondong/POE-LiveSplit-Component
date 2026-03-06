@@ -1,21 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36930.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POELiveSplitComponent", "POELiveSplitComponent\POELiveSplitComponent.csproj", "{3C331AFE-831A-4B14-B507-7BDEC1BDED02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveSplit.Core", "LiveSplit\LiveSplit\LiveSplit.Core\LiveSplit.Core.csproj", "{6DE847DB-20A3-4848-AEEE-1B4364AECDFB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveSplit.Core", "LiveSplit\src\LiveSplit.Core\LiveSplit.Core.csproj", "{6DE847DB-20A3-4848-AEEE-1B4364AECDFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateManager", "LiveSplit\LiveSplit\UpdateManager\UpdateManager.csproj", "{56DEA3A0-2EB7-493B-B50F-A5E3AA8AE52A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateManager", "LiveSplit\src\UpdateManager\UpdateManager.csproj", "{56DEA3A0-2EB7-493B-B50F-A5E3AA8AE52A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codaxy.Xlio", "LiveSplit\LiveSplit\Libs\xlio\Source\Codaxy.Xlio\Codaxy.Xlio.csproj", "{11F82973-690A-48A9-8CB8-BD97E0024E2C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeedrunComSharp", "LiveSplit\LiveSplit\Libs\SpeedrunComSharp\SpeedrunComSharp\SpeedrunComSharp.csproj", "{924AAFFE-5B89-49E2-99AD-EC9373CC838D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeedrunComSharp", "LiveSplit\lib\SpeedrunComSharp\src\SpeedrunComSharp\SpeedrunComSharp.csproj", "{924AAFFE-5B89-49E2-99AD-EC9373CC838D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{766B2954-A48E-489C-A171-F0FB635CD323}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POELiveSplitComponentTests", "POELiveSplitComponentTests\POELiveSplitComponentTests.csproj", "{62BE908B-96E7-4E1E-BD3F-8823AC4915AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomFontDialog", "LiveSplit\lib\CustomFontDialog\CustomFontDialog\CustomFontDialog.csproj", "{E2452148-3BD7-7A5B-2250-7E81E0EE0288}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsColor", "LiveSplit\lib\WinForms Color Picker\WinFormsColor\WinFormsColor.csproj", "{FF5FC590-004A-12CA-91EC-CCB40D8B0F14}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,14 +51,6 @@ Global
 		{56DEA3A0-2EB7-493B-B50F-A5E3AA8AE52A}.Release Candidate|Any CPU.Build.0 = Release Candidate|Any CPU
 		{56DEA3A0-2EB7-493B-B50F-A5E3AA8AE52A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56DEA3A0-2EB7-493B-B50F-A5E3AA8AE52A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{11F82973-690A-48A9-8CB8-BD97E0024E2C}.Debug with API Calls|Any CPU.ActiveCfg = Debug|Any CPU
-		{11F82973-690A-48A9-8CB8-BD97E0024E2C}.Debug with API Calls|Any CPU.Build.0 = Debug|Any CPU
-		{11F82973-690A-48A9-8CB8-BD97E0024E2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{11F82973-690A-48A9-8CB8-BD97E0024E2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{11F82973-690A-48A9-8CB8-BD97E0024E2C}.Release Candidate|Any CPU.ActiveCfg = Release|Any CPU
-		{11F82973-690A-48A9-8CB8-BD97E0024E2C}.Release Candidate|Any CPU.Build.0 = Release|Any CPU
-		{11F82973-690A-48A9-8CB8-BD97E0024E2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{11F82973-690A-48A9-8CB8-BD97E0024E2C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{924AAFFE-5B89-49E2-99AD-EC9373CC838D}.Debug with API Calls|Any CPU.ActiveCfg = Debug with API Calls|Any CPU
 		{924AAFFE-5B89-49E2-99AD-EC9373CC838D}.Debug with API Calls|Any CPU.Build.0 = Debug with API Calls|Any CPU
 		{924AAFFE-5B89-49E2-99AD-EC9373CC838D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -73,12 +67,32 @@ Global
 		{62BE908B-96E7-4E1E-BD3F-8823AC4915AC}.Release Candidate|Any CPU.Build.0 = Release|Any CPU
 		{62BE908B-96E7-4E1E-BD3F-8823AC4915AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62BE908B-96E7-4E1E-BD3F-8823AC4915AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2452148-3BD7-7A5B-2250-7E81E0EE0288}.Debug with API Calls|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2452148-3BD7-7A5B-2250-7E81E0EE0288}.Debug with API Calls|Any CPU.Build.0 = Debug|Any CPU
+		{E2452148-3BD7-7A5B-2250-7E81E0EE0288}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2452148-3BD7-7A5B-2250-7E81E0EE0288}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2452148-3BD7-7A5B-2250-7E81E0EE0288}.Release Candidate|Any CPU.ActiveCfg = Release|Any CPU
+		{E2452148-3BD7-7A5B-2250-7E81E0EE0288}.Release Candidate|Any CPU.Build.0 = Release|Any CPU
+		{E2452148-3BD7-7A5B-2250-7E81E0EE0288}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2452148-3BD7-7A5B-2250-7E81E0EE0288}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF5FC590-004A-12CA-91EC-CCB40D8B0F14}.Debug with API Calls|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF5FC590-004A-12CA-91EC-CCB40D8B0F14}.Debug with API Calls|Any CPU.Build.0 = Debug|Any CPU
+		{FF5FC590-004A-12CA-91EC-CCB40D8B0F14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF5FC590-004A-12CA-91EC-CCB40D8B0F14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF5FC590-004A-12CA-91EC-CCB40D8B0F14}.Release Candidate|Any CPU.ActiveCfg = Release|Any CPU
+		{FF5FC590-004A-12CA-91EC-CCB40D8B0F14}.Release Candidate|Any CPU.Build.0 = Release|Any CPU
+		{FF5FC590-004A-12CA-91EC-CCB40D8B0F14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF5FC590-004A-12CA-91EC-CCB40D8B0F14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{11F82973-690A-48A9-8CB8-BD97E0024E2C} = {766B2954-A48E-489C-A171-F0FB635CD323}
 		{924AAFFE-5B89-49E2-99AD-EC9373CC838D} = {766B2954-A48E-489C-A171-F0FB635CD323}
+		{E2452148-3BD7-7A5B-2250-7E81E0EE0288} = {766B2954-A48E-489C-A171-F0FB635CD323}
+		{FF5FC590-004A-12CA-91EC-CCB40D8B0F14} = {766B2954-A48E-489C-A171-F0FB635CD323}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7D21DC37-863D-4799-B1FD-D6A4EBDCBEEE}
 	EndGlobalSection
 EndGlobal

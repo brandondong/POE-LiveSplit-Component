@@ -35,7 +35,6 @@ namespace POELiveSplitComponent.Component.Timer
         {
             this.settings = settings;
             this.timer = timer;
-            timer.CurrentState.OnStart += HandleResetRuns;
         }
 
         public void HandleLoadStart(long timestamp)
@@ -84,6 +83,15 @@ namespace POELiveSplitComponent.Component.Timer
                 }
             }
             previousZone = zone;
+        }
+
+        public void HandleResetRuns()
+        {
+            loadTimes = 0;
+            startTimestamp = null;
+            encounteredZones = new HashSet<IZone>();
+            levelsReached = new HashSet<int>();
+            labStarted = false;
         }
 
         private bool ShouldSplitForCrtieraZone(IZone zone)
@@ -155,15 +163,6 @@ namespace POELiveSplitComponent.Component.Timer
                 timer.Start();
                 labStarted = true;
             }
-        }
-
-        private void HandleResetRuns(object sender, EventArgs e)
-        {
-            loadTimes = 0;
-            startTimestamp = null;
-            encounteredZones = new HashSet<IZone>();
-            levelsReached = new HashSet<int>();
-            labStarted = false;
         }
     }
 }

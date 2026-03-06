@@ -43,6 +43,6 @@ To build the project, this repository must be cloned recursively.
 
 `git clone --recursive`
 
-It should be able to compile without any further configuration when opening the project with Visual Studio 2015.
+It should be able to compile without any further configuration when opening the project with Visual Studio 2022 and .NET Framework 4.8.1 installed.
 
 For issues and suggestions, please use https://github.com/brandondong/POE-LiveSplit-Component/issues.
