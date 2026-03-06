@@ -132,6 +132,7 @@ namespace POELiveSplitComponent.Component.Timer
             add(new Zone("Doedre's Cesspool", 2), IconType.Wp, act8Home);
             add(new Zone("The Quay", 2), IconType.NoWp, act8Home);
             add(new Zone("The Grain Gate", 2), IconType.Wp, act8Home);
+            add(new Zone("The Hidden Underbelly", 2), IconType.NoWp);
             add(new Zone("The Imperial Fields", 2), IconType.Wp, act8Home);
             add(new Zone("The Solaris Temple Level 1", 2), IconType.Wp, act8Home);
             add(new Zone("The Solaris Temple Level 2", 2), IconType.NoWp, act8Home);
