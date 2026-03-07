@@ -107,4 +107,12 @@
 			<change>Added ability to split on levels after the campaign zones.</change>
 		</changelog>
 	</update>
+	<update version="1.0.14">
+		<files>
+			<file path="Components/POELiveSplitComponent.dll" status="changed" />
+		</files>
+		<changelog>
+			<change>Added The Hidden Underbelly zone.</change>
+		</changelog>
+	</update>
 </updates>
