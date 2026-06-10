@@ -35,6 +35,7 @@
             this.labelLabDescription = new System.Windows.Forms.Label();
             this.radioAllLab = new System.Windows.Forms.RadioButton();
             this.radioLab = new System.Windows.Forms.RadioButton();
+            this.radioPassiveSkillPoints = new System.Windows.Forms.RadioButton();
             this.checkAutoSplit = new System.Windows.Forms.CheckBox();
             this.radioLevels = new System.Windows.Forms.RadioButton();
             this.radioZones = new System.Windows.Forms.RadioButton();
@@ -62,6 +63,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.groupBoxLab);
+            this.groupBox1.Controls.Add(this.radioPassiveSkillPoints);
             this.groupBox1.Controls.Add(this.radioLab);
             this.groupBox1.Controls.Add(this.checkAutoSplit);
             this.groupBox1.Controls.Add(this.radioLevels);
@@ -133,6 +135,19 @@
             this.radioLab.UseVisualStyleBackColor = true;
             this.radioLab.CheckedChanged += new System.EventHandler(this.HandleSplitCriteriaChanged);
             // 
+            // radioPassiveSkillPoints
+            //
+            this.radioPassiveSkillPoints.AutoSize = true;
+            this.radioPassiveSkillPoints.Location = new System.Drawing.Point(226, 65);
+            this.radioPassiveSkillPoints.Name = "radioPassiveSkillPoints";
+            this.radioPassiveSkillPoints.Size = new System.Drawing.Size(77, 17);
+            this.radioPassiveSkillPoints.TabIndex = 17;
+            this.radioPassiveSkillPoints.TabStop = true;
+            this.radioPassiveSkillPoints.Text = "Passive Skill Pts";
+            this.toolTip.SetToolTip(this.radioPassiveSkillPoints, "Performs a split when the current passive skill point quest segment receives a passive point reward.");
+            this.radioPassiveSkillPoints.UseVisualStyleBackColor = true;
+            this.radioPassiveSkillPoints.CheckedChanged += new System.EventHandler(this.HandleSplitCriteriaChanged);
+            //
             // checkAutoSplit
             // 
             this.checkAutoSplit.AutoSize = true;
@@ -368,6 +383,7 @@
         private System.Windows.Forms.RadioButton radioLab;
         private System.Windows.Forms.GroupBox groupBoxLab;
         private System.Windows.Forms.Panel panelSplitList;
+        private System.Windows.Forms.RadioButton radioPassiveSkillPoints;
     }
 }
 

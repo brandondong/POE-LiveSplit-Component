@@ -1,4 +1,5 @@
 using LiveSplit.Model;
+using LiveSplit.Model.Comparisons;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using LiveSplit.Model.Input;
@@ -15,6 +16,7 @@ namespace POELiveSplitComponentTests.Component.Timer
         {
             public int NumSplits = 0;
             public int NumStarts = 0;
+            private LiveSplitState currentState = (LiveSplitState)FormatterServices.GetUninitializedObject(typeof(LiveSplitState));
 
             public void Split()
             {
@@ -30,12 +32,12 @@ namespace POELiveSplitComponentTests.Component.Timer
             {
                 get
                 {
-                    return (LiveSplitState)FormatterServices.GetUninitializedObject(typeof(LiveSplitState));
+                    return currentState;
                 }
 
                 set
                 {
-                    throw new NotImplementedException();
+                    currentState = value;
                 }
             }
 
@@ -230,8 +232,31 @@ namespace POELiveSplitComponentTests.Component.Timer
                 splitter.HandleLevelUp(2, 70);
                 splitter.HandleLoadStart(3);
                 splitter.HandleLoadEnd(4, "Lioneye's Watch");
+                splitter.HandleClientMessage(5, "You have received a Passive Skill Point.");
                 Assert.AreEqual(0, timer.NumSplits);
             }
+        }
+
+        [TestMethod()]
+        public void HandlePassiveSkillPointMessageTest()
+        {
+            PassiveSkillPointSplit passiveSplit = PassiveSkillPointSplit.PRESETS[0];
+            ComponentSettings settings = new ComponentSettings();
+            settings.CriteriaToSplit = ComponentSettings.SplitCriteria.PassiveSkillPoints;
+            settings.PassiveSkillPointSplits.Add(passiveSplit);
+            MockTimerModel timer = new MockTimerModel();
+            Run run = new Run(new StandardComparisonGeneratorsFactory());
+            Segment segment = (Segment)FormatterServices.GetUninitializedObject(typeof(Segment));
+            segment.Name = passiveSplit.SplitName();
+            run.Add(segment);
+            timer.CurrentState.Run = run;
+            timer.CurrentState.CurrentSplitIndex = 0;
+
+            LoadRemoverSplitter splitter = new LoadRemoverSplitter(timer, settings);
+            splitter.HandleClientMessage(1, "You have received a Passive Skill Point.");
+            Assert.AreEqual(1, timer.NumSplits);
+            splitter.HandleClientMessage(2, "Player: You have received a Passive Skill Point.");
+            Assert.AreEqual(1, timer.NumSplits);
         }
 
         [TestMethod()]

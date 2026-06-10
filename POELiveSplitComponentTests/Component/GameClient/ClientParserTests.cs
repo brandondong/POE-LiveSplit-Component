@@ -43,6 +43,11 @@ namespace POELiveSplitComponentTests.Component.GameClient
             {
                 throw new NotImplementedException();
             }
+
+            public virtual void HandleClientMessage(long timestamp, string message)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         class ExpectedLoadStart : MockClientEventHandler
@@ -108,6 +113,23 @@ namespace POELiveSplitComponentTests.Component.GameClient
             }
         }
 
+        class ExpectedClientMessage : MockClientEventHandler
+        {
+            private string expectedMessage;
+
+            public ExpectedClientMessage(long expectedTimestamp, string expectedMessage) : base(expectedTimestamp)
+            {
+                this.expectedMessage = expectedMessage;
+            }
+
+            public override void HandleClientMessage(long timestamp, string message)
+            {
+                Assert.AreEqual(expectedTimestamp, timestamp);
+                Assert.AreEqual(expectedMessage, message);
+                handledEvent = true;
+            }
+        }
+
         [TestMethod()]
         public void ProcessEnterZoneStart()
         {
@@ -141,6 +163,15 @@ namespace POELiveSplitComponentTests.Component.GameClient
             ExpectedIzaroDialogue expected = new ExpectedIzaroDialogue(911705671, "Delight in your gilded dungeon, ascendant.");
             ClientParser parser = new ClientParser(expected);
             parser.ProcessLine("2020/02/05 23:51:54 911705671 ac9 [INFO Client 10980] Izaro: Delight in your gilded dungeon, ascendant.");
+            expected.AssertEventProcessed();
+        }
+
+        [TestMethod()]
+        public void ProcessClientMessage()
+        {
+            ExpectedClientMessage expected = new ExpectedClientMessage(452201156, "You have received a Passive Skill Point.");
+            ClientParser parser = new ClientParser(expected);
+            parser.ProcessLine("2026/06/06 17:42:15 452201156 cffb06dd [INFO Client 18012] : You have received a Passive Skill Point.");
             expected.AssertEventProcessed();
         }
     }

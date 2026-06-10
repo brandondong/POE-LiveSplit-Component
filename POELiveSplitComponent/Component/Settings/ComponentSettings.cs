@@ -9,7 +9,7 @@ namespace POELiveSplitComponent.Component.Settings
 {
     public class ComponentSettings
     {
-        public enum SplitCriteria { Zones, Levels, Labyrinth };
+        public enum SplitCriteria { Zones, Levels, Labyrinth, PassiveSkillPoints };
 
         public enum LabSplitMode { AllZones, Trials };
 
@@ -22,6 +22,8 @@ namespace POELiveSplitComponent.Component.Settings
         private const string SPLIT_CRITERIA = "split.criteria";
         private const string SPLIT_LEVELS = "split.levels.on";
         private const string SPLIT_LEVEL = "split.level";
+        private const string SPLIT_PASSIVE_SKILL_POINTS = "split.passive.skill.points.on";
+        private const string SPLIT_PASSIVE_SKILL_POINT = "split.passive.skill.point";
         private const string GENERATE_WITH_ICONS = "generate.with.icons";
         private const string LEGACY_SPLIT_LABYRINTH = "split.labyrinth";
 
@@ -56,6 +58,8 @@ namespace POELiveSplitComponent.Component.Settings
 
         public HashSet<int> SplitLevels { get; private set; }
 
+        public HashSet<PassiveSkillPointSplit> PassiveSkillPointSplits { get; private set; }
+
         public bool GenerateWithIcons;
 
         public Action HandleLogLocationChanged { get; set; }
@@ -76,6 +80,7 @@ namespace POELiveSplitComponent.Component.Settings
             SplitZones = new HashSet<IZone>();
             SplitZoneLevels = new HashSet<int>();
             SplitLevels = new HashSet<int>();
+            PassiveSkillPointSplits = new HashSet<PassiveSkillPointSplit>();
         }
 
         public XmlNode GetSettings(XmlDocument document)
@@ -91,6 +96,7 @@ namespace POELiveSplitComponent.Component.Settings
 
             settingsNode.AppendChild(SerializeZones(document));
             settingsNode.AppendChild(SerializeLevels(document));
+            settingsNode.AppendChild(SerializePassiveSkillPointSplits(document));
 
             return settingsNode;
         }
@@ -151,6 +157,17 @@ namespace POELiveSplitComponent.Component.Settings
                             SplitLevels.Add(Int32.Parse(child.InnerText));
                         }
                     }
+                    if (element[SPLIT_PASSIVE_SKILL_POINTS] != null)
+                    {
+                        HashSet<string> deserialized = DeserializePassiveSkillPointSplits(element[SPLIT_PASSIVE_SKILL_POINTS]);
+                        foreach (PassiveSkillPointSplit split in PassiveSkillPointSplit.PRESETS)
+                        {
+                            if (deserialized.Contains(split.Serialize()))
+                            {
+                                PassiveSkillPointSplits.Add(split);
+                            }
+                        }
+                    }
                     if (element[LEGACY_SPLIT_LABYRINTH] != null && bool.Parse(element[LEGACY_SPLIT_LABYRINTH].InnerText))
                     {
                         // Override to support old split settings.
@@ -189,6 +206,16 @@ namespace POELiveSplitComponent.Component.Settings
             return parent;
         }
 
+        private XmlElement SerializePassiveSkillPointSplits(XmlDocument document)
+        {
+            XmlElement parent = SettingsHelper.ToElement(document, SPLIT_PASSIVE_SKILL_POINTS, (string)null);
+            foreach (PassiveSkillPointSplit split in PassiveSkillPointSplits)
+            {
+                SettingsHelper.CreateSetting(document, parent, SPLIT_PASSIVE_SKILL_POINT, split.Serialize());
+            }
+            return parent;
+        }
+
         private HashSet<string> DeserializeZones(XmlElement element)
         {
             HashSet<string> zones = new HashSet<string>();
@@ -197,6 +224,16 @@ namespace POELiveSplitComponent.Component.Settings
                 zones.Add(child.InnerText);
             }
             return zones;
+        }
+
+        private HashSet<string> DeserializePassiveSkillPointSplits(XmlElement element)
+        {
+            HashSet<string> splits = new HashSet<string>();
+            foreach (XmlNode child in element.GetElementsByTagName(SPLIT_PASSIVE_SKILL_POINT))
+            {
+                splits.Add(child.InnerText);
+            }
+            return splits;
         }
     }
 }
