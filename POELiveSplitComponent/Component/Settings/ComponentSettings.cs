@@ -25,6 +25,7 @@ namespace POELiveSplitComponent.Component.Settings
         private const string SPLIT_PASSIVE_SKILL_POINTS = "split.passive.skill.points.on";
         private const string SPLIT_PASSIVE_SKILL_POINT = "split.passive.skill.point";
         private const string GENERATE_WITH_ICONS = "generate.with.icons";
+        private const string COMBINE_CAMPAIGN_AND_PASSIVE_SKILL_POINT_SPLITS = "combine.campaign.and.passive.skill.point.splits";
         private const string LEGACY_SPLIT_LABYRINTH = "split.labyrinth";
 
         private const string DEFAULT_LOG_LOCATION = @"C:\Program Files (x86)\Grinding Gear Games\Path of Exile\logs\Client.txt";
@@ -62,6 +63,8 @@ namespace POELiveSplitComponent.Component.Settings
 
         public bool GenerateWithIcons;
 
+        public bool CombineCampaignAndPassiveSkillPointSplits;
+
         public Action HandleLogLocationChanged { get; set; }
 
         public ComponentSettings()
@@ -75,6 +78,7 @@ namespace POELiveSplitComponent.Component.Settings
             LoadRemovalEnabled = false;
             LabSplitType = LabSplitMode.AllZones;
             GenerateWithIcons = true;
+            CombineCampaignAndPassiveSkillPointSplits = false;
             CriteriaToSplit = SplitCriteria.Zones;
             logLocation = DEFAULT_LOG_LOCATION;
             SplitZones = new HashSet<IZone>();
@@ -93,6 +97,8 @@ namespace POELiveSplitComponent.Component.Settings
             SettingsHelper.CreateSetting(document, settingsNode, SPLIT_LABYRINTH_TYPE, LabSplitType);
             SettingsHelper.CreateSetting(document, settingsNode, SPLIT_CRITERIA, CriteriaToSplit);
             SettingsHelper.CreateSetting(document, settingsNode, GENERATE_WITH_ICONS, GenerateWithIcons);
+            SettingsHelper.CreateSetting(document, settingsNode, COMBINE_CAMPAIGN_AND_PASSIVE_SKILL_POINT_SPLITS,
+                CombineCampaignAndPassiveSkillPointSplits);
 
             settingsNode.AppendChild(SerializeZones(document));
             settingsNode.AppendChild(SerializeLevels(document));
@@ -133,6 +139,11 @@ namespace POELiveSplitComponent.Component.Settings
                     if (element[GENERATE_WITH_ICONS] != null)
                     {
                         GenerateWithIcons = bool.Parse(element[GENERATE_WITH_ICONS].InnerText);
+                    }
+                    if (element[COMBINE_CAMPAIGN_AND_PASSIVE_SKILL_POINT_SPLITS] != null)
+                    {
+                        CombineCampaignAndPassiveSkillPointSplits =
+                            bool.Parse(element[COMBINE_CAMPAIGN_AND_PASSIVE_SKILL_POINT_SPLITS].InnerText);
                     }
                     if (element[SPLIT_ZONES] != null)
                     {

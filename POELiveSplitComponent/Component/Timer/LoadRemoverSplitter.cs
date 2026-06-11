@@ -72,7 +72,7 @@ namespace POELiveSplitComponent.Component.Timer
                         timer.Split();
                     }
                 }
-                else if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones)
+                else if (SplitsOnCampaignRoute())
                 {
                     if (ShouldSplitForCrtieraZone(zone))
                     {
@@ -83,6 +83,13 @@ namespace POELiveSplitComponent.Component.Timer
                 }
             }
             previousZone = zone;
+        }
+
+        private bool SplitsOnCampaignRoute()
+        {
+            return settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones ||
+                (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.PassiveSkillPoints &&
+                settings.CombineCampaignAndPassiveSkillPointSplits);
         }
 
         public void HandleResetRuns()
@@ -138,7 +145,7 @@ namespace POELiveSplitComponent.Component.Timer
             {
                 return settings.SplitLevels;
             }
-            else if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones)
+            else if (SplitsOnCampaignRoute())
             {
                 return settings.SplitZoneLevels;
             }
@@ -167,7 +174,7 @@ namespace POELiveSplitComponent.Component.Timer
 
         public void HandleClientMessage(long timestamp, string message)
         {
-            if (!settings.AutoSplitEnabled || settings.CriteriaToSplit != ComponentSettings.SplitCriteria.PassiveSkillPoints)
+            if (!settings.AutoSplitEnabled || !SplitsOnPassiveSkillPoints())
             {
                 return;
             }
@@ -177,6 +184,13 @@ namespace POELiveSplitComponent.Component.Timer
             {
                 timer.Split();
             }
+        }
+
+        private bool SplitsOnPassiveSkillPoints()
+        {
+            return settings.CriteriaToSplit == ComponentSettings.SplitCriteria.PassiveSkillPoints ||
+                (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones &&
+                settings.CombineCampaignAndPassiveSkillPointSplits);
         }
 
         private PassiveSkillPointSplit PassiveSkillPointSplitForCurrentSegment()

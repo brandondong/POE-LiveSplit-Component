@@ -21,6 +21,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsFalse(settings.LoadRemovalEnabled);
             Assert.AreEqual(ComponentSettings.LabSplitMode.AllZones, settings.LabSplitType);
             Assert.IsTrue(settings.GenerateWithIcons);
+            Assert.IsFalse(settings.CombineCampaignAndPassiveSkillPointSplits);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
             Assert.AreEqual(0, settings.SplitZones.Count);
             Assert.AreEqual(0, settings.SplitZoneLevels.Count);
@@ -50,6 +51,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsTrue(settings.LoadRemovalEnabled);
             Assert.AreEqual(ComponentSettings.LabSplitMode.AllZones, settings.LabSplitType);
             Assert.IsTrue(settings.GenerateWithIcons);
+            Assert.IsFalse(settings.CombineCampaignAndPassiveSkillPointSplits);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
             Assert.AreEqual(2, settings.SplitZones.Count);
             Assert.AreEqual(0, settings.SplitZoneLevels.Count);
@@ -140,6 +142,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsFalse(settings.LoadRemovalEnabled);
             Assert.AreEqual(ComponentSettings.LabSplitMode.AllZones, settings.LabSplitType);
             Assert.IsTrue(settings.GenerateWithIcons);
+            Assert.IsFalse(settings.CombineCampaignAndPassiveSkillPointSplits);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
             Assert.AreEqual(0, settings.SplitZones.Count);
             Assert.AreEqual(0, settings.SplitZoneLevels.Count);
@@ -156,6 +159,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             settings.LoadRemovalEnabled = true;
             settings.LabSplitType = ComponentSettings.LabSplitMode.Trials;
             settings.GenerateWithIcons = false;
+            settings.CombineCampaignAndPassiveSkillPointSplits = true;
             settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Levels;
             settings.SplitZones.Add(Zone.ZONES[0]);
             settings.SplitZoneLevels.Add(70);
@@ -169,6 +173,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsTrue(settings.LoadRemovalEnabled);
             Assert.AreEqual(ComponentSettings.LabSplitMode.Trials, settings.LabSplitType);
             Assert.IsFalse(settings.GenerateWithIcons);
+            Assert.IsTrue(settings.CombineCampaignAndPassiveSkillPointSplits);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Levels, settings.CriteriaToSplit);
             Assert.IsTrue(new HashSet<IZone> { Zone.ZONES[0] }.SetEquals(settings.SplitZones));
             Assert.IsTrue(new HashSet<int> { 70 }.SetEquals(settings.SplitZoneLevels));
@@ -184,6 +189,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             settings.LoadRemovalEnabled = true;
             settings.LabSplitType = ComponentSettings.LabSplitMode.Trials;
             settings.GenerateWithIcons = false;
+            settings.CombineCampaignAndPassiveSkillPointSplits = true;
             settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Levels;
             settings.SplitZones.Add(Zone.ZONES[0]);
             settings.SplitZoneLevels.Add(70);
@@ -197,6 +203,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsFalse(settings.LoadRemovalEnabled);
             Assert.AreEqual(ComponentSettings.LabSplitMode.AllZones, settings.LabSplitType);
             Assert.IsTrue(settings.GenerateWithIcons);
+            Assert.IsFalse(settings.CombineCampaignAndPassiveSkillPointSplits);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
             Assert.AreEqual(0, settings.SplitZones.Count);
             Assert.AreEqual(0, settings.SplitZoneLevels.Count);
@@ -212,6 +219,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             settings.LoadRemovalEnabled = true;
             settings.LabSplitType = ComponentSettings.LabSplitMode.Trials;
             settings.GenerateWithIcons = false;
+            settings.CombineCampaignAndPassiveSkillPointSplits = true;
             settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Labyrinth;
             settings.SplitZones.Add(Zone.ZONES[0]);
             settings.SplitZoneLevels.Add(70);
@@ -228,6 +236,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsTrue(settings.LoadRemovalEnabled);
             Assert.AreEqual(ComponentSettings.LabSplitMode.AllZones, settings.LabSplitType);
             Assert.IsTrue(settings.GenerateWithIcons);
+            Assert.IsFalse(settings.CombineCampaignAndPassiveSkillPointSplits);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
             Assert.AreEqual(0, settings.SplitZones.Count);
             Assert.AreEqual(0, settings.SplitZoneLevels.Count);
@@ -242,6 +251,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             xml.LoadXml(
 @"<AutoSplitterSettings>
    <split.criteria>PassiveSkillPoints</split.criteria>
+   <combine.campaign.and.passive.skill.point.splits>True</combine.campaign.and.passive.skill.point.splits>
    <split.passive.skill.points.on>
       <split.passive.skill.point>Act 1 - The Dweller of the Deep</split.passive.skill.point>
       <split.passive.skill.point>Act 2 - Deal with the Bandits (Kill All)</split.passive.skill.point>
@@ -251,6 +261,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             ComponentSettings settings = new ComponentSettings();
             settings.SetSettings(nodeSettings);
             Assert.AreEqual(ComponentSettings.SplitCriteria.PassiveSkillPoints, settings.CriteriaToSplit);
+            Assert.IsTrue(settings.CombineCampaignAndPassiveSkillPointSplits);
             Assert.IsTrue(new HashSet<PassiveSkillPointSplit>
             {
                 PassiveSkillPointSplit.PRESETS[0],
