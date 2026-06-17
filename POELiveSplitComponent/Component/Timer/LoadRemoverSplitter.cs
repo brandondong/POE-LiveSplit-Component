@@ -12,6 +12,7 @@ namespace POELiveSplitComponent.Component.Timer
         // Zone that lab runners must enter before the lab. Unique zone name.
         private static IZone LAB_ENTRANCE = Zone.Parse("Aspirants' Plaza", new HashSet<IZone>());
         private static IZone ASPIRANTS_TRIAL = Zone.Parse("Aspirant's Trial", new HashSet<IZone>());
+        private const string TWILIGHT_STRAND = "The Twilight Strand";
         private ComponentSettings settings;
         private ITimerModel timer;
         private long loadTimes = 0;
@@ -56,8 +57,9 @@ namespace POELiveSplitComponent.Component.Timer
             }
                         
             IZone zone = Zone.Parse(zoneName, encounteredZones);
+            bool autoStarted = AutoStartOnTwilightStrand(zoneName);
 
-            if (settings.AutoSplitEnabled)
+            if (settings.AutoSplitEnabled && !autoStarted)
             {
                 if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Labyrinth)
                 {
@@ -83,6 +85,17 @@ namespace POELiveSplitComponent.Component.Timer
                 }
             }
             previousZone = zone;
+        }
+
+        private bool AutoStartOnTwilightStrand(string zoneName)
+        {
+            if (!settings.AutoSplitEnabled || !settings.AutoStartOnTwilightStrand ||
+                zoneName != TWILIGHT_STRAND || timer.CurrentState.CurrentPhase != TimerPhase.NotRunning)
+            {
+                return false;
+            }
+            timer.Start();
+            return true;
         }
 
         public void HandleResetRuns()

@@ -16,6 +16,7 @@ namespace POELiveSplitComponent.Component.Settings
         private const string LOG_KEY = "log.location";
         private const string LOAD_REMOVAL_FLAG = "load.removal";
         private const string AUTO_SPLIT_FLAG = "auto.split";
+        private const string AUTO_START_TWILIGHT_STRAND = "auto.start.twilight.strand";
         private const string SPLIT_ZONES = "split.zones.on";
         private const string SPLIT_ZONE = "split.zone";
         private const string SPLIT_LABYRINTH_TYPE = "split.labyrinth.type";
@@ -46,6 +47,8 @@ namespace POELiveSplitComponent.Component.Settings
 
         public bool AutoSplitEnabled;
 
+        public bool AutoStartOnTwilightStrand;
+
         public HashSet<IZone> SplitZones { get; private set; }
 
         public HashSet<int> SplitZoneLevels { get; private set; }
@@ -68,6 +71,7 @@ namespace POELiveSplitComponent.Component.Settings
         private void setDefaults()
         {
             AutoSplitEnabled = true;
+            AutoStartOnTwilightStrand = false;
             LoadRemovalEnabled = false;
             LabSplitType = LabSplitMode.AllZones;
             GenerateWithIcons = true;
@@ -85,6 +89,7 @@ namespace POELiveSplitComponent.Component.Settings
             SettingsHelper.CreateSetting(document, settingsNode, LOG_KEY, LogLocation);
             SettingsHelper.CreateSetting(document, settingsNode, LOAD_REMOVAL_FLAG, LoadRemovalEnabled);
             SettingsHelper.CreateSetting(document, settingsNode, AUTO_SPLIT_FLAG, AutoSplitEnabled);
+            SettingsHelper.CreateSetting(document, settingsNode, AUTO_START_TWILIGHT_STRAND, AutoStartOnTwilightStrand);
             SettingsHelper.CreateSetting(document, settingsNode, SPLIT_LABYRINTH_TYPE, LabSplitType);
             SettingsHelper.CreateSetting(document, settingsNode, SPLIT_CRITERIA, CriteriaToSplit);
             SettingsHelper.CreateSetting(document, settingsNode, GENERATE_WITH_ICONS, GenerateWithIcons);
@@ -115,6 +120,10 @@ namespace POELiveSplitComponent.Component.Settings
                     if (element[AUTO_SPLIT_FLAG] != null)
                     {
                         AutoSplitEnabled = bool.Parse(element[AUTO_SPLIT_FLAG].InnerText);
+                    }
+                    if (element[AUTO_START_TWILIGHT_STRAND] != null)
+                    {
+                        AutoStartOnTwilightStrand = bool.Parse(element[AUTO_START_TWILIGHT_STRAND].InnerText);
                     }
                     if (element[SPLIT_LABYRINTH_TYPE] != null)
                     {

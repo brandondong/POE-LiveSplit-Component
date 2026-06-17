@@ -15,6 +15,7 @@ namespace POELiveSplitComponentTests.Component.Timer
         {
             public int NumSplits = 0;
             public int NumStarts = 0;
+            private LiveSplitState currentState = (LiveSplitState)FormatterServices.GetUninitializedObject(typeof(LiveSplitState));
 
             public void Split()
             {
@@ -24,18 +25,19 @@ namespace POELiveSplitComponentTests.Component.Timer
             public void Start()
             {
                 NumStarts++;
+                currentState.CurrentPhase = TimerPhase.Running;
             }
 
             public LiveSplitState CurrentState
             {
                 get
                 {
-                    return (LiveSplitState)FormatterServices.GetUninitializedObject(typeof(LiveSplitState));
+                    return currentState;
                 }
 
                 set
                 {
-                    throw new NotImplementedException();
+                    currentState = value;
                 }
             }
 
@@ -66,6 +68,7 @@ namespace POELiveSplitComponentTests.Component.Timer
             {
                 NumSplits = 0;
                 NumStarts = 0;
+                currentState.CurrentPhase = TimerPhase.NotRunning;
             }
 
             public void Reset(bool updateSplits)
@@ -221,6 +224,7 @@ namespace POELiveSplitComponentTests.Component.Timer
                 settings.SplitZones.Add(LIONEYES1);
                 settings.SplitZoneLevels.Add(70);
                 settings.SplitLevels.Add(10);
+                settings.AutoStartOnTwilightStrand = true;
                 settings.AutoSplitEnabled = false;
                 MockTimerModel timer = new MockTimerModel();
 
@@ -230,8 +234,27 @@ namespace POELiveSplitComponentTests.Component.Timer
                 splitter.HandleLevelUp(2, 70);
                 splitter.HandleLoadStart(3);
                 splitter.HandleLoadEnd(4, "Lioneye's Watch");
+                splitter.HandleLoadEnd(5, "The Twilight Strand");
                 Assert.AreEqual(0, timer.NumSplits);
+                Assert.AreEqual(0, timer.NumStarts);
             }
+        }
+
+        [TestMethod()]
+        public void HandleAutoStartTwilightStrandTest()
+        {
+            ComponentSettings settings = new ComponentSettings();
+            settings.AutoStartOnTwilightStrand = true;
+            MockTimerModel timer = new MockTimerModel();
+
+            LoadRemoverSplitter splitter = new LoadRemoverSplitter(timer, settings);
+            splitter.HandleLoadEnd(1, "The Coast");
+            Assert.AreEqual(0, timer.NumStarts);
+            splitter.HandleLoadEnd(2, "The Twilight Strand");
+            Assert.AreEqual(1, timer.NumStarts);
+            Assert.AreEqual(0, timer.NumSplits);
+            splitter.HandleLoadEnd(3, "The Twilight Strand");
+            Assert.AreEqual(1, timer.NumStarts);
         }
 
         [TestMethod()]
