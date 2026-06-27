@@ -35,7 +35,6 @@
             this.labelLabDescription = new System.Windows.Forms.Label();
             this.radioAllLab = new System.Windows.Forms.RadioButton();
             this.radioLab = new System.Windows.Forms.RadioButton();
-            this.radioPassiveSkillPoints = new System.Windows.Forms.RadioButton();
             this.checkAutoSplit = new System.Windows.Forms.CheckBox();
             this.checkAutoStartTwilightStrand = new System.Windows.Forms.CheckBox();
             this.radioLevels = new System.Windows.Forms.RadioButton();
@@ -45,7 +44,7 @@
             this.checkedSplitList = new System.Windows.Forms.CheckedListBox();
             this.checkSelectAll = new System.Windows.Forms.CheckBox();
             this.checkIcons = new System.Windows.Forms.CheckBox();
-            this.checkCombineCampaignPassiveSkillPoints = new System.Windows.Forms.CheckBox();
+            this.checkShowPassiveSkillPoints = new System.Windows.Forms.CheckBox();
             this.createSplitsButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.linkLoadSetup = new System.Windows.Forms.LinkLabel();
@@ -65,7 +64,6 @@
             // groupBox1
             //
             this.groupBox1.Controls.Add(this.groupBoxLab);
-            this.groupBox1.Controls.Add(this.radioPassiveSkillPoints);
             this.groupBox1.Controls.Add(this.radioLab);
             this.groupBox1.Controls.Add(this.checkAutoSplit);
             this.groupBox1.Controls.Add(this.checkAutoStartTwilightStrand);
@@ -138,19 +136,6 @@
             this.radioLab.UseVisualStyleBackColor = true;
             this.radioLab.CheckedChanged += new System.EventHandler(this.HandleSplitCriteriaChanged);
             // 
-            // radioPassiveSkillPoints
-            //
-            this.radioPassiveSkillPoints.AutoSize = true;
-            this.radioPassiveSkillPoints.Location = new System.Drawing.Point(226, 65);
-            this.radioPassiveSkillPoints.Name = "radioPassiveSkillPoints";
-            this.radioPassiveSkillPoints.Size = new System.Drawing.Size(77, 17);
-            this.radioPassiveSkillPoints.TabIndex = 17;
-            this.radioPassiveSkillPoints.TabStop = true;
-            this.radioPassiveSkillPoints.Text = "Passive Skill Pts";
-            this.toolTip.SetToolTip(this.radioPassiveSkillPoints, "Performs a split when the current passive skill point quest segment receives a passive point reward.");
-            this.radioPassiveSkillPoints.UseVisualStyleBackColor = true;
-            this.radioPassiveSkillPoints.CheckedChanged += new System.EventHandler(this.HandleSplitCriteriaChanged);
-            //
             // checkAutoSplit
             // 
             this.checkAutoSplit.AutoSize = true;
@@ -216,7 +201,7 @@
             this.panelSplitList.Controls.Add(this.checkedSplitList);
             this.panelSplitList.Controls.Add(this.checkSelectAll);
             this.panelSplitList.Controls.Add(this.checkIcons);
-            this.panelSplitList.Controls.Add(this.checkCombineCampaignPassiveSkillPoints);
+            this.panelSplitList.Controls.Add(this.checkShowPassiveSkillPoints);
             this.panelSplitList.Controls.Add(this.createSplitsButton);
             this.panelSplitList.Location = new System.Drawing.Point(12, 88);
             this.panelSplitList.Name = "panelSplitList";
@@ -257,17 +242,17 @@
             this.checkIcons.UseVisualStyleBackColor = true;
             this.checkIcons.CheckedChanged += new System.EventHandler(this.HandleIconsChecked);
             //
-            // checkCombineCampaignPassiveSkillPoints
+            // checkShowPassiveSkillPoints
             //
-            this.checkCombineCampaignPassiveSkillPoints.AutoSize = true;
-            this.checkCombineCampaignPassiveSkillPoints.Location = new System.Drawing.Point(196, 228);
-            this.checkCombineCampaignPassiveSkillPoints.Name = "checkCombineCampaignPassiveSkillPoints";
-            this.checkCombineCampaignPassiveSkillPoints.Size = new System.Drawing.Size(171, 17);
-            this.checkCombineCampaignPassiveSkillPoints.TabIndex = 18;
-            this.checkCombineCampaignPassiveSkillPoints.Text = "Combine Campaign + Skill Pts";
-            this.toolTip.SetToolTip(this.checkCombineCampaignPassiveSkillPoints, "Generate and split against selected Campaign and Passive Skill Pts entries together.");
-            this.checkCombineCampaignPassiveSkillPoints.UseVisualStyleBackColor = true;
-            this.checkCombineCampaignPassiveSkillPoints.CheckedChanged += new System.EventHandler(this.HandleCombineCampaignPassiveSkillPointsChecked);
+            this.checkShowPassiveSkillPoints.AutoSize = true;
+            this.checkShowPassiveSkillPoints.Location = new System.Drawing.Point(196, 228);
+            this.checkShowPassiveSkillPoints.Name = "checkShowPassiveSkillPoints";
+            this.checkShowPassiveSkillPoints.Size = new System.Drawing.Size(138, 17);
+            this.checkShowPassiveSkillPoints.TabIndex = 18;
+            this.checkShowPassiveSkillPoints.Text = "Show Skill Point quests";
+            this.toolTip.SetToolTip(this.checkShowPassiveSkillPoints, "Shows passive skill point quest options in the Campaign list.");
+            this.checkShowPassiveSkillPoints.UseVisualStyleBackColor = true;
+            this.checkShowPassiveSkillPoints.CheckedChanged += new System.EventHandler(this.HandleShowPassiveSkillPointsChecked);
             //
             // createSplitsButton
             // 
@@ -405,14 +390,13 @@
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.CheckBox checkAutoSplit;
         private System.Windows.Forms.CheckBox checkIcons;
-        private System.Windows.Forms.CheckBox checkCombineCampaignPassiveSkillPoints;
+        private System.Windows.Forms.CheckBox checkShowPassiveSkillPoints;
         private System.Windows.Forms.Label labelLabDescription;
         private System.Windows.Forms.RadioButton radioAllLab;
         private System.Windows.Forms.RadioButton radioAspirant;
         private System.Windows.Forms.RadioButton radioLab;
         private System.Windows.Forms.GroupBox groupBoxLab;
         private System.Windows.Forms.Panel panelSplitList;
-        private System.Windows.Forms.RadioButton radioPassiveSkillPoints;
         private System.Windows.Forms.CheckBox checkAutoStartTwilightStrand;
     }
 }

@@ -34,9 +34,8 @@ namespace POELiveSplitComponent.Component
             radioZones.Checked = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones;
             radioLevels.Checked = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Levels;
             radioLab.Checked = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Labyrinth;
-            radioPassiveSkillPoints.Checked = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.PassiveSkillPoints;
             checkIcons.Checked = settings.GenerateWithIcons;
-            checkCombineCampaignPassiveSkillPoints.Checked = settings.CombineCampaignAndPassiveSkillPointSplits;
+            checkShowPassiveSkillPoints.Checked = settings.ShowPassiveSkillPointSplits;
             radioAllLab.Checked = settings.LabSplitType == ComponentSettings.LabSplitMode.AllZones;
             radioAspirant.Checked = settings.LabSplitType == ComponentSettings.LabSplitMode.Trials;
 
@@ -48,11 +47,9 @@ namespace POELiveSplitComponent.Component
             groupBoxLab.Visible = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Labyrinth;
 
             panelSplitList.Visible = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones || 
-                settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Levels ||
-                settings.CriteriaToSplit == ComponentSettings.SplitCriteria.PassiveSkillPoints;
+                settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Levels;
             checkIcons.Visible = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones;
-            checkCombineCampaignPassiveSkillPoints.Visible = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones ||
-                settings.CriteriaToSplit == ComponentSettings.SplitCriteria.PassiveSkillPoints;
+            checkShowPassiveSkillPoints.Visible = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones;
 
             checkedSplitList.Items.Clear();
             if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones)
@@ -65,19 +62,19 @@ namespace POELiveSplitComponent.Component
                 {
                     checkedSplitList.Items.Add(new LevelLabel(i), settings.SplitZoneLevels.Contains(i));
                 }
+                if (settings.ShowPassiveSkillPointSplits)
+                {
+                    foreach (PassiveSkillPointSplit split in PassiveSkillPointSplit.PRESETS)
+                    {
+                        checkedSplitList.Items.Add(split, settings.PassiveSkillPointSplits.Contains(split));
+                    }
+                }
             }
             else if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Levels)
             {
                 for (int i = 2; i <= 100; i++)
                 {
                     checkedSplitList.Items.Add(new LevelLabel(i), settings.SplitLevels.Contains(i));
-                }
-            }
-            else if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.PassiveSkillPoints)
-            {
-                foreach (PassiveSkillPointSplit split in PassiveSkillPointSplit.PRESETS)
-                {
-                    checkedSplitList.Items.Add(split, settings.PassiveSkillPointSplits.Contains(split));
                 }
             }
         }
@@ -148,7 +145,7 @@ namespace POELiveSplitComponent.Component
                         settings.SplitZones.Remove(zone);
                     }
                 }
-                else
+                else if (selectedItem is LevelLabel)
                 {
                     LevelLabel level = (LevelLabel)selectedItem;
                     if (e.NewValue == CheckState.Checked)
@@ -158,6 +155,18 @@ namespace POELiveSplitComponent.Component
                     else
                     {
                         settings.SplitZoneLevels.Remove(level.Level);
+                    }
+                }
+                else
+                {
+                    PassiveSkillPointSplit split = (PassiveSkillPointSplit)selectedItem;
+                    if (e.NewValue == CheckState.Checked)
+                    {
+                        settings.PassiveSkillPointSplits.Add(split);
+                    }
+                    else
+                    {
+                        settings.PassiveSkillPointSplits.Remove(split);
                     }
                 }
             }
@@ -171,18 +180,6 @@ namespace POELiveSplitComponent.Component
                 else
                 {
                     settings.SplitLevels.Remove(level.Level);
-                }
-            }
-            else if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.PassiveSkillPoints)
-            {
-                PassiveSkillPointSplit split = (PassiveSkillPointSplit)selectedItem;
-                if (e.NewValue == CheckState.Checked)
-                {
-                    settings.PassiveSkillPointSplits.Add(split);
-                }
-                else
-                {
-                    settings.PassiveSkillPointSplits.Remove(split);
                 }
             }
         }
@@ -209,15 +206,7 @@ namespace POELiveSplitComponent.Component
                 return;
             }
             state.Run.Clear();
-            if (GeneratesCampaignRoute())
-            {
-                AddCampaignSplits();
-                AddPassiveSkillPointSplits();
-            }
-            else
-            {
-                AddCheckedSplits();
-            }
+            AddCheckedSplits();
             if (state.Run.Count == 0)
             {
                 state.Run.AddSegment("");
@@ -230,54 +219,27 @@ namespace POELiveSplitComponent.Component
                 "Generate Splits", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private bool GeneratesCampaignRoute()
-        {
-            return settings.CombineCampaignAndPassiveSkillPointSplits &&
-                (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones ||
-                settings.CriteriaToSplit == ComponentSettings.SplitCriteria.PassiveSkillPoints);
-        }
-
         private void AddCheckedSplits()
         {
             for (int i = 0; i < checkedSplitList.Items.Count; i++)
             {
                 if (checkedSplitList.GetItemChecked(i))
                 {
-                    state.Run.AddSegment(checkedSplitList.Items[i].ToString());
-                }
-            }
-        }
-
-        private void AddCampaignSplits()
-        {
-            foreach (Zone zone in Zone.ZONES)
-            {
-                if (settings.SplitZones.Contains(zone))
-                {
-                    Image icon = null;
-                    if (settings.GenerateWithIcons)
+                    object selectedItem = checkedSplitList.Items[i];
+                    if (selectedItem is IZone)
                     {
-                        icon = iconForType(Zone.ICONTYPES[zone]);
+                        IZone zone = (IZone)selectedItem;
+                        Image icon = null;
+                        if (settings.GenerateWithIcons)
+                        {
+                            icon = iconForType(Zone.ICONTYPES[zone]);
+                        }
+                        state.Run.AddSegment(zone.SplitName(), default(Time), default(Time), icon);
                     }
-                    state.Run.AddSegment(zone.SplitName(), default(Time), default(Time), icon);
-                }
-            }
-            for (int i = 70; i <= 100; i++)
-            {
-                if (settings.SplitZoneLevels.Contains(i))
-                {
-                    state.Run.AddSegment(new LevelLabel(i).ToString());
-                }
-            }
-        }
-
-        private void AddPassiveSkillPointSplits()
-        {
-            foreach (PassiveSkillPointSplit split in PassiveSkillPointSplit.PRESETS)
-            {
-                if (settings.PassiveSkillPointSplits.Contains(split))
-                {
-                    state.Run.AddSegment(split.SplitName());
+                    else
+                    {
+                        state.Run.AddSegment(selectedItem.ToString());
+                    }
                 }
             }
         }
@@ -309,10 +271,6 @@ namespace POELiveSplitComponent.Component
             {
                 settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Labyrinth;
             }
-            else if (radioPassiveSkillPoints.Checked)
-            {
-                settings.CriteriaToSplit = ComponentSettings.SplitCriteria.PassiveSkillPoints;
-            }
             updateSplitCriteriaSpecificArea();
         }
 
@@ -333,9 +291,10 @@ namespace POELiveSplitComponent.Component
             settings.GenerateWithIcons = checkIcons.Checked;
         }
 
-        private void HandleCombineCampaignPassiveSkillPointsChecked(object sender, EventArgs e)
+        private void HandleShowPassiveSkillPointsChecked(object sender, EventArgs e)
         {
-            settings.CombineCampaignAndPassiveSkillPointSplits = checkCombineCampaignPassiveSkillPoints.Checked;
+            settings.ShowPassiveSkillPointSplits = checkShowPassiveSkillPoints.Checked;
+            updateSplitCriteriaSpecificArea();
         }
     }
 }

@@ -216,43 +216,6 @@ namespace POELiveSplitComponentTests.Component.Timer
         }
 
         [TestMethod()]
-        public void HandlePassiveSkillPointsModeSplitsCampaignRouteTest()
-        {
-            ComponentSettings settings = new ComponentSettings();
-            settings.CriteriaToSplit = ComponentSettings.SplitCriteria.PassiveSkillPoints;
-            settings.CombineCampaignAndPassiveSkillPointSplits = true;
-            settings.SplitZones.Add(LIONEYES1);
-            settings.SplitZoneLevels.Add(70);
-            settings.SplitLevels.Add(2);
-            MockTimerModel timer = new MockTimerModel();
-
-            LoadRemoverSplitter splitter = new LoadRemoverSplitter(timer, settings);
-            splitter.HandleLoadStart(1);
-            splitter.HandleLoadEnd(2, "Lioneye's Watch");
-            Assert.AreEqual(1, timer.NumSplits);
-            splitter.HandleLevelUp(3, 2);
-            Assert.AreEqual(1, timer.NumSplits);
-            splitter.HandleLevelUp(4, 70);
-            Assert.AreEqual(2, timer.NumSplits);
-        }
-
-        [TestMethod()]
-        public void HandlePassiveSkillPointsModeDoesNotSplitCampaignRouteByDefaultTest()
-        {
-            ComponentSettings settings = new ComponentSettings();
-            settings.CriteriaToSplit = ComponentSettings.SplitCriteria.PassiveSkillPoints;
-            settings.SplitZones.Add(LIONEYES1);
-            settings.SplitZoneLevels.Add(70);
-            MockTimerModel timer = new MockTimerModel();
-
-            LoadRemoverSplitter splitter = new LoadRemoverSplitter(timer, settings);
-            splitter.HandleLoadStart(1);
-            splitter.HandleLoadEnd(2, "Lioneye's Watch");
-            splitter.HandleLevelUp(3, 70);
-            Assert.AreEqual(0, timer.NumSplits);
-        }
-
-        [TestMethod()]
         public void HandleAutosplitDisabledTest()
         {
             foreach (ComponentSettings.SplitCriteria c in Enum.GetValues(typeof(ComponentSettings.SplitCriteria)))
@@ -263,6 +226,7 @@ namespace POELiveSplitComponentTests.Component.Timer
                 settings.SplitZoneLevels.Add(70);
                 settings.SplitLevels.Add(10);
                 settings.AutoStartOnTwilightStrand = true;
+                settings.ShowPassiveSkillPointSplits = true;
                 settings.AutoSplitEnabled = false;
                 MockTimerModel timer = new MockTimerModel();
 
@@ -282,37 +246,27 @@ namespace POELiveSplitComponentTests.Component.Timer
         [TestMethod()]
         public void HandlePassiveSkillPointMessageTest()
         {
-            HandlePassiveSkillPointMessageTestForCriteria(ComponentSettings.SplitCriteria.PassiveSkillPoints);
+            HandlePassiveSkillPointMessageTestForSettings(ComponentSettings.SplitCriteria.Zones, true, 1);
         }
 
         [TestMethod()]
-        public void HandlePassiveSkillPointMessageInZonesModeTest()
+        public void HandlePassiveSkillPointMessageRequiresShowSettingTest()
         {
-            HandlePassiveSkillPointMessageTestForCriteria(ComponentSettings.SplitCriteria.Zones, true);
+            HandlePassiveSkillPointMessageTestForSettings(ComponentSettings.SplitCriteria.Zones, false, 0);
         }
 
         [TestMethod()]
-        public void HandlePassiveSkillPointMessageInZonesModeRequiresCombineSettingTest()
+        public void HandlePassiveSkillPointMessageInLevelsModeTest()
         {
-            HandlePassiveSkillPointMessageTestForCriteria(ComponentSettings.SplitCriteria.Zones, false, 0);
+            HandlePassiveSkillPointMessageTestForSettings(ComponentSettings.SplitCriteria.Levels, true, 0);
         }
 
-        private void HandlePassiveSkillPointMessageTestForCriteria(ComponentSettings.SplitCriteria criteria)
-        {
-            HandlePassiveSkillPointMessageTestForCriteria(criteria, false);
-        }
-
-        private void HandlePassiveSkillPointMessageTestForCriteria(ComponentSettings.SplitCriteria criteria, bool combine)
-        {
-            HandlePassiveSkillPointMessageTestForCriteria(criteria, combine, 1);
-        }
-
-        private void HandlePassiveSkillPointMessageTestForCriteria(ComponentSettings.SplitCriteria criteria, bool combine, int expectedSplits)
+        private void HandlePassiveSkillPointMessageTestForSettings(ComponentSettings.SplitCriteria criteria, bool showPassiveSkillPoints, int expectedSplits)
         {
             PassiveSkillPointSplit passiveSplit = PassiveSkillPointSplit.PRESETS[0];
             ComponentSettings settings = new ComponentSettings();
             settings.CriteriaToSplit = criteria;
-            settings.CombineCampaignAndPassiveSkillPointSplits = combine;
+            settings.ShowPassiveSkillPointSplits = showPassiveSkillPoints;
             settings.PassiveSkillPointSplits.Add(passiveSplit);
             MockTimerModel timer = new MockTimerModel();
             Run run = new Run(new StandardComparisonGeneratorsFactory());

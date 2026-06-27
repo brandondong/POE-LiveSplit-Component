@@ -89,9 +89,7 @@ namespace POELiveSplitComponent.Component.Timer
 
         private bool SplitsOnCampaignRoute()
         {
-            return settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones ||
-                (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.PassiveSkillPoints &&
-                settings.CombineCampaignAndPassiveSkillPointSplits);
+            return settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones;
         }
 
         private bool AutoStartOnTwilightStrand(string zoneName)
@@ -201,9 +199,8 @@ namespace POELiveSplitComponent.Component.Timer
 
         private bool SplitsOnPassiveSkillPoints()
         {
-            return settings.CriteriaToSplit == ComponentSettings.SplitCriteria.PassiveSkillPoints ||
-                (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones &&
-                settings.CombineCampaignAndPassiveSkillPointSplits);
+            return settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones &&
+                settings.ShowPassiveSkillPointSplits;
         }
 
         private PassiveSkillPointSplit PassiveSkillPointSplitForCurrentSegment()
