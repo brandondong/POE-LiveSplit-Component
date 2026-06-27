@@ -37,6 +37,7 @@
             this.radioLab = new System.Windows.Forms.RadioButton();
             this.radioPassiveSkillPoints = new System.Windows.Forms.RadioButton();
             this.checkAutoSplit = new System.Windows.Forms.CheckBox();
+            this.checkAutoStartTwilightStrand = new System.Windows.Forms.CheckBox();
             this.radioLevels = new System.Windows.Forms.RadioButton();
             this.radioZones = new System.Windows.Forms.RadioButton();
             this.labelSplitOn = new System.Windows.Forms.Label();
@@ -67,6 +68,7 @@
             this.groupBox1.Controls.Add(this.radioPassiveSkillPoints);
             this.groupBox1.Controls.Add(this.radioLab);
             this.groupBox1.Controls.Add(this.checkAutoSplit);
+            this.groupBox1.Controls.Add(this.checkAutoStartTwilightStrand);
             this.groupBox1.Controls.Add(this.radioLevels);
             this.groupBox1.Controls.Add(this.radioZones);
             this.groupBox1.Controls.Add(this.labelSplitOn);
@@ -162,6 +164,18 @@
             this.checkAutoSplit.UseVisualStyleBackColor = true;
             this.checkAutoSplit.CheckedChanged += new System.EventHandler(this.HandleAutoSplitChanged);
             // 
+            // checkAutoStartTwilightStrand
+            //
+            this.checkAutoStartTwilightStrand.AutoSize = true;
+            this.checkAutoStartTwilightStrand.Location = new System.Drawing.Point(152, 20);
+            this.checkAutoStartTwilightStrand.Name = "checkAutoStartTwilightStrand";
+            this.checkAutoStartTwilightStrand.Size = new System.Drawing.Size(171, 17);
+            this.checkAutoStartTwilightStrand.TabIndex = 17;
+            this.checkAutoStartTwilightStrand.Text = "Auto-start at Twilight Strand";
+            this.toolTip.SetToolTip(this.checkAutoStartTwilightStrand, "Starts the timer when the player enters The Twilight Strand.");
+            this.checkAutoStartTwilightStrand.UseVisualStyleBackColor = true;
+            this.checkAutoStartTwilightStrand.CheckedChanged += new System.EventHandler(this.HandleAutoStartTwilightStrandChanged);
+            //
             // radioLevels
             // 
             this.radioLevels.AutoSize = true;
@@ -399,5 +413,6 @@
         private System.Windows.Forms.GroupBox groupBoxLab;
         private System.Windows.Forms.Panel panelSplitList;
         private System.Windows.Forms.RadioButton radioPassiveSkillPoints;
+        private System.Windows.Forms.CheckBox checkAutoStartTwilightStrand;
     }
 }

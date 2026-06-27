@@ -27,6 +27,8 @@ namespace POELiveSplitComponent.Component
         public void XmlRefresh()
         {
             checkAutoSplit.Checked = settings.AutoSplitEnabled;
+            checkAutoStartTwilightStrand.Checked = settings.AutoStartOnTwilightStrand;
+            checkAutoStartTwilightStrand.Enabled = settings.AutoSplitEnabled;
             checkLoadRemoval.Checked = settings.LoadRemovalEnabled;
             textLogLocation.Text = settings.LogLocation;
             radioZones.Checked = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones;
@@ -83,6 +85,12 @@ namespace POELiveSplitComponent.Component
         private void HandleAutoSplitChanged(object sender, EventArgs e)
         {
             settings.AutoSplitEnabled = checkAutoSplit.Checked;
+            checkAutoStartTwilightStrand.Enabled = checkAutoSplit.Checked;
+        }
+
+        private void HandleAutoStartTwilightStrandChanged(object sender, EventArgs e)
+        {
+            settings.AutoStartOnTwilightStrand = checkAutoStartTwilightStrand.Checked;
         }
 
         private void handleLoadRemovalChanged(object sender, EventArgs e)

@@ -18,6 +18,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             ComponentSettings settings = new ComponentSettings();
             settings.SetSettings(nodeSettings);
             Assert.IsTrue(settings.AutoSplitEnabled);
+            Assert.IsFalse(settings.AutoStartOnTwilightStrand);
             Assert.IsFalse(settings.LoadRemovalEnabled);
             Assert.AreEqual(ComponentSettings.LabSplitMode.AllZones, settings.LabSplitType);
             Assert.IsTrue(settings.GenerateWithIcons);
@@ -48,6 +49,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             ComponentSettings settings = new ComponentSettings();
             settings.SetSettings(nodeSettings);
             Assert.IsTrue(settings.AutoSplitEnabled);
+            Assert.IsFalse(settings.AutoStartOnTwilightStrand);
             Assert.IsTrue(settings.LoadRemovalEnabled);
             Assert.AreEqual(ComponentSettings.LabSplitMode.AllZones, settings.LabSplitType);
             Assert.IsTrue(settings.GenerateWithIcons);
@@ -85,6 +87,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             ComponentSettings settings = new ComponentSettings();
             settings.SetSettings(nodeSettings);
             Assert.IsTrue(settings.AutoSplitEnabled);
+            Assert.IsFalse(settings.AutoStartOnTwilightStrand);
             Assert.IsFalse(settings.LoadRemovalEnabled);
             Assert.IsTrue(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Levels, settings.CriteriaToSplit);
@@ -119,6 +122,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             ComponentSettings settings = new ComponentSettings();
             settings.SetSettings(nodeSettings);
             Assert.IsTrue(settings.AutoSplitEnabled);
+            Assert.IsFalse(settings.AutoStartOnTwilightStrand);
             Assert.IsFalse(settings.LoadRemovalEnabled);
             Assert.IsTrue(settings.GenerateWithIcons);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Labyrinth, settings.CriteriaToSplit);
@@ -139,6 +143,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             settings = new ComponentSettings();
             settings.SetSettings(node);
             Assert.IsTrue(settings.AutoSplitEnabled);
+            Assert.IsFalse(settings.AutoStartOnTwilightStrand);
             Assert.IsFalse(settings.LoadRemovalEnabled);
             Assert.AreEqual(ComponentSettings.LabSplitMode.AllZones, settings.LabSplitType);
             Assert.IsTrue(settings.GenerateWithIcons);
@@ -156,6 +161,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             XmlDocument xml = new XmlDocument();
             ComponentSettings settings = new ComponentSettings();
             settings.AutoSplitEnabled = false;
+            settings.AutoStartOnTwilightStrand = true;
             settings.LoadRemovalEnabled = true;
             settings.LabSplitType = ComponentSettings.LabSplitMode.Trials;
             settings.GenerateWithIcons = false;
@@ -170,6 +176,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             settings = new ComponentSettings();
             settings.SetSettings(node);
             Assert.IsFalse(settings.AutoSplitEnabled);
+            Assert.IsTrue(settings.AutoStartOnTwilightStrand);
             Assert.IsTrue(settings.LoadRemovalEnabled);
             Assert.AreEqual(ComponentSettings.LabSplitMode.Trials, settings.LabSplitType);
             Assert.IsFalse(settings.GenerateWithIcons);
@@ -186,6 +193,7 @@ namespace POELiveSplitComponentTests.Component.Settings
         {
             ComponentSettings settings = new ComponentSettings();
             settings.AutoSplitEnabled = false;
+            settings.AutoStartOnTwilightStrand = true;
             settings.LoadRemovalEnabled = true;
             settings.LabSplitType = ComponentSettings.LabSplitMode.Trials;
             settings.GenerateWithIcons = false;
@@ -200,6 +208,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             XmlDocument xml = new XmlDocument();
             settings.SetSettings(new ComponentSettings().GetSettings(xml));
             Assert.IsTrue(settings.AutoSplitEnabled);
+            Assert.IsFalse(settings.AutoStartOnTwilightStrand);
             Assert.IsFalse(settings.LoadRemovalEnabled);
             Assert.AreEqual(ComponentSettings.LabSplitMode.AllZones, settings.LabSplitType);
             Assert.IsTrue(settings.GenerateWithIcons);
@@ -216,6 +225,7 @@ namespace POELiveSplitComponentTests.Component.Settings
         {
             ComponentSettings settings = new ComponentSettings();
             settings.AutoSplitEnabled = false;
+            settings.AutoStartOnTwilightStrand = true;
             settings.LoadRemovalEnabled = true;
             settings.LabSplitType = ComponentSettings.LabSplitMode.Trials;
             settings.GenerateWithIcons = false;
@@ -233,6 +243,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             XmlNode nodeSettings = xml.FirstChild;
             settings.SetSettings(nodeSettings);
             Assert.IsTrue(settings.AutoSplitEnabled);
+            Assert.IsFalse(settings.AutoStartOnTwilightStrand);
             Assert.IsTrue(settings.LoadRemovalEnabled);
             Assert.AreEqual(ComponentSettings.LabSplitMode.AllZones, settings.LabSplitType);
             Assert.IsTrue(settings.GenerateWithIcons);

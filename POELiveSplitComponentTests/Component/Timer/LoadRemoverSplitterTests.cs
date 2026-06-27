@@ -26,6 +26,7 @@ namespace POELiveSplitComponentTests.Component.Timer
             public void Start()
             {
                 NumStarts++;
+                currentState.CurrentPhase = TimerPhase.Running;
             }
 
             public LiveSplitState CurrentState
@@ -68,6 +69,7 @@ namespace POELiveSplitComponentTests.Component.Timer
             {
                 NumSplits = 0;
                 NumStarts = 0;
+                currentState.CurrentPhase = TimerPhase.NotRunning;
             }
 
             public void Reset(bool updateSplits)
@@ -260,6 +262,7 @@ namespace POELiveSplitComponentTests.Component.Timer
                 settings.SplitZones.Add(LIONEYES1);
                 settings.SplitZoneLevels.Add(70);
                 settings.SplitLevels.Add(10);
+                settings.AutoStartOnTwilightStrand = true;
                 settings.AutoSplitEnabled = false;
                 MockTimerModel timer = new MockTimerModel();
 
@@ -270,7 +273,9 @@ namespace POELiveSplitComponentTests.Component.Timer
                 splitter.HandleLoadStart(3);
                 splitter.HandleLoadEnd(4, "Lioneye's Watch");
                 splitter.HandleClientMessage(5, "You have received a Passive Skill Point.");
+                splitter.HandleLoadEnd(6, "The Twilight Strand");
                 Assert.AreEqual(0, timer.NumSplits);
+                Assert.AreEqual(0, timer.NumStarts);
             }
         }
 
@@ -322,6 +327,23 @@ namespace POELiveSplitComponentTests.Component.Timer
             Assert.AreEqual(expectedSplits, timer.NumSplits);
             splitter.HandleClientMessage(2, "Player: You have received a Passive Skill Point.");
             Assert.AreEqual(expectedSplits, timer.NumSplits);
+        }
+
+        [TestMethod()]
+        public void HandleAutoStartTwilightStrandTest()
+        {
+            ComponentSettings settings = new ComponentSettings();
+            settings.AutoStartOnTwilightStrand = true;
+            MockTimerModel timer = new MockTimerModel();
+
+            LoadRemoverSplitter splitter = new LoadRemoverSplitter(timer, settings);
+            splitter.HandleLoadEnd(1, "The Coast");
+            Assert.AreEqual(0, timer.NumStarts);
+            splitter.HandleLoadEnd(2, "The Twilight Strand");
+            Assert.AreEqual(1, timer.NumStarts);
+            Assert.AreEqual(0, timer.NumSplits);
+            splitter.HandleLoadEnd(3, "The Twilight Strand");
+            Assert.AreEqual(1, timer.NumStarts);
         }
 
         [TestMethod()]
