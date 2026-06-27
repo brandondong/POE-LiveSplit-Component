@@ -15,6 +15,8 @@ namespace POELiveSplitComponent.Component.GameClient
 
         private static readonly Regex IZARO_DIALOGUE = new Regex(TIMESTAMP_SECTION + @".*Izaro: (.*)");
 
+        private static readonly Regex CLIENT_MESSAGE = new Regex(TIMESTAMP_SECTION + @".*\[INFO Client \d+\] : (.*)$");
+
         private IClientEventHandler splitter;
 
         public ClientParser(IClientEventHandler splitter)
@@ -43,13 +45,20 @@ namespace POELiveSplitComponent.Component.GameClient
             {
                 GroupCollection groups = match.Groups;
                 splitter.HandleLevelUp(long.Parse(groups[1].Value), int.Parse(groups[2].Value));
+                return;
             }
             match = IZARO_DIALOGUE.Match(s);
             if (match.Success)
             {
                 GroupCollection groups = match.Groups;
                 splitter.HandleIzaroDialogue(long.Parse(groups[1].Value), groups[2].Value);
-
+                return;
+            }
+            match = CLIENT_MESSAGE.Match(s);
+            if (match.Success)
+            {
+                GroupCollection groups = match.Groups;
+                splitter.HandleClientMessage(long.Parse(groups[1].Value), groups[2].Value);
             }
         }
     }

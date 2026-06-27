@@ -62,6 +62,7 @@
       <DependentUpon>SettingsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Component\Timer\LoadRemoverSplitter.cs" />
+    <Compile Include="Component\Timer\PassiveSkillPointSplit.cs" />
     <Compile Include="Component\Timer\Zone.cs" />
     <Compile Include="Component\UI\LevelLabel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

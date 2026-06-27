@@ -35,6 +35,7 @@ namespace POELiveSplitComponent.Component
             radioLevels.Checked = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Levels;
             radioLab.Checked = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Labyrinth;
             checkIcons.Checked = settings.GenerateWithIcons;
+            checkShowPassiveSkillPoints.Checked = settings.ShowPassiveSkillPointSplits;
             radioAllLab.Checked = settings.LabSplitType == ComponentSettings.LabSplitMode.AllZones;
             radioAspirant.Checked = settings.LabSplitType == ComponentSettings.LabSplitMode.Trials;
 
@@ -48,6 +49,7 @@ namespace POELiveSplitComponent.Component
             panelSplitList.Visible = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones || 
                 settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Levels;
             checkIcons.Visible = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones;
+            checkShowPassiveSkillPoints.Visible = settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones;
 
             checkedSplitList.Items.Clear();
             if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones)
@@ -59,6 +61,13 @@ namespace POELiveSplitComponent.Component
                 for (int i = 70; i <= 100; i++)
                 {
                     checkedSplitList.Items.Add(new LevelLabel(i), settings.SplitZoneLevels.Contains(i));
+                }
+                if (settings.ShowPassiveSkillPointSplits)
+                {
+                    foreach (PassiveSkillPointSplit split in PassiveSkillPointSplit.PRESETS)
+                    {
+                        checkedSplitList.Items.Add(split, settings.PassiveSkillPointSplits.Contains(split));
+                    }
                 }
             }
             else if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Levels)
@@ -136,7 +145,7 @@ namespace POELiveSplitComponent.Component
                         settings.SplitZones.Remove(zone);
                     }
                 }
-                else
+                else if (selectedItem is LevelLabel)
                 {
                     LevelLabel level = (LevelLabel)selectedItem;
                     if (e.NewValue == CheckState.Checked)
@@ -146,6 +155,18 @@ namespace POELiveSplitComponent.Component
                     else
                     {
                         settings.SplitZoneLevels.Remove(level.Level);
+                    }
+                }
+                else
+                {
+                    PassiveSkillPointSplit split = (PassiveSkillPointSplit)selectedItem;
+                    if (e.NewValue == CheckState.Checked)
+                    {
+                        settings.PassiveSkillPointSplits.Add(split);
+                    }
+                    else
+                    {
+                        settings.PassiveSkillPointSplits.Remove(split);
                     }
                 }
             }
@@ -185,6 +206,21 @@ namespace POELiveSplitComponent.Component
                 return;
             }
             state.Run.Clear();
+            AddCheckedSplits();
+            if (state.Run.Count == 0)
+            {
+                state.Run.AddSegment("");
+            }
+            state.Run.HasChanged = true;
+            state.Form.Invalidate();
+            MessageBox.Show("Splits generated successfully.\n\n" + 
+                "The splits can be edited in the Splits Editor after saving and reopening.\n" + 
+                "If the split names do not match the order of your zone progression, they can be reordered using that editor.",
+                "Generate Splits", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void AddCheckedSplits()
+        {
             for (int i = 0; i < checkedSplitList.Items.Count; i++)
             {
                 if (checkedSplitList.GetItemChecked(i))
@@ -206,16 +242,6 @@ namespace POELiveSplitComponent.Component
                     }
                 }
             }
-            if (state.Run.Count == 0)
-            {
-                state.Run.AddSegment("");
-            }
-            state.Run.HasChanged = true;
-            state.Form.Invalidate();
-            MessageBox.Show("Splits generated successfully.\n\n" + 
-                "The splits can be edited in the Splits Editor after saving and reopening.\n" + 
-                "If the split names do not match the order of your zone progression, they can be reordered using that editor.",
-                "Generate Splits", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private Image iconForType(Zone.IconType type)
@@ -263,6 +289,12 @@ namespace POELiveSplitComponent.Component
         private void HandleIconsChecked(object sender, EventArgs e)
         {
             settings.GenerateWithIcons = checkIcons.Checked;
+        }
+
+        private void HandleShowPassiveSkillPointsChecked(object sender, EventArgs e)
+        {
+            settings.ShowPassiveSkillPointSplits = checkShowPassiveSkillPoints.Checked;
+            updateSplitCriteriaSpecificArea();
         }
     }
 }

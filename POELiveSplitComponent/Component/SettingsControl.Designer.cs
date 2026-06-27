@@ -44,6 +44,7 @@
             this.checkedSplitList = new System.Windows.Forms.CheckedListBox();
             this.checkSelectAll = new System.Windows.Forms.CheckBox();
             this.checkIcons = new System.Windows.Forms.CheckBox();
+            this.checkShowPassiveSkillPoints = new System.Windows.Forms.CheckBox();
             this.createSplitsButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.linkLoadSetup = new System.Windows.Forms.LinkLabel();
@@ -59,9 +60,9 @@
             this.panelSplitList.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // groupBox1
-            // 
+            //
             this.groupBox1.Controls.Add(this.groupBoxLab);
             this.groupBox1.Controls.Add(this.radioLab);
             this.groupBox1.Controls.Add(this.checkAutoSplit);
@@ -76,9 +77,9 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Auto Split";
-            // 
+            //
             // groupBoxLab
-            // 
+            //
             this.groupBoxLab.Controls.Add(this.radioAspirant);
             this.groupBoxLab.Controls.Add(this.labelLabDescription);
             this.groupBoxLab.Controls.Add(this.radioAllLab);
@@ -200,6 +201,7 @@
             this.panelSplitList.Controls.Add(this.checkedSplitList);
             this.panelSplitList.Controls.Add(this.checkSelectAll);
             this.panelSplitList.Controls.Add(this.checkIcons);
+            this.panelSplitList.Controls.Add(this.checkShowPassiveSkillPoints);
             this.panelSplitList.Controls.Add(this.createSplitsButton);
             this.panelSplitList.Location = new System.Drawing.Point(12, 88);
             this.panelSplitList.Name = "panelSplitList";
@@ -239,7 +241,19 @@
             this.checkIcons.Text = "With Icons";
             this.checkIcons.UseVisualStyleBackColor = true;
             this.checkIcons.CheckedChanged += new System.EventHandler(this.HandleIconsChecked);
-            // 
+            //
+            // checkShowPassiveSkillPoints
+            //
+            this.checkShowPassiveSkillPoints.AutoSize = true;
+            this.checkShowPassiveSkillPoints.Location = new System.Drawing.Point(196, 228);
+            this.checkShowPassiveSkillPoints.Name = "checkShowPassiveSkillPoints";
+            this.checkShowPassiveSkillPoints.Size = new System.Drawing.Size(138, 17);
+            this.checkShowPassiveSkillPoints.TabIndex = 18;
+            this.checkShowPassiveSkillPoints.Text = "Show Skill Point quests";
+            this.toolTip.SetToolTip(this.checkShowPassiveSkillPoints, "Shows passive skill point quest options in the Campaign list.");
+            this.checkShowPassiveSkillPoints.UseVisualStyleBackColor = true;
+            this.checkShowPassiveSkillPoints.CheckedChanged += new System.EventHandler(this.HandleShowPassiveSkillPointsChecked);
+            //
             // createSplitsButton
             // 
             this.createSplitsButton.Location = new System.Drawing.Point(0, 223);
@@ -376,6 +390,7 @@
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.CheckBox checkAutoSplit;
         private System.Windows.Forms.CheckBox checkIcons;
+        private System.Windows.Forms.CheckBox checkShowPassiveSkillPoints;
         private System.Windows.Forms.Label labelLabDescription;
         private System.Windows.Forms.RadioButton radioAllLab;
         private System.Windows.Forms.RadioButton radioAspirant;
@@ -385,4 +400,3 @@
         private System.Windows.Forms.CheckBox checkAutoStartTwilightStrand;
     }
 }
-

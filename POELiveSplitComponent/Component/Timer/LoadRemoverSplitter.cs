@@ -74,7 +74,7 @@ namespace POELiveSplitComponent.Component.Timer
                         timer.Split();
                     }
                 }
-                else if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones)
+                else if (SplitsOnCampaignRoute())
                 {
                     if (ShouldSplitForCrtieraZone(zone))
                     {
@@ -85,6 +85,11 @@ namespace POELiveSplitComponent.Component.Timer
                 }
             }
             previousZone = zone;
+        }
+
+        private bool SplitsOnCampaignRoute()
+        {
+            return settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones;
         }
 
         private bool AutoStartOnTwilightStrand(string zoneName)
@@ -122,7 +127,7 @@ namespace POELiveSplitComponent.Component.Timer
             // See https://github.com/brandondong/POE-LiveSplit-Component/issues/8 for more details.
             IList<ISegment> segments = timer.CurrentState.Run;
             int currentIndex = timer.CurrentState.CurrentSplitIndex;
-            if (segments == null || currentIndex >= segments.Count)
+            if (segments == null || currentIndex < 0 || currentIndex >= segments.Count)
             {
                 return false;
             }
@@ -151,7 +156,7 @@ namespace POELiveSplitComponent.Component.Timer
             {
                 return settings.SplitLevels;
             }
-            else if (settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones)
+            else if (SplitsOnCampaignRoute())
             {
                 return settings.SplitZoneLevels;
             }
@@ -176,6 +181,39 @@ namespace POELiveSplitComponent.Component.Timer
                 timer.Start();
                 labStarted = true;
             }
+        }
+
+        public void HandleClientMessage(long timestamp, string message)
+        {
+            if (!settings.AutoSplitEnabled || !SplitsOnPassiveSkillPoints())
+            {
+                return;
+            }
+
+            PassiveSkillPointSplit split = PassiveSkillPointSplitForCurrentSegment();
+            if (split != null && split.Matches(message))
+            {
+                timer.Split();
+            }
+        }
+
+        private bool SplitsOnPassiveSkillPoints()
+        {
+            return settings.CriteriaToSplit == ComponentSettings.SplitCriteria.Zones &&
+                settings.ShowPassiveSkillPointSplits;
+        }
+
+        private PassiveSkillPointSplit PassiveSkillPointSplitForCurrentSegment()
+        {
+            IList<ISegment> segments = timer.CurrentState.Run;
+            int currentIndex = timer.CurrentState.CurrentSplitIndex;
+            if (segments == null || currentIndex < 0 || currentIndex >= segments.Count)
+            {
+                return null;
+            }
+
+            ISegment currentSplit = segments[currentIndex];
+            return settings.PassiveSkillPointSplits.FirstOrDefault(split => split.SplitName() == currentSplit.Name);
         }
     }
 }

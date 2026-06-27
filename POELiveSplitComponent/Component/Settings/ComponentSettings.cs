@@ -23,7 +23,11 @@ namespace POELiveSplitComponent.Component.Settings
         private const string SPLIT_CRITERIA = "split.criteria";
         private const string SPLIT_LEVELS = "split.levels.on";
         private const string SPLIT_LEVEL = "split.level";
+        private const string SPLIT_PASSIVE_SKILL_POINTS = "split.passive.skill.points.on";
+        private const string SPLIT_PASSIVE_SKILL_POINT = "split.passive.skill.point";
         private const string GENERATE_WITH_ICONS = "generate.with.icons";
+        private const string SHOW_PASSIVE_SKILL_POINT_SPLITS = "show.passive.skill.point.splits";
+        private const string LEGACY_COMBINE_CAMPAIGN_AND_PASSIVE_SKILL_POINT_SPLITS = "combine.campaign.and.passive.skill.point.splits";
         private const string LEGACY_SPLIT_LABYRINTH = "split.labyrinth";
 
         private const string DEFAULT_LOG_LOCATION = @"C:\Program Files (x86)\Grinding Gear Games\Path of Exile\logs\Client.txt";
@@ -59,7 +63,11 @@ namespace POELiveSplitComponent.Component.Settings
 
         public HashSet<int> SplitLevels { get; private set; }
 
+        public HashSet<PassiveSkillPointSplit> PassiveSkillPointSplits { get; private set; }
+
         public bool GenerateWithIcons;
+
+        public bool ShowPassiveSkillPointSplits;
 
         public Action HandleLogLocationChanged { get; set; }
 
@@ -75,11 +83,13 @@ namespace POELiveSplitComponent.Component.Settings
             LoadRemovalEnabled = false;
             LabSplitType = LabSplitMode.AllZones;
             GenerateWithIcons = true;
+            ShowPassiveSkillPointSplits = false;
             CriteriaToSplit = SplitCriteria.Zones;
             logLocation = DEFAULT_LOG_LOCATION;
             SplitZones = new HashSet<IZone>();
             SplitZoneLevels = new HashSet<int>();
             SplitLevels = new HashSet<int>();
+            PassiveSkillPointSplits = new HashSet<PassiveSkillPointSplit>();
         }
 
         public XmlNode GetSettings(XmlDocument document)
@@ -93,9 +103,12 @@ namespace POELiveSplitComponent.Component.Settings
             SettingsHelper.CreateSetting(document, settingsNode, SPLIT_LABYRINTH_TYPE, LabSplitType);
             SettingsHelper.CreateSetting(document, settingsNode, SPLIT_CRITERIA, CriteriaToSplit);
             SettingsHelper.CreateSetting(document, settingsNode, GENERATE_WITH_ICONS, GenerateWithIcons);
+            SettingsHelper.CreateSetting(document, settingsNode, SHOW_PASSIVE_SKILL_POINT_SPLITS,
+                ShowPassiveSkillPointSplits);
 
             settingsNode.AppendChild(SerializeZones(document));
             settingsNode.AppendChild(SerializeLevels(document));
+            settingsNode.AppendChild(SerializePassiveSkillPointSplits(document));
 
             return settingsNode;
         }
@@ -129,13 +142,27 @@ namespace POELiveSplitComponent.Component.Settings
                     {
                         LabSplitType = (LabSplitMode)Enum.Parse(typeof(LabSplitMode), element[SPLIT_LABYRINTH_TYPE].InnerText);
                     }
+                    bool migratedPassiveSkillPointMode = false;
                     if (element[SPLIT_CRITERIA] != null)
                     {
-                        CriteriaToSplit = (SplitCriteria)Enum.Parse(typeof(SplitCriteria), element[SPLIT_CRITERIA].InnerText);
+                        migratedPassiveSkillPointMode = SetSplitCriteria(element[SPLIT_CRITERIA].InnerText);
                     }
                     if (element[GENERATE_WITH_ICONS] != null)
                     {
                         GenerateWithIcons = bool.Parse(element[GENERATE_WITH_ICONS].InnerText);
+                    }
+                    if (element[SHOW_PASSIVE_SKILL_POINT_SPLITS] != null)
+                    {
+                        ShowPassiveSkillPointSplits = bool.Parse(element[SHOW_PASSIVE_SKILL_POINT_SPLITS].InnerText);
+                    }
+                    else if (element[LEGACY_COMBINE_CAMPAIGN_AND_PASSIVE_SKILL_POINT_SPLITS] != null)
+                    {
+                        ShowPassiveSkillPointSplits =
+                            bool.Parse(element[LEGACY_COMBINE_CAMPAIGN_AND_PASSIVE_SKILL_POINT_SPLITS].InnerText);
+                    }
+                    if (migratedPassiveSkillPointMode)
+                    {
+                        ShowPassiveSkillPointSplits = true;
                     }
                     if (element[SPLIT_ZONES] != null)
                     {
@@ -158,6 +185,17 @@ namespace POELiveSplitComponent.Component.Settings
                         foreach (XmlNode child in element[SPLIT_LEVELS].GetElementsByTagName(SPLIT_LEVEL))
                         {
                             SplitLevels.Add(Int32.Parse(child.InnerText));
+                        }
+                    }
+                    if (element[SPLIT_PASSIVE_SKILL_POINTS] != null)
+                    {
+                        HashSet<string> deserialized = DeserializePassiveSkillPointSplits(element[SPLIT_PASSIVE_SKILL_POINTS]);
+                        foreach (PassiveSkillPointSplit split in PassiveSkillPointSplit.PRESETS)
+                        {
+                            if (deserialized.Contains(split.Serialize()))
+                            {
+                                PassiveSkillPointSplits.Add(split);
+                            }
                         }
                     }
                     if (element[LEGACY_SPLIT_LABYRINTH] != null && bool.Parse(element[LEGACY_SPLIT_LABYRINTH].InnerText))
@@ -198,6 +236,27 @@ namespace POELiveSplitComponent.Component.Settings
             return parent;
         }
 
+        private XmlElement SerializePassiveSkillPointSplits(XmlDocument document)
+        {
+            XmlElement parent = SettingsHelper.ToElement(document, SPLIT_PASSIVE_SKILL_POINTS, (string)null);
+            foreach (PassiveSkillPointSplit split in PassiveSkillPointSplits)
+            {
+                SettingsHelper.CreateSetting(document, parent, SPLIT_PASSIVE_SKILL_POINT, split.Serialize());
+            }
+            return parent;
+        }
+
+        private bool SetSplitCriteria(string value)
+        {
+            if (value == "PassiveSkillPoints")
+            {
+                CriteriaToSplit = SplitCriteria.Zones;
+                return true;
+            }
+            CriteriaToSplit = (SplitCriteria)Enum.Parse(typeof(SplitCriteria), value);
+            return false;
+        }
+
         private HashSet<string> DeserializeZones(XmlElement element)
         {
             HashSet<string> zones = new HashSet<string>();
@@ -206,6 +265,16 @@ namespace POELiveSplitComponent.Component.Settings
                 zones.Add(child.InnerText);
             }
             return zones;
+        }
+
+        private HashSet<string> DeserializePassiveSkillPointSplits(XmlElement element)
+        {
+            HashSet<string> splits = new HashSet<string>();
+            foreach (XmlNode child in element.GetElementsByTagName(SPLIT_PASSIVE_SKILL_POINT))
+            {
+                splits.Add(child.InnerText);
+            }
+            return splits;
         }
     }
 }

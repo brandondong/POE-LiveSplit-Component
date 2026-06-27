@@ -22,10 +22,12 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsFalse(settings.LoadRemovalEnabled);
             Assert.AreEqual(ComponentSettings.LabSplitMode.AllZones, settings.LabSplitType);
             Assert.IsTrue(settings.GenerateWithIcons);
+            Assert.IsFalse(settings.ShowPassiveSkillPointSplits);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
             Assert.AreEqual(0, settings.SplitZones.Count);
             Assert.AreEqual(0, settings.SplitZoneLevels.Count);
             Assert.AreEqual(0, settings.SplitLevels.Count);
+            Assert.AreEqual(0, settings.PassiveSkillPointSplits.Count);
         }
 
         [TestMethod()]
@@ -51,10 +53,12 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsTrue(settings.LoadRemovalEnabled);
             Assert.AreEqual(ComponentSettings.LabSplitMode.AllZones, settings.LabSplitType);
             Assert.IsTrue(settings.GenerateWithIcons);
+            Assert.IsFalse(settings.ShowPassiveSkillPointSplits);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
             Assert.AreEqual(2, settings.SplitZones.Count);
             Assert.AreEqual(0, settings.SplitZoneLevels.Count);
             Assert.AreEqual(0, settings.SplitLevels.Count);
+            Assert.AreEqual(0, settings.PassiveSkillPointSplits.Count);
             Assert.AreEqual("C:/Program Files (x86)/Grinding Gear Games/Path of Exile/logs/client.txt", settings.LogLocation);
         }
 
@@ -90,6 +94,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.AreEqual(3, settings.SplitZones.Count);
             Assert.IsTrue(new HashSet<int> { 70 }.SetEquals(settings.SplitZoneLevels));
             Assert.IsTrue(new HashSet<int> { 3 }.SetEquals(settings.SplitLevels));
+            Assert.AreEqual(0, settings.PassiveSkillPointSplits.Count);
             Assert.AreEqual(@"C:\Program Files (x86)\Grinding Gear Games\Path of Exile\logs\Client.txt", settings.LogLocation);
         }
 
@@ -124,6 +129,7 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.AreEqual(3, settings.SplitZones.Count);
             Assert.AreEqual(0, settings.SplitZoneLevels.Count);
             Assert.AreEqual(1, settings.SplitLevels.Count);
+            Assert.AreEqual(0, settings.PassiveSkillPointSplits.Count);
             Assert.AreEqual(@"C:\Program Files (x86)\Grinding Gear Games\Path of Exile\logs\Client.txt", settings.LogLocation);
         }
 
@@ -141,10 +147,12 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsFalse(settings.LoadRemovalEnabled);
             Assert.AreEqual(ComponentSettings.LabSplitMode.AllZones, settings.LabSplitType);
             Assert.IsTrue(settings.GenerateWithIcons);
+            Assert.IsFalse(settings.ShowPassiveSkillPointSplits);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
             Assert.AreEqual(0, settings.SplitZones.Count);
             Assert.AreEqual(0, settings.SplitZoneLevels.Count);
             Assert.AreEqual(0, settings.SplitLevels.Count);
+            Assert.AreEqual(0, settings.PassiveSkillPointSplits.Count);
         }
 
         [TestMethod()]
@@ -157,10 +165,12 @@ namespace POELiveSplitComponentTests.Component.Settings
             settings.LoadRemovalEnabled = true;
             settings.LabSplitType = ComponentSettings.LabSplitMode.Trials;
             settings.GenerateWithIcons = false;
+            settings.ShowPassiveSkillPointSplits = true;
             settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Levels;
             settings.SplitZones.Add(Zone.ZONES[0]);
             settings.SplitZoneLevels.Add(70);
             settings.SplitLevels.Add(100);
+            settings.PassiveSkillPointSplits.Add(PassiveSkillPointSplit.PRESETS[0]);
             XmlNode node = settings.GetSettings(xml);
 
             settings = new ComponentSettings();
@@ -170,10 +180,12 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsTrue(settings.LoadRemovalEnabled);
             Assert.AreEqual(ComponentSettings.LabSplitMode.Trials, settings.LabSplitType);
             Assert.IsFalse(settings.GenerateWithIcons);
+            Assert.IsTrue(settings.ShowPassiveSkillPointSplits);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Levels, settings.CriteriaToSplit);
             Assert.IsTrue(new HashSet<IZone> { Zone.ZONES[0] }.SetEquals(settings.SplitZones));
             Assert.IsTrue(new HashSet<int> { 70 }.SetEquals(settings.SplitZoneLevels));
             Assert.IsTrue(new HashSet<int> { 100 }.SetEquals(settings.SplitLevels));
+            Assert.IsTrue(new HashSet<PassiveSkillPointSplit> { PassiveSkillPointSplit.PRESETS[0] }.SetEquals(settings.PassiveSkillPointSplits));
         }
 
         [TestMethod()]
@@ -185,10 +197,12 @@ namespace POELiveSplitComponentTests.Component.Settings
             settings.LoadRemovalEnabled = true;
             settings.LabSplitType = ComponentSettings.LabSplitMode.Trials;
             settings.GenerateWithIcons = false;
+            settings.ShowPassiveSkillPointSplits = true;
             settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Levels;
             settings.SplitZones.Add(Zone.ZONES[0]);
             settings.SplitZoneLevels.Add(70);
             settings.SplitLevels.Add(100);
+            settings.PassiveSkillPointSplits.Add(PassiveSkillPointSplit.PRESETS[0]);
             
             // Emulate a cancel.
             XmlDocument xml = new XmlDocument();
@@ -198,10 +212,12 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsFalse(settings.LoadRemovalEnabled);
             Assert.AreEqual(ComponentSettings.LabSplitMode.AllZones, settings.LabSplitType);
             Assert.IsTrue(settings.GenerateWithIcons);
+            Assert.IsFalse(settings.ShowPassiveSkillPointSplits);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
             Assert.AreEqual(0, settings.SplitZones.Count);
             Assert.AreEqual(0, settings.SplitZoneLevels.Count);
             Assert.AreEqual(0, settings.SplitLevels.Count);
+            Assert.AreEqual(0, settings.PassiveSkillPointSplits.Count);
         }
 
         [TestMethod()]
@@ -213,10 +229,12 @@ namespace POELiveSplitComponentTests.Component.Settings
             settings.LoadRemovalEnabled = true;
             settings.LabSplitType = ComponentSettings.LabSplitMode.Trials;
             settings.GenerateWithIcons = false;
+            settings.ShowPassiveSkillPointSplits = true;
             settings.CriteriaToSplit = ComponentSettings.SplitCriteria.Labyrinth;
             settings.SplitZones.Add(Zone.ZONES[0]);
             settings.SplitZoneLevels.Add(70);
             settings.SplitLevels.Add(100);
+            settings.PassiveSkillPointSplits.Add(PassiveSkillPointSplit.PRESETS[0]);
 
             // Emulate a cancel where the properties were fetched from file.
             // Never has been observed but we'll handle it anyways.
@@ -229,10 +247,37 @@ namespace POELiveSplitComponentTests.Component.Settings
             Assert.IsTrue(settings.LoadRemovalEnabled);
             Assert.AreEqual(ComponentSettings.LabSplitMode.AllZones, settings.LabSplitType);
             Assert.IsTrue(settings.GenerateWithIcons);
+            Assert.IsFalse(settings.ShowPassiveSkillPointSplits);
             Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
             Assert.AreEqual(0, settings.SplitZones.Count);
             Assert.AreEqual(0, settings.SplitZoneLevels.Count);
             Assert.AreEqual(0, settings.SplitLevels.Count);
+            Assert.AreEqual(0, settings.PassiveSkillPointSplits.Count);
+        }
+
+        [TestMethod()]
+        public void SetSettingsWithPassiveSkillPointSplitsTest()
+        {
+            XmlDocument xml = new XmlDocument();
+            xml.LoadXml(
+@"<AutoSplitterSettings>
+   <split.criteria>PassiveSkillPoints</split.criteria>
+   <combine.campaign.and.passive.skill.point.splits>True</combine.campaign.and.passive.skill.point.splits>
+   <split.passive.skill.points.on>
+      <split.passive.skill.point>Act 1 - The Dweller of the Deep</split.passive.skill.point>
+      <split.passive.skill.point>Act 2 - Deal with the Bandits (Kill All)</split.passive.skill.point>
+   </split.passive.skill.points.on>
+</AutoSplitterSettings>");
+            XmlNode nodeSettings = xml.FirstChild;
+            ComponentSettings settings = new ComponentSettings();
+            settings.SetSettings(nodeSettings);
+            Assert.AreEqual(ComponentSettings.SplitCriteria.Zones, settings.CriteriaToSplit);
+            Assert.IsTrue(settings.ShowPassiveSkillPointSplits);
+            Assert.IsTrue(new HashSet<PassiveSkillPointSplit>
+            {
+                PassiveSkillPointSplit.PRESETS[0],
+                PassiveSkillPointSplit.PRESETS[3]
+            }.SetEquals(settings.PassiveSkillPointSplits));
         }
     }
 }

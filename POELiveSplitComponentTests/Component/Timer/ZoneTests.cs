@@ -80,5 +80,14 @@ namespace POELiveSplitComponentTests.Component.Timer
             Assert.AreEqual(Zone.IconType.Wp, Zone.ICONTYPES[Zone.Parse("The Coast", new HashSet<IZone>())]);
             Assert.AreEqual(Zone.IconType.NoWp, Zone.ICONTYPES[Zone.Parse("The Tidal Island", new HashSet<IZone>())]);
         }
+
+        [TestMethod()]
+        public void PassiveSkillPointSplitMatchesTest()
+        {
+            PassiveSkillPointSplit split = PassiveSkillPointSplit.PRESETS[0];
+            Assert.IsTrue(split.Matches("You have received a Passive Skill Point."));
+            Assert.IsTrue(split.Matches("You have received 2 Passive Skill Points."));
+            Assert.IsFalse(split.Matches("You have received 2 Passive Respec Points."));
+        }
     }
 }
